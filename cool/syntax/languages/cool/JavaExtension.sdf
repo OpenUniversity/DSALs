@@ -1,0 +1,8 @@
+module languages/cool/JavaExtension
+imports
+  languages/java/JavaMix
+  languages/java-15/lexical/Keywords
+exports
+  lexical syntax
+    "condition" -> Keyword
+

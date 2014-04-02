@@ -1,0 +1,11 @@
+module languages/cool/Condition
+imports
+  languages/java-15/lexical/Identifiers
+  languages/java-15/lexical/literals/BooleanLiterals
+  languages/java-15/expressions/AssignmentOperators
+exports
+  sorts
+    ConditionDec
+
+  context-free syntax
+    "condition" {Expr ","}* ";" -> ConditionDec {cons("ConditionDec")}

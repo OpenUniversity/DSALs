@@ -1,0 +1,761 @@
+module externals
+imports
+  libstratego-lib
+  include/cool
+
+strategies
+  
+  add_externals(|coordname) = 
+    class := <id>;
+    syntetic_methods := <new-iset>;
+    modified_class := <add-external-impl(|syntetic_methods, coordname)>class;
+    <topdown(try(\ ClassBody(declarations*) -> ClassBody(<conc>(declarations*, <iset-elements>syntetic_methods)) \))>modified_class
+
+  add-external-impl(|methods, coordname) = 
+    node := <id>;
+    env := <new-hashtable>;
+    enclosing_env  := <new-hashtable>;
+    var2method := <new-hashtable>;
+    fields := <new-iset>;
+    <add-external-impl(|env, <new-hashtable>, fields, enclosing_env, methods, var2method, None(), False(), coordname)>node
+
+  add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, rest, replace, coordname) =
+    node := <id>;
+    switch id
+      case ?Block(_):
+        new_enclosing_env := <new-hashtable>;
+	tmp := <all(add-external-impl(|env, var2type, fields, new_enclosing_env, methods, var2method, rest, replace, coordname))>node;
+	<map(decreament(|env, new_enclosing_env))><hashtable-keys>new_enclosing_env;
+	<id> tmp
+
+      case ?MethodDec(method_head, method_body):
+      	new_enclosing_env := <new-hashtable>;
+	if <is_on_entry_or_on_exit_method>method_head
+	then
+		new_replace := True()
+	else
+		new_replace := False()
+	end;
+	<topdown(try(add_params(|env, new_enclosing_env, var2type, rest)))>method_head;
+	tmp := MethodDec(method_head,
+			  <all(add-external-impl(|env, var2type, fields, new_enclosing_env, methods, var2method, rest, new_replace, coordname))>method_body);
+	<map(decreament(|env, new_enclosing_env))><hashtable-keys>new_enclosing_env;
+	<id> tmp
+
+      case or(?ExprName(_), ?ExprName(_, _)):
+      	   <handle-expr(|env, methods, fields, var2method, rest, replace, coordname)>node
+
+      case ?VarDec(Id(name)):
+      	   <add_var(|name, env, enclosing_env, var2type, rest)><id>
+
+      case ?VarDec(Id(name), expr):
+      	  <add_var(|name, env, enclosing_env, var2type, rest)><id>;
+	  <id><all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, rest, replace, coordname))>node
+
+      case or(?FieldDec(_, type, vars), ?LocalVarDec(_, type, vars)):
+          <id><all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, type, replace, coordname))>node
+
+      case or(?Eq(expr1, expr2), ?NotEq(expr1, expr2)):
+	  <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-equality-type><try-to-get-type(|None(), env, var2type)>(expr1, expr2), replace, coordname))>node
+
+      case or(or(?Or(expr1, expr2), ?ExcOr(expr1, expr2)), ?And(expr1, expr2)):
+	      if <equal>(rest, None())
+	      then
+	         <id><all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-conditional-type><try-to-get-type(|rest, env, var2type)>(expr1, expr2), replace, coordname))>node
+	      else
+		 <id><all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-bounded-conditional-type>rest, replace, coordname))>node
+	      end
+
+      case or(or(?Lt(_, _), ?LtEq(_, _)),
+      	      or(?Gt(_, _), ?GtEq(_, _))):
+      	  <id> <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname))>node
+
+      case or(or(or(?Plus(expr1, expr2), ?Minus(expr1, expr2)),
+      	         or(?Mul(expr1, expr2), ?Div(expr1, expr2))),
+	      ?Remain(expr1, expr2)):
+	   if <equal>(rest, None())
+	   then
+	      <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname))>node
+	   else
+	      <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-bounded-arithmetic-type>rest, replace, coordname))>node
+	   end
+
+      case ?LeftShift(expr1, expr2):
+      	   if <equal>(rest, None())
+	   then
+	      new_rest := <cast-shift-type><get-type-of(|rest, env, var2type)>expr1
+	   else
+	      new_rest := <cast-shift-type>rest
+	   end;
+	   !LeftShift(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr1,
+	   	      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Long(), replace, coordname)>expr2)
+
+      case ?RightShift(expr1, expr2):
+      	   if <equal>(rest, None())
+	   then
+	      new_rest := <cast-shift-type><get-type-of(|rest, env, var2type)>expr1
+	   else
+	      new_rest := <cast-shift-type>rest
+	   end;
+	   !RightShift(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr1,
+	   	      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Long(), replace, coordname)>expr2)
+
+      case ?URightShift(expr1, expr2):
+      	   if <equal>(rest, None())
+	   then
+	      new_rest := <cast-shift-type><get-type-of(|rest, env, var2type)>expr1
+	   else
+	      new_rest := <cast-shift-type>rest
+	   end;
+	   !URightShift(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr1,
+	   	      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Long(), replace, coordname)>expr2)
+
+      case ?PreIncr(expr):
+      	   expr_type := <get-type-of(|rest, env, var2type)>expr;
+	   if <equal>(expr_type, None())
+	   then
+		if <equal>(rest, None())
+		then
+		   new_rest := Double()
+		else
+		   new_rest := <ensure_number>rest
+		end
+	   else
+		new_rest := <ensure_number>expr_type
+	   end;
+	   !PreIncr(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr)
+
+      case ?PostIncr(expr):
+      	   expr_type := <get-type-of(|rest, env, var2type)>expr;
+	   if <equal>(expr_type, None())
+	   then
+		if <equal>(rest, None())
+		then
+		   new_rest := Double()
+		else
+		   new_rest := <ensure_number>rest
+		end
+	   else
+		new_rest := <ensure_number>expr_type
+	   end;
+	   !PostIncr(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr)
+
+      case ?PreDecr(expr):
+      	   expr_type := <get-type-of(|rest, env, var2type)>expr;
+	   if <equal>(expr_type, None())
+	   then
+		if <equal>(rest, None())
+		then
+		   new_rest := Double()
+		else
+		   new_rest := <ensure_number>rest
+		end
+	   else
+		new_rest := <ensure_number>expr_type
+	   end;
+	   !PreDecr(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr)
+
+      case ?PostDecr(expr):
+      	   expr_type := <get-type-of(|rest, env, var2type)>expr;
+	   if <equal>(expr_type, None())
+	   then
+		if <equal>(rest, None())
+		then
+		   new_rest := Double()
+		else
+		   new_rest := <ensure_number>rest
+		end
+	   else
+		new_rest := <ensure_number>expr_type
+	   end;
+	   !PostDecr(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, new_rest, replace, coordname)>expr)
+
+      case ?Not(_):
+      	   <id> <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname))>node
+
+      case or(or(?Minus(_), ?Plus(_)),
+      	      ?Complement(_)):
+      	   <id> <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <type-of(|rest, env, var2type)>node, replace, coordname))>node
+
+      case ?Assign(LHS, expr):
+      	   LHS_type := <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !Assign(LHS,
+		   <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, LHS_type, replace, coordname)>expr)
+
+      case ?AssignMul(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignMul(LHS,
+		      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname)>expr)
+
+      case ?AssignDiv(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignDiv(LHS,
+		      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname)>expr)
+
+      case ?AssignRemain(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignRemain(LHS,
+			 <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname)>expr)
+
+      case ?AssignPlus(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignPlus(LHS,
+		       <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname)>expr)
+
+      case ?AssignMinus(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignMinus(LHS,
+			<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Double(), replace, coordname)>expr)
+
+      case ?AssignLeftShift(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignLeftShift(LHS,
+			    <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Long(), replace, coordname)>expr)
+
+      case ?AssignRightShift(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignRightShift(LHS,
+			     <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Long(), replace, coordname)>expr)
+
+      case ?AssignURightShift(LHS, expr):
+      	   <get-LHS-type(|rest, env, var2type)>LHS;
+           !AssignURightShift(LHS,
+			      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Long(), replace, coordname)>expr)
+
+      case ?AssignAnd(LHS, expr):
+      	   LHS_type := <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignAnd(LHS,
+		      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-bounded-conditional-type>LHS_type, replace, coordname)>expr)
+
+      case ?AssignExcOr(LHS, expr):
+      	   LHS_type := <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignExcOr(LHS,
+			<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-bounded-conditional-type>LHS_type, replace, coordname)>expr)
+
+      case ?AssignOr(LHS, expr):
+      	   LHS_type := <get-LHS-type(|rest, env, var2type)>LHS;
+      	   !AssignOr(LHS,
+		     <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, <cast-bounded-conditional-type>LHS_type, replace, coordname)>expr)
+
+      case or(?LazyAnd(_, _), ?LazyOr(_, _)):
+      	   <id> <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname))>node
+
+      case ?If(expr, stms):
+      	   !If(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr,
+	      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stms)
+
+      case ?If(expr, stms, else_stms):
+      	   !If(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr,
+	      <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stms,
+	    <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>else_stms)
+
+      case ?AssertStm(expr):
+      	   !AssertStm(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr)
+
+      case ?AssertStm(expr1, expr2):
+      	   !AssertStm(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr1,
+	   	    <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr2)
+
+      case ?While(expr, stm):
+      	   !While(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr,
+	   	  <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stm)
+  
+      case ?DoWhile(stm, expr):
+           !DoWhile(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stm,
+	   	    <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr) 
+
+      case ?For(var_dec, expr, exprs, stm):
+      	   !For(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>var_dec,
+	   	<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr,
+		<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>exprs,
+		<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stm)
+
+      case ?For(exprs1, expr, exprs2, stm):
+      	   !For(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>exprs1,
+	   	<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, Boolean(), replace, coordname)>expr,
+		<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>exprs2,
+		<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stm)
+
+      case ?ForEach(param, expr, stm):
+      	   !ForEach(<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>param,
+	   	<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>expr,
+		<add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>stm)
+
+      case ?CastPrim(type, expr):
+      	   !CastPrim(type,
+		     <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>expr)
+
+      case ?CastRef(type, expr):
+      	   !CastRef(type,
+		    <add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, None(), replace, coordname)>expr)
+
+      otherwise:
+      	  <id> <all(add-external-impl(|env, var2type, fields, enclosing_env, methods, var2method, rest, replace, coordname))>node 
+    end
+
+  is_on_entry_or_on_exit_method =
+  	or(?MethodDecHead(annos*, _, _, _, _, _),
+	   ?DeprMethodDecHead(annos*, _, _, _, _, _, _));
+	if or(<fetch(?Anno(TypeName(Id("COOLOnEntry")), _))>annos*,
+	      <fetch(?Anno(TypeName(Id("COOLOnExit")), _))>annos*)
+	then
+	   true
+	else
+	   false
+	end
+	
+
+  add_params(|env, enclosing_env, var2type, rest) =
+  	or(?Param(_, _, Id(name)), ?VarArityParam(_, _, Id(name)));
+	<add_var(|name, env, enclosing_env, var2type, rest)><id>
+
+  add_var(|name, env, enclosing_env, var2type, rest) =
+	<hashtable-put(|name, rest)>var2type;
+	<increament(|name, env)>env;
+	<increament(|name, enclosing_env)>enclosing_env
+  	
+  try-to-get-type(|rest, env, var2type) =
+  	(expr1, expr2) := <id>;
+	expr1_type := <get-type-of(|rest, env, var2type)>expr1;
+	if not(<equal>(expr1_type, None()))
+	then
+	   <id>expr1_type
+	else
+	  expr2_type := <get-type-of(|rest, env, var2type)>expr2;
+	  if not(<equal>(expr2_type, None()))
+	  then
+	     <id>expr2_type
+	  else
+	     <debug>"Didn't find any type..";
+	     <fail>""
+	  end
+	end
+
+  cast-equality-type =
+	type := <id>;
+	switch <id>type
+	  case ?Byte():
+	       !Double()
+	  case ?Int():
+	       !Double()
+	  case ?Short():
+	       !Double()
+	  case or(?Char(), ?Char(_)):
+	       !Double()
+	  case or(?Float(), ?Float(_)):
+	       !Double()
+	  case ?Long():
+	       !Double()
+	  case ?Double():
+	       !Double()
+	  case ?Deci(_):
+	       !Double()
+	  case or(?Boolean(), ?Bool(_)):
+	       !Boolean()
+	  otherwise:
+		<debug>"Got:"; <debug>type;
+		<fail>""
+	end
+
+   cast-bounded-conditional-type =
+	type := <id>;
+	switch <id>type
+	  case ?Int():
+	       !Int()
+	  case ?Long():
+	       !Long()
+	  case ?Deci(_):
+	       !Long()
+	  case ?Double():
+	       !Long()
+	  case or(?Boolean(), ?Bool(_)):
+	       !Boolean()
+	  otherwise:
+		<debug>"Got:"; <debug>type;
+		<fail>""
+	end
+
+  cast-shift-type =
+	type := <id>;
+	switch <id>type
+	  case ?Byte():
+	       !Int()
+	  case ?Short():
+	       !Int()
+	  case ?Int():
+	       !Int()
+	  case ?Long():
+	       !Long()
+	  case or(?Float(), ?Float(_)):
+	       !Long()
+	  case ?Double():
+	       !Long()
+	  case ?Deci(_):
+	       !Long()
+	  otherwise:
+	    <debug>"Got:"; <debug>type;
+		<fail>""
+	end
+
+  cast-bounded-arithmetic-type =
+     type := <id>;
+	switch <id>type
+	  case ?Byte():
+	       !Int()
+	  case ?Short():
+	       !Int()
+	  case ?Int():
+	       !Int()
+	  case ?Long():
+	       !Long()
+	  case or(?Float(), ?Float(_)):
+	       !Float()
+	  case ?Double():
+	       !Double()
+	  case ?Deci(_):
+	       !Long()
+	  otherwise:
+	    <debug>"Got:"; <debug>type;
+		<fail>"" 
+	end
+
+   cast-conditional-type =
+  	node := <id>;
+	switch <id>node
+	  case ?Byte():
+	       !Long()
+	  case or(?Char(), ?Char(_)):
+	       !Long()
+	  case ?Short():
+	       !Long()
+	  case ?Int():
+	       !Long()
+	  case ?Long():
+	       !Long()
+	  case ?Deci(_):
+	       !Long()
+	  case or(?Boolean(), ?Bool(_)):
+	       !Boolean()
+	  otherwise:
+		<debug>"Got:"; <debug>node;
+		<fail>""
+	end
+
+  ensure_number =
+  	node := <id>;
+	switch <id>node
+	  case ?Byte():
+	       !Byte()
+	  case or(?Char(), ?Char(_)):
+	       !Char()
+	  case ?Short():
+	       !Short()
+	  case ?Int():
+	       !Int()
+	  case ?Long():
+	       !Long()
+	  case ?Deci(_):
+	       !Long()
+	  case or(?Float(), ?Float(_)):
+	       !Float()
+	  case ?Double():
+	       !Double()
+	  otherwise:
+		<debug>"Got:"; <debug>node;
+		<fail>""
+	end
+
+  get-LHS-type(|rest, env, var2type) =
+        node := <id>;
+  	type := <get-type-of(|rest, env, var2type)>node;
+  	if <equal>(type, None())
+	then
+	   <debug>"LHS can't be:"; <debug>node;
+	   <fail>""
+	else
+	   <id>type
+	end
+
+  get-type-of(|rest, env, var2type) =
+  	if not(type := <type-of(|rest, env, var2type)><id>)
+	  then
+		type := None()
+	  end;
+	<id>type
+
+  handle-expr(|env, methods, fields, var2method, restriction, replace, coordname) =
+  	node := <id>;
+  	var_name := <fetch>node;
+	if <elem>(var_name, <hashtable-keys>env)
+	then
+	   <id>node
+	else
+	   if <equal>(replace, False())
+	   then
+		<debug>"Unknown variable:";<debug>node;
+		<fail>""
+	   else
+		ref_method_name := <generate-ref-method_name(|var_name, var2method)>;
+	   	<iset-add(|<create-ref-method(|var_name, ref_method_name, restriction, coordname)>)>methods;
+	   	<iset-add(|var_name)>fields;
+	   	<generate-invoke-ref(|ref_method_name)>""
+	   end
+	end
+
+  generate-invoke-ref(|ref_method_name) =
+	!Invoke(Method(MethodName(Id(ref_method_name))),[ExprName(Id("target"))])
+
+  generate-ref-method_name(|var_name, var2method) = 
+  	if not(<elem>(var_name, <hashtable-keys>var2method))
+	then
+		ref_index := <add>(<length><hashtable-keys>var2method, 1);
+		ref_method_name := <concat-strings>["_ref", <int-to-string>ref_index];
+		<hashtable-put(|var_name, ref_method_name)>var2method
+	end;
+	<hashtable-get(|var_name)>var2method
+
+  increament(|name, map) =
+  	if <elem>(name, <hashtable-keys>map)
+	then
+	  prev := <hashtable-get(|name)>map;
+	  <hashtable-remove(|name)>map;
+	  <hashtable-put(|name, <add>(1, prev ))>map
+	else
+	  <hashtable-put(|name, 1)>map
+	end
+
+  decreament(|map, aa) =
+  	name := <id>;
+  	if <elem>(name, <hashtable-keys>map)
+	then
+	  prev := <hashtable-get(|name)>map;
+	  <hashtable-remove(|name)>map;
+	  <hashtable-put(|name, <subti>(prev,  <hashtable-get(|name)>aa))>map;
+	  if <equal>(<hashtable-get(|name)>map, 0)
+	  then
+		<hashtable-remove(|name)>map
+	  end
+	end
+
+  create-ref-method(|name, ref_method_name, rest, coordname) =
+  	switch <id>rest
+	  case ?Byte():
+	       return_type := Byte();
+	       return_value := Lit(Deci("0"))
+	  case ?Int():
+	       return_type := Int();
+	       return_value := Lit(Deci("0"))
+	  case or(?Boolean(), ?Bool(_)):
+	       return_type := Boolean();
+	       return_value := Lit(Bool(False()))
+	  case or(?Float(_), ?Float()):
+	       return_type := Float();
+	       return_value := Lit(Deci("0.0"))
+	  case ?Double():
+	       return_type := Double();
+	       return_value := Lit(Deci("0.0"))
+	  case ?Long():
+	       return_type := Long();
+	       return_value := Lit(Deci("0"))
+	  case ?Deci(_):
+	       return_type := Double();
+	       return_value := Lit(Deci("0.0"))
+	  otherwise:
+	       return_type := ClassOrInterfaceType(TypeName(Id("Object")), None());
+	       return_value := Lit(Null())
+	end;
+        !MethodDec(
+		MethodDecHead(
+			[Anno(TypeName(Id("COOLExternalRef")), 
+			      [ElemValPair(Id("expr"), Lit(String([Chars(name)])))]),
+			 Private()],
+			None(),
+			return_type,
+			Id(ref_method_name), 
+			[Param( [],
+				ClassOrInterfaceType(TypeName(Id(coordname)), None()), 
+				Id("thiz"))], 
+			None()), 
+		Block([Return(Some(return_value))]))
+
+
+  get-expr-type(|name, env, var2type) =
+  	if <elem>(name, <hashtable-keys>env)
+	then
+	   <id><hashtable-get(|name)>var2type
+	else
+	   !None()
+	end		
+   		
+  type-of(|rest, env, var2type) =
+  	?Complement(_);
+  	if <equal>(rest,None())
+	then
+	   !Long()
+	else
+	   <id>rest
+	end
+
+  type-of(|rest, env, var2type) =
+  	or(?Plus(_), ?Minus(_));
+	if <equal>(rest, None())
+	then
+	   !Double()
+	else
+	   <id>rest
+	end
+
+  type-of(|rest, env, var2type) =
+  	or(or(or(?Plus(_, _), ?Minus(_, _)),
+	      or(?Mul(_, _), ?Div(_, _))),
+	   ?Remain(_, _));
+	if <equal>(rest, None())
+	then
+	   !Double()
+	else
+	   <cast-bounded-arithmetic-type>rest
+	end
+
+  type-of(|rest, env, var2type) =
+  	or(or(?LeftShift(expr, _), ?RightShift(expr, _)),
+	   ?URightShift(expr, _));
+	if <equal>(rest, None())
+	then
+	   <cast-shift-type><get-type-of(|rest, env, var2type)>expr
+	else
+	   <cast-shift-type>rest
+	end
+
+   type-of(|rest, env, var2type) =
+	?And(expr1, expr2);
+	if <equal>(rest, None())
+	then
+	   <cast-conditional-type><try-to-get-type(|rest, env, var2type)>(expr1, expr2)
+	else
+	   <cast-bounded-conditional-type>rest
+	end
+	       
+   type-of(|rest, env, var2type) =
+	?ExcOr(expr1, expr2);
+	if <equal>(rest, None())
+	then
+	   <cast-conditional-type><try-to-get-type(|rest, env, var2type)>(expr1, expr2)	   
+	else
+	   <cast-bounded-conditional-type>rest
+	end
+
+   type-of(|rest, env, var2type) =
+	?Or(expr1, expr2);
+	if <equal>(rest, None())
+	then
+	   <cast-conditional-type><try-to-get-type(|rest, env, var2type)>(expr1, expr2)	  
+	else
+	   <cast-bounded-conditional-type>rest
+	end
+
+   type-of(|rest, env, var2type) =
+   	or(or(?PreIncr(expr), ?PreDecr(expr)),
+	   or(?PostIncr(expr), ?PostDecr(expr)));
+	expr_type := <get-type-of(|rest, env, var2type)>expr;
+	if <equal>(expr_type, None())
+	then
+	   if <equal>(rest, None())
+	   then
+	      !Double()
+	   else
+	      <ensure_number>rest
+	   end
+	else
+	   <ensure_number>expr_type
+	end
+
+rules
+
+   fetch:
+	ExprName(exprname) -> <fetch>exprname
+   fetch:
+	ExprName(ambname, exprname) -> <fetch>AmbName(ambname, exprname)
+   fetch: 
+  	AmbName(first, Id(second)) -> <concat-strings>[<fetch>first, ".", second]
+   fetch:
+	AmbName(name) -> <fetch>name
+   fetch:
+        Id(name) -> name
+
+   type-of(|rest, env, var2type):
+        ExprName(exprname) -> <get-expr-type(|<fetch><id>, env, var2type)>
+
+   type-of(|rest, env, var2type):
+        ExprName(amb_name, exprname) -> <get-expr-type(|<fetch><id>, env, var2type)>
+
+   type-of(|rest, env, var2type):
+	Lit(type) -> type
+
+   type-of(|rest, env, var2type):
+	Not(_) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	Lt(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	Gt(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	LtEq(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	GtEq(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	Eq(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	NotEq(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	LazyAnd(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+	LazyOr(_, _) -> Boolean()
+
+   type-of(|rest, env, var2type):
+        Assign(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignMul(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignDiv(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignRemain(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignPlus(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignMinus(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignLeftShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignRightShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+	AssignURightShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignAnd(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+        AssignExcOr(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+	AssignOr(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+
+   type-of(|rest, env, var2type):
+   	CastPrim(type, _) -> <id>type
+
+   type-of(|rest, env, var2type):
+   	CastRef(type, _) -> <id>type

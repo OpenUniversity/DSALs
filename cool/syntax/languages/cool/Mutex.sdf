@@ -1,0 +1,10 @@
+module languages/cool/Mutex
+imports
+  languages/cool/MethodSignature
+
+exports
+  sorts
+    MutexDec
+
+  context-free syntax
+    "mutex" "{" {MethodSignature ","}* "}" ";" -> MutexDec {cons("Mutex")}

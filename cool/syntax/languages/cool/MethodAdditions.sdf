@@ -1,0 +1,16 @@
+module languages/cool/MethodAdditions
+imports
+  languages/java-15/statements/Blocks
+  languages/java-15/names/Main
+  languages/java-15/expressions/Main
+  languages/cool/MethodSignature
+
+exports
+  sorts
+    MethodAdditionsDec
+
+  context-free syntax
+    MethodSignature ":" Requires? OnEntry? OnExit? -> MethodAdditionsDec {cons("MethodAdditions")}
+    "requires" Expr ";" -> Requires {cons("Requires")}
+    "on_entry" Block -> OnEntry {cons("OnEntry")}
+    "on_exit" Block -> OnExit {cons("OnExit")}

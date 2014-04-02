@@ -15,6 +15,7 @@ imports
   check
   generate
   refactor
+  transform
 
 rules // Analysis
   
@@ -91,6 +92,12 @@ rules // Editor services
         (<index-lookup-all(|name)> item <+ ![]) => proposals
       );
       proposals' := <map(index-uri; index-uri-name)> proposals
+
+   generate-java:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"java")> path;
+      result   := <transform> selected
 
 rules // Debugging
   

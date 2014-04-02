@@ -1,0 +1,15 @@
+module languages/cool/BodyDeclaration
+imports
+  languages/cool/Selfex
+  languages/cool/Mutex
+  languages/cool/Condition
+  languages/cool/MethodAdditions
+  languages/java-15/classes/FieldDeclarations
+exports
+  sorts CoordinatorBodyDec
+  context-free syntax
+    FieldDec           -> CoordinatorBodyDec
+    SelfexDec          -> CoordinatorBodyDec
+    MutexDec	       -> CoordinatorBodyDec
+    ConditionDec       -> CoordinatorBodyDec
+    MethodAdditionsDec -> CoordinatorBodyDec
