@@ -1,0 +1,31 @@
+<project>
+	<target name="clean">
+		<delete dir="cool/dist"/>
+		<delete dir="ejp/dist"/>
+	</target>
+
+	<target name="cool">
+		<mkdir dir="cool/dist"/>
+		<java fork="true" jar="libs/strategoxt.jar">
+			<jvmarg value="-Xmx1024m"/>
+                        <jvmarg value="-Xss8m"/>
+                        <arg line="-I cool"/>
+                        <arg line="-i cool/trans/transform.str"/>
+                        <arg line="-o cool/dist/transform.java"/>
+                        <arg line="-la java-front"/>
+		</java>
+	</target>
+
+	<target name="ejp">
+                <mkdir dir="ejp/dist"/>
+                <java fork="true" jar="libs/strategoxt.jar">
+                        <jvmarg value="-Xmx1024m"/>
+                        <jvmarg value="-Xss8m"/>
+                        <arg line="-I ejp"/>
+                        <arg line="-i ejp/trans/transform.str"/>
+                        <arg line="-o ejp/dist/transform.java"/>
+                        <arg line="-la java-front"/>
+                </java>
+        </target>
+</project>
+
