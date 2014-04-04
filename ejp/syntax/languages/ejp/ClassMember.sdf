@@ -1,0 +1,27 @@
+module languages/ejp/ClassMember
+imports
+	languages/aspectj/pattern/ClassMember
+
+exports
+	context-free syntax
+		ExplicitJoinPointPattern -> MethodConstrPattern
+		ExplicitJoinPointScopePattern -> MethodConstrPattern
+		ThisClass -> PointcutExpr
+		ThisMethod -> MethodConstrPattern
+		ThisBlock -> MethodConstrPattern
+
+		"ejp"  "(" MethodPattern ")" -> ExplicitJoinPointPattern {cons("ExplicitJoinPointPattern")}
+		"ejp"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointPattern {cons("ExplicitJoinPointPattern")}
+		
+		"!ejp"  "(" MethodPattern ")" -> ExplicitJoinPointPattern {cons("NotExplicitJoinPointPattern")}
+		"!ejp"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointPattern {cons("NotExplicitJoinPointPattern")}
+
+		"ejpscope"  "(" MethodPattern ")" -> ExplicitJoinPointScopePattern {cons("ExplicitJoinPointScopePattern")}
+		"ejpscope"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointScopePattern {cons("ExplicitJoinPointScopePattern")}
+		
+		"!ejpscope"  "(" MethodPattern ")" -> ExplicitJoinPointScopePattern {cons("NotExplicitJoinPointScopePattern")}
+		"!ejpscope"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointScopePattern {cons("NotExplicitJoinPointScopePattern")}
+		
+		"thisclass" -> ThisClass {cons("ThisClass")}
+		"thismethod" -> ThisMethod {cons("ThisMethod")}
+		"thisblock" -> ThisBlock {cons("ThisBlock")}

@@ -1,0 +1,62 @@
+module transform
+
+imports
+  libstratego-lib
+  include/ejp
+  aspectj/pretty-print
+  aspect-converter
+  java-converter
+strategies
+	
+   main = handle-io	
+
+   handle-io =
+  	?[ program | args ];
+  	<debug>args;
+  	input_file_path := < \ [input|rest] -> input\ >args;
+  	ReadFromFile;
+  	ast := <id>;
+  	output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
+  	result := <pp-aspectj-string><convert>ast;
+  	// output_file_path := <concat-strings>[input_file_dir, "/", modified_input_file_name];
+  	handle := <fopen> (output_file_path, "w");
+	<fputs> (result, handle);
+ 	fclose
+
+	convert = <try(ejp-converter-compilation-unit)><id>
+
+rules
+	ejp-converter-compilation-unit: CompilationUnit(PackageDec, ImportDecs, TypeDecs) -> CompilationUnit(PackageDec, ImportDecs', TypeDecs')
+	with
+		if (<?(x,x)>(TypeDecs, <all(try(check-for-change-in-aspect-or-class))>TypeDecs))
+		then
+			ImportDecs' := ImportDecs;
+			TypeDecs' := TypeDecs
+		else
+			if (<?(Some(PackageDec(_, _)))>PackageDec)
+			then
+				<?(Some(PackageDec(_, package_name)))>PackageDec
+			else
+				package_name := None()
+			end;
+			ImportDecs' := <conc>(ImportDecs, [TypeImportOnDemandDec(PackageName([Id("ejps"),Id("runtime")]))]);
+			TypeDecs' := <all(try(ejp-converter-aspect-or-class(|package_name)))>TypeDecs
+		end
+		
+	check-for-change-in-aspect-or-class: ClassDec(head, body) -> result
+	with
+		result := <topdown(try(remove-ejp-calls))>ClassDec(head, body)
+	
+	check-for-change-in-aspect-or-class: AspectDec(head, body) -> result
+	with
+		result := <topdown(try(remove-ejp-decs))>AspectDec(head, body)
+	
+	ejp-converter-aspect-or-class(|package_name): AspectDec(head, AspectBody(stms*)) -> AspectDec(head, body')
+	with
+		<?AspectDecHead(_, Id(aspect_name), _, _, _, _)>head;
+		pointcutargs_pointcuts := <new-iset>;
+		body' := AspectBody(<conc>(<topdown(try(ejp-to-ajc(|pointcutargs_pointcuts, package_name, aspect_name)))>stms*, <iset-elements>pointcutargs_pointcuts))
+
+	ejp-converter-aspect-or-class(|package_name): ClassDec(head, body) -> class'
+	with
+		class' := <ejp-to-java2>ClassDec(head, body)

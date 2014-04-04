@@ -1,0 +1,325 @@
+module java-converter
+
+imports
+  libstratego-lib
+  libjava-front
+  aspectj/pretty-print
+  include/ejp
+  expr
+  utils
+
+strategies
+	// TODO: if the result not equals to the source, then we need to add imports for the annotations..
+	ejp-to-java2 =
+		?ClassDec(ClassDecHead(annos, class_id, typeParams, super, interfaces), ClassBody(stms*));
+		gen_id := <random-string>;
+		annos' := <conc>([SingleElemAnno(TypeName(Id("ClassAnno")), Lit(Deci(gen_id)))], annos);
+		head' := ClassDecHead(annos', class_id, typeParams, super, interfaces);
+		pointcut_methods := <new-iset>;
+		stms' := <all(try(ejp-to-java(|<new-hashtable>, gen_id, None(), pointcut_methods)))>stms*;
+		body' := ClassBody(<conc>(stms', <iset-elements>pointcut_methods));
+		!ClassDec(head', body')
+		
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) =
+		?ClassDec(ClassDecHead(annos, class_id, typeParams, super, interfaces), ClassBody(stms*));
+		// we may want a better check (like looking for annotation)
+		if (<string-starts-with(|"ejpScopedInner")><\ Id(x) -> x\>class_id)
+		then
+			head' := ClassDecHead(annos, class_id, typeParams, super, interfaces);
+			body' := ClassBody(<all(try(ejp-to-java(|<hashtable-copy>predefined_var2type, class_name, method_name, pointcut_methods)))>stms*)
+		else
+			gen_id := <random-string>;
+			annos' := <conc>([SingleElemAnno(TypeName(Id("ClassAnno")), Lit(Deci(gen_id)))] ,annos);
+			head' := ClassDecHead(annos', class_id, typeParams, super, interfaces);
+			body' := ClassBody(<all(try(ejp-to-java(|<hashtable-copy>predefined_var2type, gen_id, method_name, pointcut_methods)))>stms*)
+		end;
+		!ClassDec(head', body')
+	
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) =
+		?MethodDec(MethodDecHead(annos, typeParams, resultType, method_id, formalParams, throws), Block(stms*));
+		// add the method parameters as predefined variables
+		<all(try(process-method-param(|predefined_var2type)))>formalParams;		
+		if (<fetch(?Anno(TypeName(Id("ExplicitScopedJoinPoint")), _))>annos)
+		then
+			head' := MethodDecHead(annos, typeParams, resultType, method_id, formalParams, throws);
+			body' := Block(<allow-extends(ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) | stms*)>)
+		else
+			gen_id := <random-string>;
+			annos' := <conc>([SingleElemAnno(TypeName(Id("MethodAnno")), Lit(Deci(gen_id)))] ,annos);
+			head' := MethodDecHead(annos', typeParams, resultType, method_id, formalParams, throws);
+			body' := Block(<allow-extends(ejp-to-java(|predefined_var2type, class_name, gen_id, pointcut_methods) | stms*)>)
+		end;
+		!MethodDec(head', body')
+		
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) =
+		?Block(stms*);
+		<all(try(ejp-to-java(|<hashtable-copy>predefined_var2type, class_name, method_name, pointcut_methods)))>stms*
+	
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) =
+		?LocalVarDecStm(LocalVarDec(mods, type, vars*));
+		<concat>(<map( \ x -> <convert-one-var-dec(|predefined_var2type, mods, type, class_name, method_name, pointcut_methods)>x \ )>vars*)
+
+	convert-one-var-dec(|predefined_var2type, mods, type, class_name, method_name, pointcut_methods) =
+		?VarDec(var, expr);
+		<add-local-var(|predefined_var2type, type)> VarDec(var, None());
+		if (<or(?ScopedEJPCall(_, _, _), ?EJPCall(_, _))>expr)
+		then
+			<convert-var-dec-by-ejp-call(|predefined_var2type, mods, type, class_name, method_name, pointcut_methods)>VarDec(var, expr)
+		else
+			![LocalVarDecStm(LocalVarDec(mods, type, [VarDec(var, expr)]))]
+		end
+
+	convert-var-dec-by-ejp-call(|predefined_vars_table, mods, type, class_name, method_name, pointcut_methods):
+		VarDec(var, EJPCall(ejp, pointcuts)) ->
+		[LocalVarDecStm(LocalVarDec(mods, type, [VarDec(var, <ejp-call-to-method-invokation(|predefined_vars_table, class_name, method_name, pointcut_methods)>EJPCall(ejp, pointcuts))]))]
+
+	/* Should the defined var be visible from within the ejp block? currently it is.. */
+	convert-var-dec-by-ejp-call(|predefined_vars_table, mods, type, class_name, method_name, pointcut_methods):
+		VarDec(var, ScopedEJPCall(ejp, pointcuts, Block(stms*))) ->
+		<conc>(
+			[LocalVarDecStm(LocalVarDec(mods, type, [VarDec(var, <ejp-call-to-method-invokation(|predefined_vars_table, class_name, method_name, pointcut_methods)>EJPCall(ejp, pointcuts))]))],
+			<scoped-ejp-to-java(|predefined_vars_table, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)) )
+		
+	add-local-vars(|vars_table) =
+        ?LocalVarDecStm(LocalVarDec(_, type, vars*));
+        source := <id>;
+        <all(try(add-local-var(|vars_table, type)))>vars*;
+        <id>source
+        
+	add-local-vars(|vars_table) =
+		or(or(?ExprStm(ScopedEJPCall(_, _, Block(stms*))),
+		      ?ExprStm(Assign(_, ScopedEJPCall(_, _, Block(stms*))))),
+		   ?VarDec(_, ScopedEJPCall(_, _, Block(stms*))));
+		source := <id>;
+		<all(try(add-local-vars(|vars_table)))>stms*;
+		<id>source
+
+	add-local-var(|vars_table, type) =
+		or(?VarDec(Id(name)), ?VarDec(Id(name), _));
+		source := <id>;
+		<hashtable-remove(|name)>vars_table;
+		<hashtable-put(|name, type)>vars_table;
+		<id>source
+		
+	
+	process-method-param(|table) =
+		or(?Param(_, type, Id(name)), ?VarArityParam(_, type, Id(name)));
+		source := <id>;
+		<hashtable-put(|name, type)>table;
+		<id>source
+
+    // need to get the class name as a parameter
+	gen-auxilery-class(|vars_to_define, vars_table, ejp, class_name, gen_id) =
+		stms* := <id>;
+		<?ExplicitJoinPoint(aspect_id, joinpoint_id, args)>ejp;
+		!ClassDec(ClassDecHead([], Id(class_name), None(), None(), None()),
+  			  ClassBody(<concat> [
+  			  	<gen-compact-var-declaration(|vars_to_define, vars_table)>,
+  			  	[MethodDec(
+            		MethodDecHead(
+            			[SingleElemAnno(TypeName(Id("MethodAnno")), Lit(Deci(gen_id))), <gen-method-annotation>ejp],
+            			None(),
+            			Void(),
+            			Id(<gen_ejpscope_method_name>ejp),
+            			[],
+            			None())
+          			, Block(stms*))]
+  			  	]))
+  	
+  	gen-method-annotation =
+  		?ExplicitJoinPoint(aspect_type, Id(joinpoint_id), args);
+  		!Anno(TypeName(Id("ExplicitScopedJoinPoint"))
+                , [ ElemValPair(
+                      Id("args")
+                    , ElemValArrayInit(
+                      	<map(fetch-type)> args
+                      	)
+                    )
+                  , ElemValPair(Id("aspect"), Lit(String([Chars(<pp-aspectj-string>aspect_type)])))
+                  , ElemValPair(Id("joinpoint"), Lit(String([Chars(joinpoint_id)])))
+                  ]
+                )
+  	
+  	gen-compact-var-declaration(|vars_to_define, vars_table) =
+  		type2vars := <new-hashtable>;
+  		<map( \ x -> <add-key-to-multiple-values-table(|<hashtable-get(|x)>vars_table, x)>type2vars \ )><iset-elements>vars_to_define;
+  		<map( \ x -> FieldDec([], x, <map ( \ y -> VarDec(Id(y)) \ )><hashtable-get(|x)>type2vars) \ )><hashtable-keys>type2vars
+
+	gen-before-call-assignments(|unknown_fields, local_field_name) =
+		<map( \ x -> ExprStm(Assign(ExprName(AmbName(Id(local_field_name)), Id(x)), ExprName(Id(x)))) \ )><iset-elements>unknown_fields
+  
+    gen-after-call-simple-assignments(|unknown_fields, local_field_name) =
+    	<map( \ x -> ExprStm(Assign(ExprName(Id(x)), ExprName(AmbName(Id(local_field_name)), Id(x)))) \ )><iset-elements>unknown_fields
+    
+    gen-after-call-assignments-with-declarations(|inner_vars_table, local_field_name) =
+    	<map( \ x -> LocalVarDecStm(LocalVarDec([], <hashtable-get(|x)>inner_vars_table, [VarDec(Id(x), ExprName(AmbName(Id(local_field_name)), Id(x)))])) \ )><hashtable-keys>inner_vars_table
+
+    create-method-invokation(|local_field_name, ejp) =
+    	<?ExplicitJoinPoint(_, _, _)>ejp; 
+		!Invoke(Method(MethodName(AmbName(Id(local_field_name)), Id(<gen_ejpscope_method_name>ejp))), [])
+
+	create-method-invokation(|ejp) =
+    	<?ExplicitJoinPoint(aspect_name, joinpoint_name, args)>ejp; 
+		!Invoke(Method(MethodName(<typename_2_ambname>aspect_name, joinpoint_name)), args)
+
+    /* Remove the var declarations from the statements in the direct block of the scoped EJP statement */
+	remove-scoped-ejp-var-decs =
+		stms* := <id>;
+		<id><allow-extends(remove-vars-decs-from-local-var-dec-stm | stms*)>
+
+rules
+	
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) =
+		?InstanceInit(Block(stms*));
+		predefined_var2type' := <new-hashtable>;
+		!InstanceInit(Block(<all(try(ejp-to-java(|predefined_var2type', None(), None(), pointcut_methods)))>stms*))
+
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods) =
+		?StaticInit(Block(stms*));
+		predefined_var2type' := <new-hashtable>;
+		!StaticInit(Block(<all(try(ejp-to-java(|predefined_var2type', None(), None(), pointcut_methods)))>stms*))
+
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
+		ExprStm(Assign(expr, EJPCall(ejp, pointcuts))) ->
+		ExprStm(Assign(expr, <ejp-call-to-method-invokation(|predefined_var2type, class_name, method_name, pointcut_methods)>EJPCall(ejp, pointcuts)))
+
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
+		ExprStm(EJPCall(ejp, pointcuts)) ->
+		ExprStm(<ejp-call-to-method-invokation(|predefined_var2type, class_name, method_name, pointcut_methods)>EJPCall(ejp, pointcuts))
+
+	ejp-call-to-method-invokation(|predefined_var2type, class_name, method_name, pointcut_methods):
+		EJPCall(ejp, pointcuts) -> method_invokation
+		with
+			// pointcutargs handling
+			gen_id := <random-string>;
+			// replace thisblock, thismethod, thisclass keywords
+			pointcuts' := <topdown(try(pointcutarg(|class_name, method_name, gen_id)))>pointcuts;
+			<try(handle-pointcutargs(|pointcut_methods, ejp))>Some(pointcuts');
+			method_invokation := <create-method-invokation(|ejp)>
+
+	scoped-ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
+		ScopedEJPCall(ejp, pointcuts, Block(stms*)) ->
+		[ClassDecStm(class), local_field_declaration, first_assignments*, ExprStm(invoke_synthetic_method), second_assignments*, second_assignments2*]
+		with
+			// pointcutargs handling
+			gen_id := <random-string>;
+			// replace thisblock, thismethod, thisclass keywords
+			pointcuts' := <topdown(try(pointcutarg(|class_name, method_name, gen_id)))>pointcuts;
+			<try(handle-pointcutargs(|pointcut_methods, ejp))>pointcuts';
+			
+			vars_in_block := <new-iset>;
+			<topdown(try(fetch(|vars_in_block)))>stms*;
+			inner_vars_table := <new-hashtable>;
+			<get-inner-scoped-vars(|inner_vars_table)>stms*;
+			// <try(ejp-to-java(|inner_vars_table, class_name, method_name))>Block(stms*);
+			external_vars := <iset-isect(|vars_in_block)><iset-addlist(|<hashtable-keys>predefined_var2type)><new-iset>;
+			vars_to_define := <new-iset>;
+			<iset-addlist(|<iset-elements>external_vars)>vars_to_define;
+			<iset-addlist(|<hashtable-keys>inner_vars_table)>vars_to_define;
+			inner_class_name := <gen-auxilary-class-name>;
+			<my-hashtable-union(|inner_vars_table)>predefined_var2type;
+			new_stms* := <allow-extends(ejp-to-java(|inner_vars_table, class_name, method_name, pointcut_methods) | <remove-scoped-ejp-var-decs>stms*)>;
+			class := <gen-auxilery-class(|vars_to_define, predefined_var2type, ejp, inner_class_name, gen_id)>new_stms*;
+			local_field_name := <concat-strings>[inner_class_name, "_instance"];
+			local_field_declaration := LocalVarDecStm(LocalVarDec([Final()],  ClassOrInterfaceType(TypeName(Id(inner_class_name)), None()),
+			    [ VarDec(Id(local_field_name) , NewInstance(None(), ClassOrInterfaceType(TypeName(Id(inner_class_name)), None()), [], None()))]));
+	        first_assignments* := <gen-before-call-assignments(|external_vars, local_field_name)>;
+			second_assignments* := <gen-after-call-simple-assignments(|external_vars, local_field_name)>;
+			second_assignments2* := <gen-after-call-assignments-with-declarations(|<my-hashtable-remove(|external_vars)>inner_vars_table, local_field_name)>;
+			invoke_synthetic_method := <create-method-invokation(|local_field_name, ejp)>
+	
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
+		ExprStm(ScopedEJPCall(ejp, pointcuts, Block(stms*))) ->
+		<conc>(
+			[ExprStm(<create-method-invokation(|ejp)>)],
+			<scoped-ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)))
+	
+	handle-pointcutargs(|pointcut_methods, ejp) =
+		?Some(Pointcutargs(pointcutsargs*));
+		<map( \ x -> <iset-add(|x)>pointcut_methods \ )><map(handle-pointcutarg-helper(|ejp))>pointcutsargs*
+	
+	handle-pointcutarg-helper(|ejp) =
+		?Pointcutarg(Id(pointcutarg_name), params*, expr);
+		<?ExplicitJoinPoint(aspect_name, Id(joinpoint_name), args)>ejp;
+		!MethodDec(
+            MethodDecHead(
+              [ Anno(
+                  TypeName(Id("Pointcutargs"))
+                , [ ElemValPair(Id("aspect"), Lit(String([Chars(<pp-aspectj-string>aspect_name)])))
+                  , ElemValPair(Id("joinpoint"), Lit(String([Chars(joinpoint_name)])))
+                  , ElemValPair(Id("pointcut"), Lit(String([Chars(pointcutarg_name)])))
+                  , ElemValPair(Id("expr"), Lit(String([Chars(<pp-aspectj-string>expr)])))
+                  ]
+                )
+              ]
+            , None()
+            , Void()
+            , Id(<concat-strings>["pointcut", <random-string>])
+            , params*
+            , None()
+            )
+          , Block([])
+          )
+          
+	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
+		ExprStm(Assign(expr, ScopedEJPCall(ejp, pointcuts, Block(stms*)))) ->
+		<conc>(
+			[ExprStm(Assign(expr, <create-method-invokation(|ejp)>))],
+			<scoped-ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)))
+	
+	get-inner-scoped-vars(|inner_vars_table) =
+                stms* := <id>;  
+                <all(try(add-local-vars(|inner_vars_table)))>stms*;
+                <id>stms*
+
+	/* Remove var declarations from LocalVarDecStm (note that multiple vars can be defined in one statement) */
+	remove-vars-decs-from-local-var-dec-stm:
+		LocalVarDecStm(LocalVarDec(_, _, vars*)) -> new_stms*
+		with
+			new_stms* := <allow-extends(remove-var-dec | vars*)>
+	
+	/* Remove var declaration with no value assignment: <type> <var name>; */
+	remove-var-dec:
+		VarDec(_) -> None()
+	
+	/* Remove var declaration from declaration with value assignment:
+		<type> <var name> = <value>;   =>   <var name> = <value>; */
+	remove-var-dec:
+		VarDec(var_id, expr) -> ExprStm(Assign(ExprName(var_id), expr))
+		
+// --------------------------------------------------------------------------
+
+	pointcutarg(|class_name, method_name, block_name):
+		ThisClass() -> 
+				Within(
+                 AnnoTypePattern(
+                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejps.runtime.ClassAnno")), Lit(Deci(class_name)))])
+                , RefTypePattern(NamePattern("*"))))
+
+	pointcutarg(|class_name, method_name, block_name):
+		ThisMethod() ->
+				MethodPattern(
+                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejps.runtime.MethodAnno")), Lit(Deci(method_name)))])
+                , ModPattern([])
+                , RefTypePattern(NamePattern("*"))
+                , MemberName("*")
+                , [FormalWildcard()]
+                , None())
+	
+	pointcutarg(|class_name, method_name, block_name):
+		ThisBlock() ->
+				MethodPattern(
+                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejps.runtime.EjpBlockAnno")), Lit(Deci(block_name)))])
+                , ModPattern([])
+                , RefTypePattern(NamePattern("*"))
+                , MemberName("*")
+                , [FormalWildcard()]
+                , None())
+
+	// --------------------------------------------------------------------------
+	
+	remove-ejp-calls:
+		ScopedEJPCall(_, _, _) -> None()
+	
+	remove-ejp-calls:
+		EJPCall(_, _) -> None()

@@ -1,0 +1,74 @@
+module expr
+
+imports
+  libstratego-lib
+  include/ejp
+
+strategies
+	
+   validate-expr-name =
+   	expr := <id>;
+   	switch id
+   		case "java":
+   			fail
+   		case "System":
+   			fail
+   		case "Math":
+   			fail
+   		case "Collections":
+   			fail
+   		case "String":
+   			fail
+   		case "Integer":
+   			fail
+   		case "Double":
+   			fail
+   		case "Byte":
+   			fail
+   		case "Float":
+   			fail
+   		case "Long":
+   			fail
+   		case "Short":
+   			fail
+   		case "Boolean":
+   			fail
+   		case "Array":
+   			fail
+   		otherwise:
+   			if (<is-upper>< \ [first|rest] -> first \ ><explode-string>expr)
+   			then
+   			   fail
+   			else
+			   id
+			end
+   	end   		
+
+rules
+   fetch:
+   	MethodName(ambname, _) -> <fetch>ambname
+   fetch:
+	ExprName(exprname) -> <fetch>exprname
+   fetch:
+	ExprName(ambname, exprname) -> <fetch>AmbName(ambname, exprname)
+   fetch: 
+  	AmbName(first, Id(second)) -> <fetch>first
+   fetch:
+	AmbName(name) -> <fetch>name
+   fetch:
+        Id(name) -> <validate-expr-name>name
+   
+   fetch(|vars_set):
+   	MethodName(ambname, _) -> <fetch(|vars_set)>ambname
+   fetch(|vars_set):
+	ExprName(exprname) -> <fetch(|vars_set)>exprname
+   fetch(|vars_set):
+	ExprName(ambname, exprname) -> <fetch(|vars_set)>AmbName(ambname, exprname)
+   fetch(|vars_set): 
+  	AmbName(first, Id(second)) -> <fetch(|vars_set)>first
+   fetch(|vars_set):
+	AmbName(name) -> <fetch(|vars_set)>name
+   fetch(|vars_set):
+        Id(name) -> <iset-add(|name)>vars_set
+        
+   

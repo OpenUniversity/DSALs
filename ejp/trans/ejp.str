@@ -15,6 +15,8 @@ imports
   check
   generate
   refactor
+  transform
+  aspectj/pretty-print
 
 rules // Analysis
   
@@ -91,6 +93,15 @@ rules // Editor services
         (<index-lookup-all(|name)> item <+ ![]) => proposals
       );
       proposals' := <map(index-uri; index-uri-name)> proposals
+
+  transform:
+  	(selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := "result.aj";
+      // result :=  <pp-ejp-string><topdown(try(ejp-converter))> selected
+      	//<guarantee-extension(|"java")> path;
+      // result   := <pp-java5-to-string><topdown(try(for-testing))> selected
+         result   := <pp-aspectj-string><convert>selected
 
 rules // Debugging
   

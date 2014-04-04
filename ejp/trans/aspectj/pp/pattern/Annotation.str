@@ -1,0 +1,15 @@
+/**
+ * Pretty-printing Annotation Patterns
+ */
+module aspectj/pp/pattern/Annotation
+rules
+
+  aspectj-to-box :
+    SimpleAnnoPatternExact(b) -> H hs=0 [ "@" b ]
+
+  aspectj-to-box :
+    SimpleAnnoPattern(b) -> H hs=0 [ "@" "(" b ")" ]
+
+  aspectj-to-box :
+    SimpleAnnoPatternValue(b1, b2) -> H hs=0 [ "@" b1 "(" b2 ")" ]
+ 

@@ -20,3 +20,4 @@ syntax/ejp*.generated.esv
 utils
 lib/*.generated.str
 lib-refactoring/*.generated.str
+result.aj

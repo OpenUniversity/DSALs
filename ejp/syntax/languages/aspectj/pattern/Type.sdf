@@ -1,0 +1,54 @@
+%%%
+ %% Type Patterns
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pattern/Type
+imports
+  languages/aspectj/common/BooleanComposition[TypePattern]
+  languages/aspectj/pattern/Name
+  languages/java/JavaMix
+
+exports
+  sorts
+    TopTypePattern      
+    TypePattern
+    TypeParamsPattern
+    TypeParamPattern
+    TypeBoundPattern
+    
+  context-free syntax
+    TypeDecSpecPattern -> BaseTypePattern {cons("RefTypePattern")}
+    PrimType    -> BaseTypePattern {cons("PrimTypePattern")}
+
+    BaseTypePattern  -> TypePattern
+    "void"           -> TypePattern {cons("Void")}
+    TypePattern "[]" -> TypePattern {cons("ArrayType")}
+    "?"              -> TypePattern {cons("Wildcard")}
+
+  context-free syntax
+    NamePattern     -> TypeDecSpecPattern
+    NamePattern "+" -> TypeDecSpecPattern {cons("Subtype")}
+
+    TypeDecSpecPattern TypeParamsPattern -> TypePattern {cons("GenericTypePattern")}
+    NamePattern        TypeParamsPattern "+" -> TypePattern {cons("GenericSubtypePattern")}
+
+    "(" AnnoPatternPlus TypePattern ")" -> TypePattern {cons("AnnoTypePattern")}
+
+    AnnoPatternPlus TypePattern -> TopTypePattern {cons("AnnoTypePattern")}
+    TypePattern                 -> TopTypePattern
+
+  context-free syntax
+
+  context-free syntax
+    TypePattern TypeBoundPattern?      -> TypeParamPattern  {cons("TypeParam")}
+    "<" {TypeParamPattern ","}+ ">"    -> TypeParamsPattern {cons("TypeParams")}
+    
+    "extends" {TypePattern "&"}+       -> TypeBoundPattern  {cons("WildcardUpperBound")}
+    "super"   {TypePattern "&"}+       -> TypeBoundPattern  {cons("WildcardLowerBound")}
+
+  %%%
+   %% Void, int are valid name patterns, so they should be reject as type patterns.
+   %%%
+  context-free syntax
+    Keyword -> TypeDecSpecPattern {reject}

@@ -13,4 +13,4 @@ language General properties
                   
   extensions    : aj, java
   table         : include/ejp.tbl
-  start symbols : Start
+  start symbols : JavaCtxCompilationUnit

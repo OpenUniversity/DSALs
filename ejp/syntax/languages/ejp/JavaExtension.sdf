@@ -1,0 +1,16 @@
+module languages/ejp/JavaExtension
+imports
+  languages/aspectj/JavaExtension
+  languages/java-15/Main
+exports
+    
+  context-free syntax
+  	
+  	ExplicitJoinPoint Pointcutargs -> Expr {cons("EJPCall")}
+    ExplicitJoinPoint Pointcutargs? Block -> Expr {cons("ScopedEJPCall")}
+    
+    TypeName "." Id "(" {Expr ","}*  ")"-> ExplicitJoinPoint {cons("ExplicitJoinPoint")}
+
+    "pointcutargs" {Pointcutarg ","}+ -> Pointcutargs {cons("Pointcutargs")}
+   
+    Id "(" {FormalParam ","}* ")" ":" PointcutExpr -> Pointcutarg {cons("Pointcutarg")}

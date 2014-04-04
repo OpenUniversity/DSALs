@@ -1,0 +1,210 @@
+module replace
+
+imports
+  libstratego-lib
+  include/ejp
+  expr
+  utils
+strategies
+
+	// We must have put the following logic in a separate method as EJPs/Scoped EJPs calls have to return
+	// a list of statements that need to be concated to the block statements	
+	block-statement-convertion(|env, members, var2type, fields, enclosing_env, rest, index) =
+		statement := <id>;
+		if (result := <convert(|env, members,var2type, fields, enclosing_env, rest, index)>statement)
+		then
+			!result
+		else
+			![<arik(|env, members, var2type, fields, enclosing_env, rest, index)>statement]
+		end
+
+  gen_first_assignments(|unknown_fields, local_field_name) =
+  	<map( \ x -> ExprStm(Assign(ExprName(AmbName(Id(local_field_name)), Id(x)), ExprName(Id(x)))) \ )><iset-elements>unknown_fields
+  
+  gen_second_assignments(|unknown_fields, local_field_name) =
+  	<map( \ x -> ExprStm(Assign(ExprName(Id(x)), ExprName(AmbName(Id(local_field_name)), Id(x)))) \ )><iset-elements>unknown_fields
+  			
+  gen_auxilery_class(|var2type, unknown_fields, method_name, index) =
+  	?Block(statements*);
+  	prev := <hashtable-get(|"index")>index;
+  	<hashtable-remove(|"index")>index;
+  	<hashtable-put(|"index", <add>(1, prev))>index;
+  	!ClassDec(ClassDecHead([], Id(<concat-strings>["ejpScopedInner", <int-to-string><hashtable-get(|"index")>index]), None(), None(), None()),
+  			  ClassBody(<concat> [
+  			  	<map( \ x -> FieldDec([], <hashtable-get(|x)>var2type, [VarDec(Id(x))]) \ )><iset-elements>unknown_fields,
+  			  	[MethodDec(
+            		MethodDecHead([MarkerAnno(TypeName(Id("ExplicitScopedJoinPoint"))), Final()] , None(), Void(), Id(method_name), [ ], None())
+          			, Block(statements*))]
+  			  	]))
+  			  // ClassBody(< \ Block(statements*) -> statements* \ >block))
+	
+// -----------------------------------------------------------------------------------------------------------------------------
+  get-types = node := <id>; result := <arik()>node; <id>result
+  
+  print(|methods) = <debug>"result"; <debug><iset-elements>methods
+
+  arik() = 
+    node := <id>;
+    index := <new-hashtable>;
+    <hashtable-put(|"index", 0)>index;
+    <arik(|<new-hashtable>, <new-iset>, <new-hashtable>, <new-iset>, <new-hashtable>, None(), index)>node
+
+  // env includes formal params and local variables
+  // members includes class members
+  arik(|env, members, var2type, fields, enclosing_env, rest, index) =
+    node := <id>;
+    switch id
+      case or(or(?ExprName(_), ?ExprName(_, _)), ?MethodName(_, _)):
+   	   <handle-expr(|enclosing_env, members, fields, rest)>node
+
+      case ?Block(statements*):
+      	// Create new enclosing environment for this block
+        new_enclosing_env := <new-hashtable>;
+		converted_block := Block(<concat><all(block-statement-convertion(|env, members, var2type, fields, new_enclosing_env, rest, index))>statements*);
+		<map(decreament(|env, new_enclosing_env))><hashtable-keys>new_enclosing_env;
+		<id> converted_block
+
+      case ?MethodDec(method_head, method_body):
+      	new_enclosing_env := <new-hashtable>;
+		<topdown(try(add_params(|env, new_enclosing_env, var2type)))>method_head;
+		tmp := MethodDec(method_head,
+				  <arik(|env, members, var2type, fields, new_enclosing_env, rest, index)>method_body);
+		<map(decreament(|env, new_enclosing_env))><hashtable-keys>new_enclosing_env;
+		<id> tmp
+
+      // case or(?VarDec(Id(name)), ?VarDec(Id(name), _)):
+      	   // <add_local_var(|name, env, enclosing_env, var2type, rest)><id>;
+      	   // <id>node
+
+      case ?FieldDec(_, type, vars*):
+		   	<list-loop(add_class_member(|members, enclosing_env, var2type, type))>vars*;
+		   	<id>node
+      	
+      // case ?LocalVarDec(mods*, type, vars*):
+      		// if <elem>(Final(), <iset-elements>mods*)
+      		// then
+	          // <list-loop(add_local_var(|env, enclosing_env, var2type, type))>vars*;
+	        // end;
+	        // <id>node
+	          
+	  otherwise:
+      	  <id> <all(arik(|env, members, var2type, fields, enclosing_env, rest, index))>node 
+    end
+    
+  handle-expr(|env, members, fields, restriction) =
+  	node := <id>;
+  	if var_name := <fetch>node
+  	then 
+		if and(not(<elem>(var_name, <hashtable-keys>env)), not(<iset-contains(|var_name)>members)) 
+		then
+	   		<iset-add(|var_name)>fields
+		end
+	end;
+	<id>node
+
+  add_params(|env, enclosing_env, var2type) =
+  	or(?Param(_, type, Id(name)), ?VarArityParam(_, type, Id(name)));
+	<hashtable-put(|name, type)>var2type;
+	<increament(|name, env)>env;
+	<increament(|name, enclosing_env)>enclosing_env
+
+  add_local_var(|env, enclosing_env, var2type, type) =
+  	or(?VarDec(Id(name)), ?VarDec(Id(name), _));
+	<hashtable-put(|name, type)>var2type;
+	<increament(|name, env)>env;
+	<increament(|name, enclosing_env)>enclosing_env
+    
+  add_class_member(|members, enclosing_env, var2type, type) =
+  	or(?VarDec(Id(name)), ?VarDec(Id(name), _));
+	<hashtable-put(|name, type)>var2type;
+	<iset-add(|name)>members
+    
+  increament(|name, map) =
+  	if <elem>(name, <hashtable-keys>map)
+	then
+	  prev := <hashtable-get(|name)>map;
+	  <hashtable-remove(|name)>map;
+	  <hashtable-put(|name, <add>(1, prev ))>map
+	else
+	  <hashtable-put(|name, 1)>map
+	end
+
+  decreament(|map, aa) =
+  	name := <id>;
+  	if <elem>(name, <hashtable-keys>map)
+	then
+	  prev := <hashtable-get(|name)>map;
+	  <hashtable-remove(|name)>map;
+	  <hashtable-put(|name, <subti>(prev,  <hashtable-get(|name)>aa))>map;
+	  if <equal>(<hashtable-get(|name)>map, 0)
+	  then
+		<hashtable-remove(|name)>map
+	  end
+	end
+	
+	// local var declarations need to be handled with caution as it may include
+	// a call for scoped ejp
+	convert(|env, members, var2type, fields, enclosing_env, rest, index) =
+		?LocalVarDecStm(LocalVarDec(mods*, type, vars*));
+		node := <id>;
+		<concat><map(convert-var-declaration(|env, members, var2type, fields, enclosing_env, rest, mods*, type, index))>vars*
+		
+	convert-var-declaration(|env, members, var2type, fields, enclosing_env, rest, mods*, type, index) =
+		?VarDec(d, expr);
+		node := <id>;
+		<add_local_var(|env, enclosing_env, var2type, type)>node;
+		if <?ScopedEJPCall(ejp_call, pointcuts, block)>expr
+			then
+			method_invokation := <create-method-invokation(|env, members, var2type, fields, enclosing_env, rest, index)>ejp_call;
+			unknown_fields := <new-iset>;
+			<arik(|<new-hashtable>, members, var2type, unknown_fields, enclosing_env, rest, index)>block;
+			ejpscope_method_name := <gen_ejpscope_method_name>ejp_call;
+			class := <gen_auxilery_class(|var2type, unknown_fields, ejpscope_method_name, index)>block;
+			class_name := <concat-strings>["ejpScopedInner", <int-to-string><hashtable-get(|"index")>index];
+			local_field_name := <concat-strings>["local_", class_name];
+			first_assignments* := <gen_first_assignments(|unknown_fields, local_field_name)>;
+			second_assignments* := <gen_second_assignments(|unknown_fields, local_field_name)>;
+			invoke_synthetic_method := ExprStm(Invoke(Method(MethodName(AmbName(Id(local_field_name)), Id(ejpscope_method_name))), []));			
+			local_field_declaration := LocalVarDecStm(LocalVarDec([Final()],  ClassOrInterfaceType(TypeName(Id(class_name)), None()), [ VarDec(Id(local_field_name)
+	                      , NewInstance(None(), ClassOrInterfaceType(TypeName(Id(class_name)), None()), [], None()))]));
+			![LocalVarDecStm(LocalVarDec(mods*, type, [VarDec(d, method_invokation)])), ClassDecStm(class), local_field_declaration, first_assignments*, invoke_synthetic_method, second_assignments*]
+		else
+			![<arik(|env, members, var2type, fields, enclosing_env, rest, index)>LocalVarDecStm(LocalVarDec(mods*, type, [node]))]
+		end
+
+	convert-var-declaration(|env, members, var2type, fields, enclosing_env, rest, mods*, type, index) =
+		?VarDec(var);		
+		node := <id>;
+		<add_local_var(|env, enclosing_env, var2type, type)>node;
+		!LocalVarDecStm(LocalVarDec(mods*, type, [<arik(|env, members, var2type, fields, enclosing_env, rest, index)>node]))
+// -----------------------------------------------------------------------------------------------------------------------------
+
+rules
+	// convert-ejp-calls: Block(statements*) -> Block(<replace-ejp-calls>statements*)
+	
+	convert(|env, members, var2type, fields, enclosing_env, rest, index):
+		ExprStm(EJPCall(ejp_call, pointcutargs)) -> 
+		[ExprStm(method_invokation)]
+	with
+		method_invokation := <create-method-invokation(|env, members, var2type, fields, enclosing_env, rest, index)>ejp_call
+	
+	convert(|env, members, var2type, fields, enclosing_env, rest, index): 
+		ExprStm(ScopedEJPCall(ejp_call, pointcuts, block)) -> 
+		[ExprStm(method_invokation), ClassDecStm(class), local_field_declaration, first_assignments*, invoke_synthetic_method, second_assignments*]
+	with
+		method_invokation := <create-method-invokation(|env, members, var2type, fields, enclosing_env, rest, index)>ejp_call;
+		unknown_fields := <new-iset>;
+		<arik(|<new-hashtable>, members, var2type, unknown_fields, enclosing_env, rest, index)>block;
+		ejpscope_method_name := <gen_ejpscope_method_name>ejp_call;
+		class := <gen_auxilery_class(|var2type, unknown_fields, ejpscope_method_name, index)>block;
+		class_name := <concat-strings>["ejpScopedInner", <int-to-string><hashtable-get(|"index")>index];
+		local_field_name := <concat-strings>["local_", class_name];
+		first_assignments* := <gen_first_assignments(|unknown_fields, local_field_name)>;
+		second_assignments* := <gen_second_assignments(|unknown_fields, local_field_name)>;
+		invoke_synthetic_method := ExprStm(Invoke(Method(MethodName(AmbName(Id(local_field_name)), Id(ejpscope_method_name))), []));
+		local_field_declaration := LocalVarDecStm(LocalVarDec([Final()],  ClassOrInterfaceType(TypeName(Id(class_name)), None()), [ VarDec(Id(local_field_name)
+                      , NewInstance(None(), ClassOrInterfaceType(TypeName(Id(class_name)), None()), [], None()))]))	
+	                        
+	create-method-invokation(|env, members, var2type, fields, enclosing_env, rest, index): 
+		ExplicitJoinPoint(aspect_id, joinpoint_id, args) -> Invoke(MethodName(aspect_id, joinpoint_id), <arik(|env, members, var2type, fields, enclosing_env, rest, index)>args)
+		

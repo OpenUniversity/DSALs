@@ -1,13 +1,12 @@
+%% Grammar for the ejp language
+%% By default, based on an example "entities" syntax
 module ejp
 
-imports Common
+imports
+   languages/ejp/Main
 
 exports
-
-  context-free start-symbols
-  
-    Start
-
+  sorts JavaTheCtx AspectTheCtx PointcutTheCtx PatternTheCtx JavaCtxCompilationUnit
+  context-free start-symbols JavaCtxCompilationUnit
   context-free syntax
-  
-    -> Start {"Dummy"}
+    CompilationUnit -> JavaCtxCompilationUnit
