@@ -1,0 +1,16 @@
+module ejp.main
+
+imports ejp-Builders ejp-Refactorings ejp-Colorer ejp-Completions ejp-Folding ejp-Outliner ejp-References ejp-Syntax
+
+language General properties
+                  
+  name          : ejp
+  id            : ejp
+  extends       : Root
+                  
+  description   : "Spoofax/IMP-generated editor for the ejp language"
+  url           : http://strategoxt.org
+                  
+  extensions    : aj, java
+  table         : include/ejp.tbl
+  start symbols : Start
