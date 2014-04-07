@@ -25,6 +25,7 @@
                         <arg line="-i ejp/trans/transform.str"/>
                         <arg line="-o ejp/dist/transform.java"/>
                         <arg line="-la java-front"/>
+                        <arg line="-la stratego-gpp"/>
                 </java>
         </target>
 </project>
