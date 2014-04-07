@@ -186,7 +186,7 @@ strategies
                     )
                   , Id("Pointcut")
                   )
-                , Lit(String([Chars(<concat-strings>["@withincode(anno) && @withincode(ejps.runtime.ExplicitScopedJoinPoint) && ", <pp-aspectj-string>exp1])]))
+                , Lit(String([Chars(<concat-strings>["@withincode(anno) && @withincode(ejp.runtime.ExplicitScopedJoinPoint) && ", <pp-aspectj-string>exp1])]))
                 )
               , Private()
               ]
@@ -225,7 +225,7 @@ strategies
                     )
                   , Id("Pointcut")
                   )
-                , Lit(String([Chars(<concat-strings>["@withincode(anno) && !@withincode(ejps.runtime.ExplicitScopedJoinPoint) && ", <pp-aspectj-string>exp1])]))
+                , Lit(String([Chars(<concat-strings>["@withincode(anno) && !@withincode(ejp.runtime.ExplicitScopedJoinPoint) && ", <pp-aspectj-string>exp1])]))
                 )
               , Private()
               ]
