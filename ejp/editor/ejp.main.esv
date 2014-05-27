@@ -11,6 +11,6 @@ language General properties
   description   : "Spoofax/IMP-generated editor for the ejp language"
   url           : http://strategoxt.org
                   
-  extensions    : aj, java
+  extensions    : ejp
   table         : include/ejp.tbl
   start symbols : JavaCtxCompilationUnit
