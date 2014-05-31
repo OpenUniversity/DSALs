@@ -39,15 +39,9 @@ strategies
   			  // ClassBody(< \ Block(statements*) -> statements* \ >block))
 	
 // -----------------------------------------------------------------------------------------------------------------------------
-  get-types = node := <id>; result := <arik()>node; <id>result
-  
-  print(|methods) = <debug>"result"; <debug><iset-elements>methods
 
-  arik() = 
-    node := <id>;
-    index := <new-hashtable>;
-    <hashtable-put(|"index", 0)>index;
-    <arik(|<new-hashtable>, <new-iset>, <new-hashtable>, <new-iset>, <new-hashtable>, None(), index)>node
+  // for debugging
+  print(|methods) = <debug>"result"; <debug><iset-elements>methods
 
   // env includes formal params and local variables
   // members includes class members
