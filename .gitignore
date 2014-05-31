@@ -1,1 +1,9 @@
 dist
+bin
+.cache
+include/
+editor/java/trans
+*generated*
+.settings/org.eclipse.jdt.core.prefs
+utils
+result.aj
