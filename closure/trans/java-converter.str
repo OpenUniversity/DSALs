@@ -1,0 +1,35 @@
+module java-converter
+
+imports
+	include/Closure
+
+strategies
+	remove-closures-calls:
+		ShortClosureJoinpoints(_, _) -> None()
+
+	remove-closures-calls:
+		ClosureJoinpoints(_, _, _, _) -> None()
+
+	closures-to-java =
+		?ClassDec(head, ClassBody(stms*));
+		class := <id>;
+		amethods := <new-hashtable>;
+		stmt' := <topdown(try(closure-to-java(|amethods)))>stms*;
+		body' := ClassBody(<conc>(stmt', <hashtable-values>amethods));
+		!ClassDec(head, body')
+
+	closure-to-java(|amethods) =
+		?ClosureJoinpoints(jp_id, params*, block, exprs*);
+		amethod := MethodDec(
+			MethodDecHead(
+				[],
+				None(),
+				Void(),
+				jp_id,
+				params*,
+				None()
+            ),
+            block            
+		);
+		<hashtable-put(|jp_id, amethod)>amethods;
+		!Invoke(Method(MethodName(jp_id)), exprs*)

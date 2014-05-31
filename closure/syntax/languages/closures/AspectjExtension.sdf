@@ -1,0 +1,32 @@
+module languages/closures/AspectjExtension
+
+imports
+	languages/aspectj/aspect/BodyDeclaration
+	languages/java-15/types/ReferenceTypes
+	languages/java-15/classes/MethodDeclarations
+	languages/java-15/expressions/Main
+	languages/java-15/classes/MethodDeclarations
+
+exports
+	sorts JoinpointDeclaration
+
+	context-free syntax
+		JoinpointDeclaration -> AspectBodyDec
+	
+		"joinpoint" ResultType Id "(" {FormalParam ","}* ")" Throws? ";" -> JoinpointDeclaration{cons("JoinpointDeclaration")}
+
+		(Anno | MethodMod)* CJPAdviceSpec Throws? Block -> AdviceDec {cons("CJPAdvice")}
+
+		"before" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPBefore")}
+
+		"after" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPAfter")}
+
+		"after" Id "(" {FormalParam ","}* ")" "returning" CJPSingleParam? -> CJPAdviceSpec {cons("CJPAfterReturning")}
+
+		"after" Id "(" {FormalParam ","}* ")" "throwing" CJPSingleParam? -> CJPAdviceSpec {cons("CJPAfterThrowing")}
+
+		"(" FormalParam? ")" -> CJPSingleParam {cons("CJPSingleParam")}
+
+		ResultType "around" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPAround")}
+
+		"@" TypeName "(" ElemVal ")" -> SimpleAnnoPattern {cons("SimpleAnnoPatternValue")}

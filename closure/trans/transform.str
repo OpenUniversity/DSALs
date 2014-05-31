@@ -1,0 +1,52 @@
+module transform
+
+imports
+	include/Closure
+	java-converter
+	aspect-converter
+
+strategies
+	convert = <try(closures-converter-compilation-unit)><id>
+
+rules
+	closures-converter-compilation-unit: CompilationUnit(PackageDec, ImportDecs, TypeDecs) -> CompilationUnit(PackageDec, ImportDecs', TypeDecs')
+	with
+		if (<?(x,x)>(TypeDecs, <all(try(check-for-change-in-aspect-or-class))>TypeDecs))
+		then
+			<debug>"bbb";
+			ImportDecs' := ImportDecs;
+			TypeDecs' := TypeDecs
+		else
+			<debug>"ccc";
+			if (<?(Some(PackageDec(_, _)))>PackageDec)
+			then
+				<?(Some(PackageDec(_, package_name)))>PackageDec
+			else
+				package_name := None()
+			end;
+			<debug>"dddd";
+			ImportDecs' := <conc>(ImportDecs, [TypeImportOnDemandDec(PackageName([Id("closures"),Id("runtime")]))]);
+			<debug>"eee";
+			TypeDecs' := <all(try(closures-converter-aspect-or-class(|package_name)))><debug>TypeDecs;
+			<debug>"fff"
+		end
+		
+	check-for-change-in-aspect-or-class: ClassDec(head, body) -> result
+	with
+		<debug>"aaaa";
+		result := <debug><topdown(try(remove-closures-calls))>ClassDec(head, body)
+	
+	check-for-change-in-aspect-or-class: AspectDec(head, body) -> result
+	with
+		result := <topdown(try(remove-closures-decs))>AspectDec(head, body)
+	
+	closures-converter-aspect-or-class(|package_name): AspectDec(head, AspectBody(stms*)) -> AspectDec(head, body')
+	with
+		<?AspectDecHead(_, Id(aspect_name), _, _, _, _)>head;
+		pointcutargs_pointcuts := <new-iset>;
+		body' := AspectBody(<topdown(try(closures-to-ajc(|package_name, aspect_name)))>stms*)
+
+	closures-converter-aspect-or-class(|package_name): ClassDec(head, body) -> class'
+	with
+		<debug>"gggggggg";
+		class' := <closures-to-java>ClassDec(head, body)

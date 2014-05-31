@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?eclipse version="3.0"?>
+
+<plugin>
+       <extension point="org.eclipse.imp.runtime.languageDescription">
+          <language extensions="cj" description="Closure" language="Closure" derivedFrom="DynamicRoot" validator="closure.ClosureValidator" validatorClass="closure.ClosureValidator"></language>
+       </extension>
+       <extension id="closure.parser" name="Closure Parser" point="org.eclipse.imp.runtime.parser">
+          <parser class="closure.ClosureParseController" language="Closure">
+          </parser>
+       </extension>    
+    </plugin>

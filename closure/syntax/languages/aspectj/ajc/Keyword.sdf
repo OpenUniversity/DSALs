@@ -1,0 +1,27 @@
+%%%
+ %% Keywords in the official AspectJ Compiler.
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/ajc/Keyword
+exports
+  context-free syntax
+    PrimPointcutName -> PointcutName {reject}
+
+  context-free syntax
+    PseudoKeyword -> TypeName            {reject}
+    PseudoKeyword -> PackageOrTypeName   {reject}
+
+    PseudoKeyword -> TypeName          {reject}
+    PseudoKeyword -> PackageOrTypeName {reject}
+
+  sorts PseudoKeyword
+  lexical syntax
+      "aspect"
+    | "pointcut"
+    | "privileged"
+    | "before"
+    | "after"
+    | "around"
+    | "declare" -> PseudoKeyword
+

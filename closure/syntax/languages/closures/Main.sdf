@@ -1,0 +1,6 @@
+module languages/closures/Main
+imports
+  languages/aspectj/ajc/Main
+  languages/closures/Keyword
+  languages/closures/JavaExtension
+  languages/closures/AspectjExtension

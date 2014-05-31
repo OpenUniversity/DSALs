@@ -1,0 +1,28 @@
+%%%
+ %% 3.3.3: Advice Declarations
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/aspect/AdviceDeclaration[Ctx]
+exports
+  sorts AdviceDec AdviceMod
+  context-free syntax
+    AdviceMod* AdviceSpec Throws? ":" PointcutExpr MethodBody -> AdviceDec {cons("AdviceDec")}
+
+    StrictFP -> AdviceMod
+    Anno     -> AdviceMod
+
+  sorts AdviceSpec
+  context-free syntax
+    "before" "(" {FormalParam ","}* ")"             -> AdviceSpec {cons("Before")}
+    "after"  "(" {FormalParam ","}* ")" ExitStatus? -> AdviceSpec {cons("After")}
+
+    ResultType "around" "(" {FormalParam ","}* ")" -> AdviceSpec {cons("Around")}
+
+    "returning"                            -> ExitStatus {cons("Returning")}
+    "returning" "("                    ")" -> ExitStatus {cons("Returning")}
+    "returning" "(" FormalParam ")" -> ExitStatus {cons("Returning")}
+
+    "throwing"                             -> ExitStatus {cons("Throwing")}
+    "throwing"  "("                    ")" -> ExitStatus {cons("Throwing")}
+    "throwing"  "(" FormalParam ")" -> ExitStatus {cons("Throwing")}

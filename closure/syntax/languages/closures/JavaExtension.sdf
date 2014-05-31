@@ -1,0 +1,16 @@
+module languages/closures/JavaExtension
+
+imports
+  languages/aspectj/JavaExtension
+  languages/java-15/Main
+
+exports
+    
+  context-free syntax
+  	"exhibit" Id "(" {FormalParam ","}* ")" Block "(" {Expr ","}* ")" -> Expr {cons("ClosureJoinpoints")}
+
+	"exhibit" Id Block -> Expr {cons("ShortClosureJoinpoints")}
+
+  	
+
+	

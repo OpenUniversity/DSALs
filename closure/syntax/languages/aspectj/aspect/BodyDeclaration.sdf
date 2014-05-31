@@ -1,0 +1,21 @@
+%%%
+ %% Aspect Body Declarations
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/aspect/BodyDeclaration
+imports
+  languages/aspectj/aspect/DeclareDeclaration
+  languages/aspectj/aspect/AdviceDeclaration
+  languages/aspectj/aspect/IntertypeMemberDeclaration
+
+exports
+  sorts AspectBodyDec
+  context-free syntax
+    ClassBodyDec -> AspectBodyDec
+    DeclareDec          -> AspectBodyDec 
+    AdviceDec           -> AspectBodyDec
+    IntertypeMemberDec  -> AspectBodyDec
+
+    AspectDec           -> ClassMemberDec
+    PointcutDec         -> ClassMemberDec

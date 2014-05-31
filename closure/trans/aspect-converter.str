@@ -1,0 +1,73 @@
+module aspect-converter
+
+imports
+	include/Closure
+	aspectj/pretty-print
+
+strategies
+	remove-closures-decs:
+		JoinpointDeclaration(_, _, _, _) -> None()
+
+	closures-to-ajc(|package_name, aspect_name) =
+		?JoinpointDeclaration(return_type, jp_id, params, throws);
+		!MethodDec(
+			MethodDecHead([Public(), Static()], None(), return_type, jp_id, params, throws),
+			Block([])
+		)
+
+	closures-to-ajc(|package_name, aspect_name) =
+		?CJPAdvice(mods, CJPAround(return_type, Id(jp_name), params), throws, block);
+		!AdviceDec(mods, Around(return_type, params), None(),
+		 AndComp(
+			 Call(
+			 	MethodPattern(
+	                AnnoPattern([])
+	              , ModPattern([])
+	              , RefTypePattern(NamePattern("*"))
+	              , MemberName(jp_name)
+	              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
+	              , None()
+	              )
+			 ),
+			 Args(<map( \ Param(_, _, Id(x)) -> ClassOrInterfaceType(TypeName(Id(x)), None()) \ )>params)
+		 )
+		 , block)
+
+	closures-to-ajc(|package_name, aspect_name) =
+		?CJPAdvice(mods, CJPBefore(Id(jp_name), params), throws, block);
+		!AdviceDec(mods, Before(params), None(),
+		AndComp(
+			 Call(
+			 	MethodPattern(
+	                AnnoPattern([])
+	              , ModPattern([])
+	              , RefTypePattern(NamePattern("*"))
+	              , MemberName(jp_name)
+	              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
+	              , None()
+	              )
+			 ),
+			 Args(<map( \ Param(_, _, Id(x)) -> ClassOrInterfaceType(TypeName(Id(x)), None()) \ )>params)
+		 )
+		 , block)
+
+
+	closures-to-ajc(|package_name, aspect_name) =
+		?CJPAdvice(mods, CJPAfter(Id(jp_name), params), throws, block);
+		!AdviceDec(mods, After(params, None()), None(),
+		AndComp(
+			 Call(
+			 	MethodPattern(
+	                AnnoPattern([])
+	              , ModPattern([])
+	              , RefTypePattern(NamePattern("*"))
+	              , MemberName(jp_name)
+	              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
+	              , None()
+	              )
+			 ),
+			 Args(<map( \ Param(_, _, Id(x)) -> ClassOrInterfaceType(TypeName(Id(x)), None()) \ )>params)
+		 )
+		 , block)
+
+

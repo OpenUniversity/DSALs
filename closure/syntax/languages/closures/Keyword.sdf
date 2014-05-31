@@ -1,0 +1,16 @@
+%%%
+ %% Keywords in the closures in addition to those in the official AspectJ Compiler.
+ %%
+ %% @author  Arik Hadas
+ %%%
+module languages/closures/Keyword
+
+imports
+	languages/aspectj/ajc/Keyword
+	languages/java-15/lexical/Keywords
+
+exports
+  lexical syntax
+      "joinpoint" -> PseudoKeyword
+     
+      "exhibit" -> Keyword
