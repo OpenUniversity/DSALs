@@ -43,7 +43,7 @@ strategies
   // for debugging
   print(|methods) = <debug>"result"; <debug><iset-elements>methods
 
-  // env includes formal params and local variables
+  // env includes formal params (method arguments) and local variables
   // members includes class members
   arik(|env, members, var2type, fields, enclosing_env, rest, index) =
     node := <id>;
@@ -144,11 +144,11 @@ strategies
 		<concat><map(convert-var-declaration(|env, members, var2type, fields, enclosing_env, rest, mods*, type, index))>vars*
 		
 	convert-var-declaration(|env, members, var2type, fields, enclosing_env, rest, mods*, type, index) =
-		?VarDec(d, expr);
+		?VarDec(var_id, expr);
 		node := <id>;
 		<add_local_var(|env, enclosing_env, var2type, type)>node;
 		if <?ScopedEJPCall(ejp_call, pointcuts, block)>expr
-			then
+		then
 			method_invokation := <create-method-invokation(|env, members, var2type, fields, enclosing_env, rest, index)>ejp_call;
 			unknown_fields := <new-iset>;
 			<arik(|<new-hashtable>, members, var2type, unknown_fields, enclosing_env, rest, index)>block;
@@ -161,7 +161,7 @@ strategies
 			invoke_synthetic_method := ExprStm(Invoke(Method(MethodName(AmbName(Id(local_field_name)), Id(ejpscope_method_name))), []));			
 			local_field_declaration := LocalVarDecStm(LocalVarDec([Final()],  ClassOrInterfaceType(TypeName(Id(class_name)), None()), [ VarDec(Id(local_field_name)
 	                      , NewInstance(None(), ClassOrInterfaceType(TypeName(Id(class_name)), None()), [], None()))]));
-			![LocalVarDecStm(LocalVarDec(mods*, type, [VarDec(d, method_invokation)])), ClassDecStm(class), local_field_declaration, first_assignments*, invoke_synthetic_method, second_assignments*]
+			![LocalVarDecStm(LocalVarDec(mods*, type, [VarDec(var_id, method_invokation)])), ClassDecStm(class), local_field_declaration, first_assignments*, invoke_synthetic_method, second_assignments*]
 		else
 			![<arik(|env, members, var2type, fields, enclosing_env, rest, index)>LocalVarDecStm(LocalVarDec(mods*, type, [node]))]
 		end
