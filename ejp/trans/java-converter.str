@@ -79,7 +79,7 @@ strategies
 		<conc>(
 			[LocalVarDecStm(LocalVarDec(mods, type, [VarDec(var, <ejp-call-to-method-invokation(|predefined_vars_table, class_name, method_name, pointcut_methods)>EJPCall(ejp, pointcuts))]))],
 			<scoped-ejp-to-java(|predefined_vars_table, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)) )
-		
+
 	add-local-vars(|vars_table) =
         ?LocalVarDecStm(LocalVarDec(_, type, vars*));
         source := <id>;
@@ -100,7 +100,6 @@ strategies
 		<hashtable-remove(|name)>vars_table;
 		<hashtable-put(|name, type)>vars_table;
 		<id>source
-		
 	
 	process-method-param(|table) =
 		or(?Param(_, type, Id(name)), ?VarArityParam(_, type, Id(name)));
@@ -206,12 +205,9 @@ rules
 			// replace thisblock, thismethod, thisclass keywords
 			pointcuts' := <topdown(try(pointcutarg(|class_name, method_name, gen_id)))>pointcuts;
 			<try(handle-pointcutargs(|pointcut_methods, ejp))>pointcuts';
-			
-			vars_in_block := <new-iset>;
-			<topdown(try(fetch(|vars_in_block)))>stms*;
-			inner_vars_table := <new-hashtable>;
-			<get-inner-scoped-vars(|inner_vars_table)>stms*;
-			// <try(ejp-to-java(|inner_vars_table, class_name, method_name))>Block(stms*);
+
+			vars_in_block := <get-vars-in-block>stms*;
+			inner_vars_table := <get-inner-scoped-vars>stms*;
 			external_vars := <iset-isect(|vars_in_block)><iset-addlist(|<hashtable-keys>predefined_var2type)><new-iset>;
 			vars_to_define := <new-iset>;
 			<iset-addlist(|<iset-elements>external_vars)>vars_to_define;
@@ -227,6 +223,20 @@ rules
 			second_assignments* := <gen-after-call-simple-assignments(|external_vars, local_field_name)>;
 			second_assignments2* := <gen-after-call-assignments-with-declarations(|<my-hashtable-remove(|external_vars)>inner_vars_table, local_field_name)>;
 			invoke_synthetic_method := <create-method-invokation(|local_field_name, ejp)>
+
+	/* return set of vars used inside the block */
+	get-vars-in-block =
+		stms* := <id>;
+		vars_in_block := <new-iset>;
+		<topdown(try(fetch(|vars_in_block)))>stms*;
+		!vars_in_block
+
+	/* return table that maps var to type */
+	get-inner-scoped-vars =
+		stms* := <id>;
+		inner_vars_table := <new-hashtable>;
+        <all(try(add-local-vars(|inner_vars_table)))>stms*;
+        !inner_vars_table
 	
 	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
 		ExprStm(ScopedEJPCall(ejp, pointcuts, Block(stms*))) ->
@@ -267,11 +277,6 @@ rules
 			[ExprStm(Assign(expr, <create-method-invokation(|ejp)>))],
 			<scoped-ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)))
 	
-	get-inner-scoped-vars(|inner_vars_table) =
-                stms* := <id>;  
-                <all(try(add-local-vars(|inner_vars_table)))>stms*;
-                <id>stms*
-
 	/* Remove var declarations from LocalVarDecStm (note that multiple vars can be defined in one statement) */
 	remove-vars-decs-from-local-var-dec-stm:
 		LocalVarDecStm(LocalVarDec(_, _, vars*)) -> new_stms*
@@ -323,3 +328,4 @@ rules
 	
 	remove-ejp-calls:
 		EJPCall(_, _) -> None()
+
