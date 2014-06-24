@@ -7,9 +7,9 @@ imports
 exports
     
   context-free syntax
-  	"exhibit" Id "(" {FormalParam ","}* ")" Block "(" {Expr ","}* ")" -> Expr {cons("ClosureJoinpoints")}
+	"exhibit" MethodName "(" {FormalParam ","}* ")" Block "(" {Expr ","}* ")" -> Expr {cons("ClosureJoinpoints")}
 
-	"exhibit" Id Block -> Expr {cons("ShortClosureJoinpoints")}
+	"exhibit" MethodName Block -> Expr {cons("ShortClosureJoinpoints")}
 
   	
 

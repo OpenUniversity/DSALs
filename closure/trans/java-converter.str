@@ -1,7 +1,9 @@
 module java-converter
 
 imports
+	extract_method
 	include/Closure
+	utils
 
 strategies
 	remove-closures-calls:
@@ -14,22 +16,51 @@ strategies
 		?ClassDec(head, ClassBody(stms*));
 		class := <id>;
 		amethods := <new-hashtable>;
-		stmt' := <topdown(try(closure-to-java(|amethods)))>stms*;
+		stmt' := <topdown(try(closure-to-java(|amethods, stms*)))>stms*;
 		body' := ClassBody(<conc>(stmt', <hashtable-values>amethods));
 		!ClassDec(head, body')
 
+	closure-to-java(|amethods, type) =
+		!CastRef(
+            ClassOrInterfaceType(TypeName(Id("int")), None())
+          , <closure-to-java(|amethods)><id>)
+
 	closure-to-java(|amethods) =
-		?ClosureJoinpoints(jp_id, params*, block, exprs*);
+		?ClosureJoinpoints(MethodName(_, Id(jp_name)), params*, block, exprs*);
+		generated_name := Id(<gen_extracted_method_name>jp_name);
+		declared_vars := <new-iset>;
+		<add-params(|declared_vars)>params*;
+		<extract-block(|declared_vars)>block;
 		amethod := MethodDec(
 			MethodDecHead(
-				[],
+				[Private()],
 				None(),
-				Void(),
-				jp_id,
+				ClassOrInterfaceType(TypeName(Id("Object")), None()),
+				generated_name,
 				params*,
 				None()
             ),
-            block            
+            block
 		);
-		<hashtable-put(|jp_id, amethod)>amethods;
-		!Invoke(Method(MethodName(jp_id)), exprs*)
+		<hashtable-put(|generated_name, amethod)>amethods;
+		!Invoke(Method(MethodName(generated_name)), exprs*)
+
+	closure-to-java(|amethods) =
+		?ShortClosureJoinpoints(MethodName(_, Id(jp_name)), block);
+		<debug>"in short";
+		generated_name := Id(<gen_extracted_method_name>jp_name);
+		declared_vars := <new-iset>;
+		<extract-block(|declared_vars)>block;
+		amethod := MethodDec(
+			MethodDecHead(
+				[Private()],
+				None(),
+				ClassOrInterfaceType(TypeName(Id("Object")), None()),
+				generated_name,
+				[],
+				None()
+            ),
+            block
+		);
+		<hashtable-put(|generated_name, amethod)>amethods;
+		!Invoke(Method(MethodName(generated_name)), [])

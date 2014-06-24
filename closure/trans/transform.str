@@ -38,15 +38,12 @@ rules
 	
 	check-for-change-in-aspect-or-class: AspectDec(head, body) -> result
 	with
-		result := <topdown(try(remove-closures-decs))>AspectDec(head, body)
+		result := <topdown(try(remove-closures-additions))>AspectDec(head, body)
 	
-	closures-converter-aspect-or-class(|package_name): AspectDec(head, AspectBody(stms*)) -> AspectDec(head, body')
+	closures-converter-aspect-or-class(|package_name): AspectDec(head, body) -> aspect
 	with
-		<?AspectDecHead(_, Id(aspect_name), _, _, _, _)>head;
-		pointcutargs_pointcuts := <new-iset>;
-		body' := AspectBody(<topdown(try(closures-to-ajc(|package_name, aspect_name)))>stms*)
+		aspect := <closures-to-ajc(|package_name)>AspectDec(head, body)
 
 	closures-converter-aspect-or-class(|package_name): ClassDec(head, body) -> class'
 	with
-		<debug>"gggggggg";
 		class' := <closures-to-java>ClassDec(head, body)
