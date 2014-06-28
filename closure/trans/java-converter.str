@@ -33,7 +33,7 @@ strategies
 		<extract-block(|declared_vars)>block;
 		amethod := MethodDec(
 			MethodDecHead(
-				[Private()],
+				[MarkerAnno(TypeName(Id("Closure"))), Private()],
 				None(),
 				ClassOrInterfaceType(TypeName(Id("Object")), None()),
 				generated_name,
@@ -47,13 +47,12 @@ strategies
 
 	closure-to-java(|amethods) =
 		?ShortClosureJoinpoints(MethodName(_, Id(jp_name)), block);
-		<debug>"in short";
 		generated_name := Id(<gen_extracted_method_name>jp_name);
 		declared_vars := <new-iset>;
 		<extract-block(|declared_vars)>block;
 		amethod := MethodDec(
 			MethodDecHead(
-				[Private()],
+				[MarkerAnno(TypeName(Id("Closure"))), Private()],
 				None(),
 				ClassOrInterfaceType(TypeName(Id("Object")), None()),
 				generated_name,

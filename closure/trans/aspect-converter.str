@@ -38,7 +38,7 @@ strategies
 		 AndComp(
 			 Call(
 			 	MethodPattern(
-	                AnnoPattern([])
+	                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
 	              , ModPattern([])
 	              , RefTypePattern(NamePattern("*"))
 	              , MemberName(jp_name)
@@ -56,7 +56,7 @@ strategies
 		AndComp(
 			 Call(
 			 	MethodPattern(
-	                AnnoPattern([])
+	                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
 	              , ModPattern([])
 	              , RefTypePattern(NamePattern("*"))
 	              , MemberName(jp_name)
@@ -75,7 +75,7 @@ strategies
 		AndComp(
 			 Call(
 			 	MethodPattern(
-	                AnnoPattern([])
+	                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
 	              , ModPattern([])
 	              , RefTypePattern(NamePattern("*"))
 	              , MemberName(jp_name)
@@ -95,7 +95,7 @@ strategies
 		<extract-block(|declared_vars)>block;
 		amethod := MethodDec(
 			MethodDecHead(
-				[Private()],
+				[MarkerAnno(TypeName(Id("Closure"))), Private()],
 				None(),
 				ClassOrInterfaceType(TypeName(Id("Object")), None()),
 				generated_name,
@@ -114,7 +114,7 @@ strategies
 		<extract-block(|declared_vars)>block;
 		amethod := MethodDec(
 			MethodDecHead(
-				[Private()],
+				[MarkerAnno(TypeName(Id("Closure"))), Private()],
 				None(),
 				ClassOrInterfaceType(TypeName(Id("Object")), None()),
 				generated_name,
