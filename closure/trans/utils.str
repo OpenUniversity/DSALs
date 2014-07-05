@@ -1,0 +1,74 @@
+module utils
+
+imports
+  libstratego-lib
+  libjava-front
+  aspectj/pretty-print
+  
+strategies
+
+	add-var(|name, type) =
+		<hashtable-put(|name, type)><id>
+
+	discover-return-type =
+		stmt* := <topdown(try(\ ClassBody(_) -> ClassBody([]) \))><id>;
+		<debug>"discover-return-type";//<debug>stmt*;
+		var2type := <new-hashtable>;
+		<fetch-elem(discover-return-type-impl(|var2type))>stmt*
+	
+	discover-return-type-impl(|var2type) =
+		node := <id>;
+		
+		switch id
+			case ?Block(stmt*):
+				<discover-return-type-impl(|<hashtable-copy>var2type)>stmt*
+			
+			case ?LocalVarDecStm(LocalVarDec(_, type, var*)):
+				<map(add-var(|type, var2type))>var*; fail
+			
+			case ?Return(Some(stmt)):
+				<get-type-from-return-stmt(|var2type)>stmt
+		end
+	
+	add-var(|type, var2type) =
+		or(?VarDec(Id(name)), ?VarDec(Id(name), _));
+		<add-var(|name, type)>var2type
+	
+	get-type-from-return-stmt(|var2type) =
+		node := <id>;
+		
+		switch id
+			case or(?Eq(_, _), ?NotEq(_, _)):
+				!Boolean()
+			
+			case or(?Plus(_), ?Minus(_)):
+				!Double()
+			
+			case or(?Plus(Lit(String(_)), _), ?Plus(_, Lit(String(_)))):
+				!ClassOrInterfaceType(TypeName(Id("String")), None())
+			
+			case or(
+					or(?Plus(Lit(Float(_)), _), ?Plus(_, Lit(Float(_)))),
+					or(?Plus(Lit(Deci(_)), _), ?Plus(_, Lit(Deci(_))))):
+				!Double()
+				
+			case ?Minus(_, _):
+				!Double()
+			
+			case ?Mul(_, _):
+				!Double()
+			
+			case ?Remain(_, _):
+				!Double()
+			
+			case ?Div(_, _):
+				!Double()
+			
+			case ?ExprName(Id(name)):
+				<debug>"expr-name:";<debug>name;
+				<debug><hashtable-keys>var2type;
+				<debug><hashtable-get(|name)>var2type
+			
+			otherwise:
+				fail
+		end

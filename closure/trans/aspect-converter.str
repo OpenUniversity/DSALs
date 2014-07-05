@@ -4,7 +4,7 @@ imports
 	include/Closure
 	aspectj/pretty-print
 	utils
-	extract_method
+	replace_exhibits
 
 strategies
 	remove-closures-additions:
@@ -22,8 +22,7 @@ strategies
 		aspect := <id>;
 		amethods := <new-hashtable>;
 		stmt' := <topdown(try(closures-to-ajc(|amethods, package_name, aspect_name)))>stms*;
-		body' := AspectBody(<conc>(stmt', <hashtable-values>amethods));
-		!AspectDec(head, body')
+		<replace(|None(), <new-hashtable>)>AspectDec(head, AspectBody(stmt'))
 
 	closures-to-ajc(|amethods, package_name, aspect_name) =
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
@@ -87,42 +86,4 @@ strategies
 		 )
 		 , block)
 
-	closures-to-ajc(|amethods, package_name, aspect_name) =
-		?ClosureJoinpoints(MethodName(_, Id(jp_name)), params*, block, exprs*);
-		generated_name := Id(<gen_extracted_method_name>jp_name);
-		declared_vars := <new-iset>;
-		<add-params(|declared_vars)>params*;
-		<extract-block(|declared_vars)>block;
-		amethod := MethodDec(
-			MethodDecHead(
-				[MarkerAnno(TypeName(Id("Closure"))), Private()],
-				None(),
-				ClassOrInterfaceType(TypeName(Id("Object")), None()),
-				generated_name,
-				params*,
-				None()
-            ),
-            block
-		);
-		<hashtable-put(|generated_name, amethod)>amethods;
-		!Invoke(Method(MethodName(generated_name)), exprs*)
-
-	closures-to-ajc(|amethods, package_name, aspect_name) =
-		?ShortClosureJoinpoints(MethodName(_, Id(jp_name)), block);
-		generated_name := Id(<gen_extracted_method_name>jp_name);
-		declared_vars := <new-iset>;
-		<extract-block(|declared_vars)>block;
-		amethod := MethodDec(
-			MethodDecHead(
-				[MarkerAnno(TypeName(Id("Closure"))), Private()],
-				None(),
-				ClassOrInterfaceType(TypeName(Id("Object")), None()),
-				generated_name,
-				[],
-				None()
-            ),
-            block
-		);
-		<hashtable-put(|generated_name, amethod)>amethods;
-		!Invoke(Method(MethodName(generated_name)), [])
 

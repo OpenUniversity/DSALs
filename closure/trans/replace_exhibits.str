@@ -1,0 +1,95 @@
+module replace_exhibits
+imports
+	include/Closure
+	java-converter
+	utils
+
+strategies
+	
+	replace(|type, var2type) =
+		node := <id>;
+		<debug>"in replace"; <debug>node;
+		switch id
+			case ?ClassDec(head, ClassBody(dec*)):
+				var2type' := <hashtable-copy>var2type;
+				field_dec* := <filter(?FieldDec(_, _, _))>dec*;
+				<map(\ FieldDec(_, type', vars*) -> <map(replace(|type', var2type'))>vars* \)> field_dec*;
+				!ClassDec(head, ClassBody(<map(replace(|None(), var2type'))>dec*))
+			
+			case ?AspectDec(head, AspectBody(dec*)):
+				var2type' := <hashtable-copy>var2type;
+				field_dec* := <filter(?FieldDec(_, _, _))>dec*;
+				<map(\ FieldDec(_, type', vars*) -> <map(replace(|type', var2type'))>vars* \)> field_dec*;
+				!AspectDec(head, AspectBody(<map(replace(|None(), var2type'))>dec*))
+				
+			case ?Block(stms*):
+				<debug>"in block";
+				var2type' := <hashtable-copy>var2type;
+				!Block(<map(replace(|None(), var2type'))>stms*)
+
+			case ?LocalVarDecStm(LocalVarDec(t1, type', vars*)):
+				<debug>"LocalVarDecStm";
+				!LocalVarDecStm(LocalVarDec(t1, type', <map(replace(|type', var2type))>vars*))
+				
+			case ?MethodDec(head, body):
+				<debug>"in methodDec";
+				var2type' := <hashtable-copy>var2type;
+				<topdown(try(add-param(|var2type')))>head;
+				!MethodDec(head, <replace(|None(), var2type')>body)
+			
+			case ?VarDec(Id(name)):
+				<add-var(|name, type)>var2type;
+				<id> node
+
+			case ?VarDec(Id(name), expr):
+				<debug>"in VarDec X 2";
+				<add-var(|name, type)>var2type;
+				!VarDec(Id(name), <replace(|type, var2type)>expr)
+
+			case ?ShortClosureJoinpoints(_, _):
+				<debug>"short closure";
+				<closure-to-java(|type, var2type)>node
+
+			case ?ClosureJoinpoints(name, param*, blk, expr*):
+				<debug>"closure";
+				var2type' := <hashtable-copy>var2type;
+				<topdown(try(add-param(|var2type')))>param*;
+				<closure-to-java(|type, var2type)>ClosureJoinpoints(name, param*, <replace(|None(), var2type')>blk, expr*)
+			
+			case ?ExprStm(expr):
+				!ExprStm(<replace(|None(), var2type)>expr)
+				
+			case ?Assign(expr1, expr2):
+				<debug>"assign";
+	      	   !Assign(expr1, <replace(|<get-var-type(|var2type)>expr1, var2type)>expr2)
+			
+			otherwise:
+				<debug>"otherwise";
+				<debug><id>node
+		end
+	
+	add-param(|var2type) =
+  		or(?Param(_, type, Id(name)), ?VarArityParam(_, type, Id(name)));
+		<add-var(|name, type)>var2type
+	
+	get-var-type(|var2type) =
+		if type := <get-var-type-impl(|var2type)><id>
+		then
+			<id>type
+		else
+			!None()
+		end
+			
+	get-var-type-impl(|var2type) =
+		?ExprName(name);
+		<get-var-type(|var2type)>name
+	
+	get-var-type-impl(|var2type) =
+		?Id(name);
+		if <elem>(name, <hashtable-keys>var2type)
+		then
+			<hashtable-get(|name)>var2type
+		else
+			None()
+		end
+	

@@ -1,9 +1,9 @@
 module java-converter
 
 imports
-	extract_method
 	include/Closure
 	utils
+	replace_exhibits
 
 strategies
 	remove-closures-calls:
@@ -14,52 +14,115 @@ strategies
 
 	closures-to-java =
 		?ClassDec(head, ClassBody(stms*));
-		class := <id>;
-		amethods := <new-hashtable>;
-		stmt' := <topdown(try(closure-to-java(|amethods, stms*)))>stms*;
-		body' := ClassBody(<conc>(stmt', <hashtable-values>amethods));
-		!ClassDec(head, body')
+		<replace(|None(), <new-hashtable>)><id>
 
-	closure-to-java(|amethods, type) =
-		!CastRef(
-            ClassOrInterfaceType(TypeName(Id("int")), None())
-          , <closure-to-java(|amethods)><id>)
+	closure-to-java(|type, var2type) =
+		or(?ClosureJoinpoints(_, _, block, _), ?ShortClosureJoinpoints(_, block));
+		node := <id>;
+		<debug>"1111";
+		if <equal>(type, None())
+	   	then
+	   		<debug>"22222";
+	   		if return_type := <get-return-type-from-block(|var2type)>block
+	   		then
+	   			<debug>"3333";
+	   			<closure-to-java-impl(|return_type)>node
+	   		else
+	   			<debug>"4444";
+	   			<closure-to-java-impl(|ClassOrInterfaceType(TypeName(Id("Object")), None()))>node
+	   		end
+		else
+			<debug>"5555";
+      		<closure-to-java-impl(|type)>node
+		end
+		
+	get-return-type-from-block(|var2type) =
+		?Block(stmt*);
+		<debug>"66666";
+		if <is-return-stmt-exist>stmt*
+		then
+			<debug>"7777";
+			// !ClassOrInterfaceType(TypeName(Id("Arik")), None())
+			<debug><discover-return-type>stmt*
+		else
+			<debug>"8888";
+			// if there is no return statement, the method can be void
+			!Void()
+		end
+	
+	is-return-stmt-exist =
+		stms* := <id>;
+		stms' := <topdown(try(\ ClassBody(_) -> ClassBody([]) \))>stms*;
+		if <equal>(stms', <remove-return-decs>stms')
+		then
+			fail
+		else
+			not(fail)
+		end
 
-	closure-to-java(|amethods) =
-		?ClosureJoinpoints(MethodName(_, Id(jp_name)), params*, block, exprs*);
-		generated_name := Id(<gen_extracted_method_name>jp_name);
-		declared_vars := <new-iset>;
-		<add-params(|declared_vars)>params*;
-		<extract-block(|declared_vars)>block;
-		amethod := MethodDec(
-			MethodDecHead(
-				[MarkerAnno(TypeName(Id("Closure"))), Private()],
-				None(),
-				ClassOrInterfaceType(TypeName(Id("Object")), None()),
-				generated_name,
-				params*,
-				None()
-            ),
-            block
-		);
-		<hashtable-put(|generated_name, amethod)>amethods;
-		!Invoke(Method(MethodName(generated_name)), exprs*)
+	remove-return-decs =
+		<topdown(try(\ Return(_) -> None() \))><id>
 
-	closure-to-java(|amethods) =
-		?ShortClosureJoinpoints(MethodName(_, Id(jp_name)), block);
-		generated_name := Id(<gen_extracted_method_name>jp_name);
-		declared_vars := <new-iset>;
-		<extract-block(|declared_vars)>block;
-		amethod := MethodDec(
-			MethodDecHead(
-				[MarkerAnno(TypeName(Id("Closure"))), Private()],
-				None(),
-				ClassOrInterfaceType(TypeName(Id("Object")), None()),
-				generated_name,
-				[],
-				None()
-            ),
-            block
-		);
-		<hashtable-put(|generated_name, amethod)>amethods;
-		!Invoke(Method(MethodName(generated_name)), [])
+	closure-to-java-impl(|returnType) =
+		?ClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, params*, block, exprs*);
+		<debug>"in closures..";
+		!Invoke(
+              Method(
+                NewInstance(
+                  None()
+                , ClassOrInterfaceType(TypeName(Id("Object")), None())
+                , []
+                , Some(
+                    ClassBody(
+                      [ MethodDec(
+                          MethodDecHead(
+                            [MarkerAnno(TypeName(Id("Closure"))), Public()]
+                          , None()
+                          , returnType
+                          , Id(jp_name)
+                          , params*
+                          , None()
+                          )
+                        , block
+                        )
+                      ]
+                    )
+                  )
+                )
+              , None()
+              , Id(jp_name)
+              )
+            , exprs*
+            )
+
+	closure-to-java-impl(|returnType) =
+		?ShortClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, block);
+		<debug>"in short closures..";
+		!Invoke(
+          Method(
+            NewInstance(
+              None()
+            , ClassOrInterfaceType(TypeName(Id("Object")), None())
+            , []
+            , Some(
+                ClassBody(
+                  [ MethodDec(
+                      MethodDecHead(
+                        [MarkerAnno(TypeName(Id("Closure"))), Public()]
+                      , None()
+                      , returnType
+                      , Id(jp_name)
+                      , []
+                      , None()
+                      )
+                    , block
+                    )
+                  ]
+                )
+              )
+            )
+          , None()
+          , Id(jp_name)
+          )
+        , []
+        )
