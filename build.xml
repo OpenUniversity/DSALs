@@ -28,5 +28,18 @@
                         <arg line="-la stratego-gpp"/>
                 </java>
         </target>
+
+        <target name="closure">
+               <mkdir dir="closure/dist"/>
+               <java fork="true" jar="libs/strategoxt.jar">
+                        <jvmarg value="-Xmx1024m"/>
+                        <jvmarg value="-Xss8m"/>
+                        <arg line="-I closure"/>
+                        <arg line="-i closure/trans/transform.str"/>
+                        <arg line="-o closure/dist/transform.java"/>
+                        <arg line="-la java-front"/>
+                        <arg line="-la stratego-gpp"/>
+               </java>
+        </target>
 </project>
 

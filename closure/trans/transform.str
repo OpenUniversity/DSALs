@@ -4,8 +4,23 @@ imports
 	include/Closure
 	java-converter
 	aspect-converter
+    aspectj/pretty-print
 
 strategies
+   main = handle-io
+
+   handle-io =
+    ?[ program | args ];
+    <debug>args;
+    input_file_path := < \ [input|rest] -> input\ >args;
+    ReadFromFile;
+    ast := <id>;
+    output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
+    result := <pp-aspectj-string><convert>ast;
+    handle := <fopen> (output_file_path, "w");
+    <fputs> (result, handle);
+    fclose
+
 	convert = <try(closures-converter-compilation-unit)><id>
 
 rules
