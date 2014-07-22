@@ -28,7 +28,7 @@ strategies
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
 		!MethodDec(
 			MethodDecHead([Public(), Static()], None(), return_type, jp_id, params, throws),
-			Block([])
+			<gen-joinpoint-body(|return_type)>
 		)
 
 	closures-to-ajc(|amethods, package_name, aspect_name) =
@@ -87,3 +87,19 @@ strategies
 		 , block)
 
 
+   gen-joinpoint-body(|return_type) =
+        !Block([Return(Some(<get-default-return-value-for-return-type>return_type))])
+		
+	get-default-return-value-for-return-type =
+		return_type := <id>;
+		switch <id>return_type
+			case ?Void(): !None()
+			case ?Int() : !Some(Lit(Deci("0")))
+			case ?Long() : !Some(Lit(Deci("0")))
+			case ?Short() : !Some(Lit(Deci("0")))
+			case ?Byte() : !Some(Lit(Deci("0")))
+			case ?Double() : !Some(Lit(Deci("0")))
+			case ?Float() : !Some(Lit(Deci("0")))
+			case ?Boolean() : !Some(Lit(False()))
+			otherwise: !Some(Lit(Null()))
+		end
