@@ -28,6 +28,9 @@ exports
     Id             -> ExprName {cons("ExprName")}
     AmbName "." Id -> ExprName {cons("ExprName")}
 
+    "this"              -> ExprName {cons("This"), avoid}
+    TypeName "." "this" -> ExprName {cons("QThis"), avoid}
+
     Id             -> MethodName  {cons("MethodName")}
     AmbName "." Id -> MethodName  {cons("MethodName")}
 
