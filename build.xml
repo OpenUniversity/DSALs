@@ -2,6 +2,7 @@
 	<target name="clean">
 		<delete dir="cool/dist"/>
 		<delete dir="ejp/dist"/>
+		<delete dir="closure/dist"/>
 	</target>
 
 	<target name="cool">
