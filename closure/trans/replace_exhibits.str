@@ -62,7 +62,14 @@ strategies
 			case ?Assign(expr1, expr2):
 				<debug>"assign";
 	      	   !Assign(expr1, <replace(|<get-var-type(|var2type)>expr1, var2type)>expr2)
-			
+
+			case ?For(LocalVarDec(t1, type', var*), t2, t3, expr*):
+				var2type' := <hashtable-copy>var2type;
+				!For(LocalVarDec(t1, type', <map(replace(|type', var2type'))>var*), t2, t3, <replace(|None(), var2type')>expr*)
+
+			case ?Labeled(t1, t2):
+				!Labeled(t1, <replace(|None(), var2type)>t2)
+
 			otherwise:
 				<debug>"otherwise";
 				<debug><id>node
