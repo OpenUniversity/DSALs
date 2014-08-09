@@ -29,6 +29,7 @@ strategies
 
 	closures-to-ajc(|amethods, package_name, aspect_name) =
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
+		<joinpoint(|jp_id, return_type, throws)>jp_id;
 		!MethodDec(
 			MethodDecHead([Public(), Static()], None(), return_type, jp_id, params, throws),
 			Block([]))
@@ -109,3 +110,4 @@ strategies
 		 , block)
 
 
+	 external joinpoint(|arg1, arg2, arg3)
