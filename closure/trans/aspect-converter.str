@@ -22,12 +22,10 @@ strategies
 	closures-to-ajc(|package_name) =
 		?AspectDec(head, AspectBody(stms*));
 		<?AspectDecHead(_, Id(aspect_name), _, _, _, _)>head;
-		aspect := <id>;
-		amethods := <new-hashtable>;
-		stmt' := <topdown(try(closure-to-java-impl))><topdown(try(closures-to-ajc(|amethods, package_name, aspect_name)))>stms*;
+		stmt' := <topdown(try(closure-to-java-impl))><topdown(try(closures-to-ajc(|package_name, aspect_name)))>stms*;
 		!AspectDec(head, AspectBody(stmt'))
 
-	closures-to-ajc(|amethods, package_name, aspect_name) =
+	closures-to-ajc(|package_name, aspect_name) =
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
 		<joinpoint(|jp_id, return_type, throws)>jp_id;
 		!MethodDec(
@@ -35,7 +33,7 @@ strategies
 			Block([]))
 
 
-	closures-to-ajc(|amethods, package_name, aspect_name) =
+	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPAround(return_type, Id(jp_name), params), throws, block);
 		!AdviceDec(mods, Around(return_type, params), None(),
 		 AndComp(
@@ -53,7 +51,7 @@ strategies
 		 )
 		 , block)
 
-	closures-to-ajc(|amethods, package_name, aspect_name) =
+	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPBefore(Id(jp_name), params), throws, block);
 		!AdviceDec(mods, Before(params), None(),
 		AndComp(
@@ -72,7 +70,7 @@ strategies
 		 , block)
 
 
-	closures-to-ajc(|amethods, package_name, aspect_name) =
+	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPAfter(Id(jp_name), params), throws, block);
 		!AdviceDec(mods, After(params, None()), None(),
 		AndComp(
@@ -91,7 +89,7 @@ strategies
 		 , block)
 
 
-	closures-to-ajc(|amethods, package_name, aspect_name) =
+	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPAfterReturning(Id(jp_name), params, Some(CJPSingleParam(Some(param)))), throws, block);
 		!AdviceDec(mods, After(params, Some(Returning(param))), None(),
 		AndComp(
