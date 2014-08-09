@@ -5,6 +5,7 @@ imports
 	aspectj/pretty-print
 	utils
 	java-converter
+	libjava-front
 
 strategies
 	remove-closures-additions:
@@ -27,11 +28,13 @@ strategies
 
 	closures-to-ajc(|package_name, aspect_name) =
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
-		<joinpoint(|jp_id, return_type, throws)>jp_id;
+		<joinpoint(|<joinpoint-params-to-string>params, return_type, throws)>jp_id;
 		!MethodDec(
 			MethodDecHead([Public(), Static()], None(), return_type, jp_id, params, throws),
 			Block([]))
 
+	joinpoint-params-to-string =
+		!(<concat-strings><map(\ Param(_, x, _) -> <conc-strings>(",", <pp-java5-to-string>x) \)><id>)
 
 	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPAround(return_type, Id(jp_name), params), throws, block);
