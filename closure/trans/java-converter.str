@@ -26,14 +26,14 @@ strategies
 	   		if return_type := <get-return-type-from-block(|var2type)>block
 	   		then
 	   			<debug>"3333";
-	   			<closure-to-java-impl(|return_type)>node
+	   			<closure-to-java-impl>node
 	   		else
 	   			<debug>"4444";
-	   			<closure-to-java-impl(|ClassOrInterfaceType(TypeName(Id("Object")), None()))>node
+	   			<closure-to-java-impl>node
 	   		end
 		else
 			<debug>"5555";
-      		<closure-to-java-impl(|type)>node
+      		<closure-to-java-impl()>node
 		end
 		
 	get-return-type-from-block(|var2type) =
@@ -63,7 +63,7 @@ strategies
 	remove-return-decs =
 		<topdown(try(\ Return(_) -> None() \))><id>
 
-	closure-to-java-impl(|returnType) =
+	closure-to-java-impl =
 		?ClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, params*, block, exprs*);
 		<debug>"in closures..";
 		!Invoke(
@@ -78,7 +78,7 @@ strategies
                           MethodDecHead(
                             [MarkerAnno(TypeName(Id("Closure"))), Public()]
                           , None()
-                          , returnType
+                          , Void()
                           , Id(jp_name)
                           , params*
                           , None()
@@ -95,7 +95,7 @@ strategies
             , exprs*
             )
 
-	closure-to-java-impl(|returnType) =
+	closure-to-java-impl =
 		?ShortClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, block);
 		<debug>"in short closures..";
 		!Invoke(
@@ -110,7 +110,7 @@ strategies
                       MethodDecHead(
                         [MarkerAnno(TypeName(Id("Closure"))), Public()]
                       , None()
-                      , returnType
+                      , Void()
                       , Id(jp_name)
                       , []
                       , None()
