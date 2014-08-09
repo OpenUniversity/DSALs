@@ -3,7 +3,6 @@ module java-converter
 imports
 	include/Closure
 	utils
-	replace_exhibits
 
 strategies
 	remove-closures-calls:
@@ -14,54 +13,7 @@ strategies
 
 	closures-to-java =
 		?ClassDec(head, ClassBody(stms*));
-		<replace(|None(), <new-hashtable>)><id>
-
-	closure-to-java(|type, var2type) =
-		or(?ClosureJoinpoints(_, _, block, _), ?ShortClosureJoinpoints(_, block));
-		node := <id>;
-		<debug>"1111";
-		if <equal>(type, None())
-	   	then
-	   		<debug>"22222";
-	   		if return_type := <get-return-type-from-block(|var2type)>block
-	   		then
-	   			<debug>"3333";
-	   			<closure-to-java-impl>node
-	   		else
-	   			<debug>"4444";
-	   			<closure-to-java-impl>node
-	   		end
-		else
-			<debug>"5555";
-      		<closure-to-java-impl()>node
-		end
-		
-	get-return-type-from-block(|var2type) =
-		?Block(stmt*);
-		<debug>"66666";
-		if <is-return-stmt-exist>stmt*
-		then
-			<debug>"7777";
-			// !ClassOrInterfaceType(TypeName(Id("Arik")), None())
-			<debug><discover-return-type>stmt*
-		else
-			<debug>"8888";
-			// if there is no return statement, the method can be void
-			!Void()
-		end
-	
-	is-return-stmt-exist =
-		stms* := <id>;
-		stms' := <topdown(try(\ ClassBody(_) -> ClassBody([]) \))>stms*;
-		if <equal>(stms', <remove-return-decs>stms')
-		then
-			fail
-		else
-			not(fail)
-		end
-
-	remove-return-decs =
-		<topdown(try(\ Return(_) -> None() \))><id>
+		!ClassDec(head, ClassBody(<topdown(try(closure-to-java-impl()))>stms*))
 
 	closure-to-java-impl =
 		?ClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, params*, block, exprs*);

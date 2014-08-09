@@ -4,7 +4,7 @@ imports
 	include/Closure
 	aspectj/pretty-print
 	utils
-	replace_exhibits
+	java-converter
 
 strategies
 	remove-closures-additions:
@@ -24,8 +24,8 @@ strategies
 		<?AspectDecHead(_, Id(aspect_name), _, _, _, _)>head;
 		aspect := <id>;
 		amethods := <new-hashtable>;
-		stmt' := <topdown(try(closures-to-ajc(|amethods, package_name, aspect_name)))>stms*;
-		<replace(|None(), <new-hashtable>)>AspectDec(head, AspectBody(stmt'))
+		stmt' := <topdown(try(closure-to-java-impl))><topdown(try(closures-to-ajc(|amethods, package_name, aspect_name)))>stms*;
+		!AspectDec(head, AspectBody(stmt'))
 
 	closures-to-ajc(|amethods, package_name, aspect_name) =
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
