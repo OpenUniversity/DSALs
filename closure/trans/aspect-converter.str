@@ -30,7 +30,7 @@ strategies
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
 		<joinpoint(|<joinpoint-params-to-string>params, return_type, throws)>jp_id;
 		!MethodDec(
-			MethodDecHead([Public(), Static()], None(), return_type, jp_id, params, throws),
+			MethodDecHead([Public(), Static()], None(), Void(), jp_id, params, throws),
 			Block([]))
 
 	joinpoint-params-to-string =
