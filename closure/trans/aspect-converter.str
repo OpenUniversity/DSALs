@@ -16,6 +16,9 @@ strategies
 	remove-closures-additions:
 		ClosureJoinpoints(_, _, _, _) -> None()
 
+	remove-closures-additions:
+		CJPAdvice(_, _, _, _) -> None()
+
 	closures-to-ajc(|package_name) =
 		?AspectDec(head, AspectBody(stms*));
 		<?AspectDecHead(_, Id(aspect_name), _, _, _, _)>head;
