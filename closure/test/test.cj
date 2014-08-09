@@ -1,7 +1,7 @@
 package a;
 
 aspect BonusProgram {
-// 	joinpoint int Buying(int amount, Category cat);
+	joinpoint int Buying(int amount, Category cat);
 //
 // 	after Buying(int amt, Category cat) {
 // 	}
