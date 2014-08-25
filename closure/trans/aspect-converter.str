@@ -30,8 +30,17 @@ strategies
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
 		<joinpoint(|<joinpoint-params-to-string>params, return_type, throws)>jp_id;
 		!MethodDec(
-			MethodDecHead([Public(), Static()], None(), Void(), jp_id, params, throws),
-			Block([]))
+			MethodDecHead([Private(), Static(), MarkerAnno(TypeName(Id("Joinpoint")))], None(), return_type, jp_id, params, throws),
+			Block([
+				Throw(
+                  NewInstance(
+                    None()
+                  , ClassOrInterfaceType(TypeName(Id("UnsupportedOperationException")), None())
+                  , []
+                  , None()
+                  )
+                )
+			]))
 
 	joinpoint-params-to-string =
 		!(<concat-strings><map(\ Param(_, x, _) -> <conc-strings>(",", <pp-java5-to-string>x) \)><id>)
