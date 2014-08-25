@@ -40,7 +40,9 @@ rules
 				package_name := None()
 			end;
 			<debug>"dddd";
-			ImportDecs' := <conc>(ImportDecs, [TypeImportOnDemandDec(PackageName([Id("closures"),Id("runtime")]))]);
+			ImportDecs' := <conc>(ImportDecs,
+			 [TypeImportOnDemandDec(PackageName([Id("closures"),Id("runtime")])),
+			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang"), Id("annotation")]))]);
 			<debug>"eee";
 			TypeDecs' := <all(try(closures-converter-aspect-or-class(|package_name)))><debug>TypeDecs;
 			<debug>"fff"
