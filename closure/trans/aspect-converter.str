@@ -148,21 +148,47 @@ strategies
 
 	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPAfterThrowing(Id(jp_name), params, Some(CJPSingleParam(Some(param)))), throws, block);
-		!AdviceDec(mods, After(params, Some(Throwing(param))), None(),
-		AndComp(
-			 Call(
-			    MethodPattern(
-	                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
-	              , ModPattern([])
-	              , RefTypePattern(NamePattern("*"))
-	              , MemberName(jp_name)
-	              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
-	              , None()
-	              )
-			 ),
-			 Args(<map( \ Param(_, _, Id(x)) -> ClassOrInterfaceType(TypeName(Id(x)), None()) \ )>params)
-		 )
-		 , block)
-
+		!MethodDec(
+            MethodDecHead(
+              [ Anno(
+                  TypeName(Id("AfterThrowing"))
+                , [ElemValPair(Id("pointcut"), Lit(String([Chars(<pp-aspectj-string>Call(
+							    MethodPattern(
+				                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
+					              , ModPattern([])
+					              , RefTypePattern(NamePattern("*"))
+					              , MemberName(jp_name)
+					              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
+					              , None()
+					              )
+							 ))])))
+					, ElemValPair(Id("throwing"),
+					  <\ Param(_, _, x) -> Lit(String([Chars(<pp-java-string>x)])) \>param)
+				  ]
+                )
+              , Anno(
+                  TypeName(Id("JoinpointSignature"))
+                , [ ElemValPair(
+                      Id("args")
+                    , ElemValArrayInit(
+                      	<map( \ Param(_, x, _) -> Lit(Class(RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))))) \ )>params
+                      )
+                    )
+                  , ElemValPair(
+                      Id("name")
+                    , Lit(String([Chars(jp_name)]))
+                    )
+                  ]
+                )
+              , Public()
+              ]
+            , None()
+            , Void()
+            , Id(jp_name)
+            , [param]
+            , None()
+            )
+          , block
+          )
 
 	 external joinpoint(|arg1, arg2, arg3)
