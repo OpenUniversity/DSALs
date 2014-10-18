@@ -7,6 +7,10 @@ imports
   
 strategies
 
+	gen-synthetic-method-name =
+		base_name := <id>;
+		!<debug><concat-strings>[base_name, <int-to-string><abs><next-random>]
+
 	add-var(|name, type) =
 		<hashtable-put(|name, type)><id>
 
