@@ -11,7 +11,7 @@ strategies
 
    handle-io =
     ?[ program | args ];
-    <debug>args;
+    // <debug>args;
     input_file_path := < \ [input|rest] -> input\ >args;
     ReadFromFile;
     ast := <id>;
@@ -28,31 +28,25 @@ rules
 	with
 		if (<?(x,x)>(TypeDecs, <all(try(check-for-change-in-aspect-or-class))>TypeDecs))
 		then
-			<debug>"bbb";
 			ImportDecs' := ImportDecs;
 			TypeDecs' := TypeDecs
 		else
-			<debug>"ccc";
 			if (<?(Some(PackageDec(_, _)))>PackageDec)
 			then
 				<?(Some(PackageDec(_, package_name)))>PackageDec
 			else
 				package_name := None()
 			end;
-			<debug>"dddd";
 			ImportDecs' := <conc>(ImportDecs,
 			 [TypeImportOnDemandDec(PackageName([Id("closures"),Id("runtime")])),
 			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang"), Id("annotation")])),
 			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang")]))]);
-			<debug>"eee";
-			TypeDecs' := <all(try(closures-converter-aspect-or-class(|package_name)))><debug>TypeDecs;
-			<debug>"fff"
+			TypeDecs' := <all(try(closures-converter-aspect-or-class(|package_name)))>TypeDecs
 		end
 		
 	check-for-change-in-aspect-or-class: ClassDec(head, body) -> result
 	with
-		<debug>"aaaa";
-		result := <debug><topdown(try(remove-closures-calls))>ClassDec(head, body)
+		result := <topdown(try(remove-closures-calls))>ClassDec(head, body)
 	
 	check-for-change-in-aspect-or-class: AspectDec(head, body) -> result
 	with
