@@ -215,9 +215,9 @@ strategies
               ]
             , None()
             , Void()
-            , Id(jp_name)
+            , Id(<gen-synthetic-method-name>jp_name)
             , [param]
-            , None()
+            , throws
             )
           , block
           )
@@ -260,9 +260,9 @@ strategies
               ]
             , None()
             , Void()
-            , Id(jp_name)
+            , Id(<gen-synthetic-method-name>jp_name)
             , [param]
-            , None()
+            , throws
             )
           , block
           )
