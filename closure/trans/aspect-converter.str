@@ -47,21 +47,60 @@ strategies
 
 	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPAround(return_type, Id(jp_name), params), throws, block);
-		!AdviceDec(mods, Around(return_type, params), None(),
-		 AndComp(
-			 Call(
-			 	MethodPattern(
-	                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
-	              , ModPattern([])
-	              , RefTypePattern(NamePattern("*"))
-	              , MemberName(jp_name)
-	              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
-	              , None()
-	              )
-			 ),
-			 Args(<map( \ Param(_, _, Id(x)) -> ClassOrInterfaceType(TypeName(Id(x)), None()) \ )>params)
-		 )
-		 , block)
+		!MethodDec(
+            MethodDecHead(
+              [ SingleElemAnno(
+                  TypeName(Id("Around"))
+                , Lit(String([Chars(<pp-aspectj-string>
+                  AndComp(
+                  	Call(
+					    MethodPattern(
+		                AnnoPattern([SimpleAnnoPatternExact(TypeName(Id("Closure")))])
+			              , ModPattern([])
+			              , RefTypePattern(NamePattern("*"))
+			              , MemberName(jp_name)
+			              , <map( \ Param(_, x, _) -> RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))) \ )>params
+			              , None()
+			              )
+					 ),
+					 Args(
+		                	<map( \ Param(_, _, x) -> ClassOrInterfaceType(TypeName(Id(<pp-aspectj-string>x)), None()) \ )>params
+					 )))]))
+				)
+              , Anno(
+                  TypeName(Id("JoinpointSignature"))
+                , [ ElemValPair(
+                      Id("args")
+                    , ElemValArrayInit(
+                      	<map( \ Param(_, x, _) -> Lit(Class(RegularTypePattern(RefTypePattern(NamePattern(<pp-aspectj-string>x))))) \ )>params
+                      )
+                    )
+                  , ElemValPair(
+                      Id("name")
+                    , Lit(String([Chars(jp_name)]))
+                    )
+                 ]
+                )
+              , Public()
+              ]
+            , None()
+            , return_type
+            , Id(<gen-synthetic-method-name>jp_name)
+            , <conc>([Param(
+	                 []
+	               , ClassOrInterfaceType(TypeName(Id("ProceedingJoinPoint")), None())
+	               , Id("pjp")
+	               ),
+	               Param(
+	                 []
+	               , ClassOrInterfaceType(TypeName(Id("JoinPoint")), None())
+	               , Id("thisJoinPoint")
+	               )
+	               ], params)
+            , throws
+            )
+          , <topdown(try(replace-proceed-calls(|return_type)))>block
+          )
 
 	closures-to-ajc(|package_name, aspect_name) =
 		?CJPAdvice(mods, CJPBefore(Id(jp_name), params), throws, block);
@@ -266,5 +305,37 @@ strategies
             )
           , block
           )
+
+
+	replace-proceed-calls(|return_type) =
+		?Invoke(
+          Method(MethodName(Id("proceed")))
+        , arg*);
+        !CastRef(
+	        <primitiveToBoxObject>return_type
+	      , Invoke(
+	          Method(MethodName(AmbName(Id("pjp")), Id("proceed")))
+	        , [ NewArray(
+	              TypeName(Id("Object"))
+	            , [Dim()]
+	            , ArrayInit(arg*)
+	            )
+	          ]
+	        )
+	      )
+
+	// needed for java < 7
+	primitiveToBoxObject =
+		returnType := <id>;
+		switch <id>returnType
+			case ?Int() : !ClassOrInterfaceType(TypeName(Id("Integer")), None())
+			case ?Long() : !ClassOrInterfaceType(TypeName(Id("Long")), None())
+			case ?Short() : !ClassOrInterfaceType(TypeName(Id("Short")), None())
+			case ?Byte() : !ClassOrInterfaceType(TypeName(Id("Byte")), None())
+			case ?Double() : !ClassOrInterfaceType(TypeName(Id("Double")), None())
+			case ?Float() : !ClassOrInterfaceType(TypeName(Id("Float")), None())
+			case ?Boolean() : !ClassOrInterfaceType(TypeName(Id("Boolean")), None())
+			otherwise: <id>returnType
+		end
 
 	 external joinpoint(|arg1, arg2, arg3)
