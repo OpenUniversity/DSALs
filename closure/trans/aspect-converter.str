@@ -86,17 +86,19 @@ strategies
             , None()
             , return_type
             , Id(<gen-synthetic-method-name>jp_name)
-            , <conc>([Param(
+            , <conc>(
+              	params,
+              	[Param(
 	                 []
 	               , ClassOrInterfaceType(TypeName(Id("ProceedingJoinPoint")), None())
 	               , Id("pjp")
 	               ),
-	               Param(
+               	 Param(
 	                 []
 	               , ClassOrInterfaceType(TypeName(Id("JoinPoint")), None())
 	               , Id("thisJoinPoint")
-	               )
-	               ], params)
+	               )]
+	            )
             , throws
             )
           , <topdown(try(replace-proceed-calls(|return_type)))>block
@@ -143,12 +145,14 @@ strategies
             , None()
             , Void()
             , Id(<gen-synthetic-method-name>jp_name)
-            , <conc>([Param(
-	                 []
+            , <conc>(
+              	params,
+              	[Param(
+              		 []
 	               , ClassOrInterfaceType(TypeName(Id("JoinPoint")), None())
 	               , Id("thisJoinPoint")
-	               )]
-	               , params)
+	                 )]
+	           )
             , throws
             )
           , block
@@ -195,17 +199,14 @@ strategies
             , None()
             , Void()
             , Id(<gen-synthetic-method-name>jp_name)
-            , <conc>([Param(
-	                 []
-	               , ClassOrInterfaceType(TypeName(Id("ProceedingJoinPoint")), None())
-	               , Id("pjp")
-	               ),
-	               Param(
+            , <conc>(
+              	params,
+              	[Param(
 	                 []
 	               , ClassOrInterfaceType(TypeName(Id("JoinPoint")), None())
 	               , Id("thisJoinPoint")
-	               )
-	               ], params)
+	                 )]
+	            )
             , throws
             )
           , block
