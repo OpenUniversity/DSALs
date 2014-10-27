@@ -145,15 +145,10 @@ strategies
             , Id(<gen-synthetic-method-name>jp_name)
             , <conc>([Param(
 	                 []
-	               , ClassOrInterfaceType(TypeName(Id("ProceedingJoinPoint")), None())
-	               , Id("pjp")
-	               ),
-	               Param(
-	                 []
 	               , ClassOrInterfaceType(TypeName(Id("JoinPoint")), None())
 	               , Id("thisJoinPoint")
-	               )
-	               ], params)
+	               )]
+	               , params)
             , throws
             )
           , block
