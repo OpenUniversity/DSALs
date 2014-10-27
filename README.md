@@ -1,4 +1,4 @@
-AOP-Awesome-Frontend-Transformations
+AOP-Awesome-Frontends
 ====================================
 
 This project contains transformations of different languages & extensions to Java.  
