@@ -22,7 +22,7 @@ strategies
               Method(
                 NewInstance(
                   None()
-                , ClassOrInterfaceType(TypeName(Id("Object")), None())
+                , ClassOrInterfaceType(TypeName(Id("JoinpointWrapper")), None())
                 , []
                 , Some(
                     ClassBody(
@@ -54,7 +54,7 @@ strategies
           Method(
             NewInstance(
               None()
-            , ClassOrInterfaceType(TypeName(Id("Object")), None())
+            , ClassOrInterfaceType(TypeName(Id("JoinpointWrapper")), None())
             , []
             , Some(
                 ClassBody(
