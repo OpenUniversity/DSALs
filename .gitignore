@@ -3,7 +3,6 @@ bin
 .cache
 include/
 editor/java/trans
-*generated*
 .settings
 utils
 result.aj
