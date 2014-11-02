@@ -1,0 +1,10 @@
+bin
+.cache
+include
+editor/java/trans
+editor/*.generated.esv
+syntax/*.generated.esv
+.settings/org.eclipse.jdt.core.prefs
+utils
+lib/*.generated.str
+lib-refactoring/*.generated.str
