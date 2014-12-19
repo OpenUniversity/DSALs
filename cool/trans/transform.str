@@ -87,10 +87,22 @@ strategies
   make-requires-method(|requires_map, requires_methods, method2index) =
      ?MethodSignature(Id(name), types);
      methodsig := <id>;
-     annos := [Anno(TypeName(Id("COOLRequires")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]), Private()];
+     annos := [
+     	Anno(TypeName(Id("COOLRequires")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
+     	<gen-source-location-ann>methodsig,
+     	Private()
+     	];
      newmethodname := <gen-requires-method-name(|method2index)>methodsig;
      <hashtable-put(|methodsig, newmethodname)>requires_methods;
      !MethodDec(MethodDecHead(annos, None(), Boolean(), Id(newmethodname), [], None()), Block([Return(Some(<hashtable-get(|methodsig)>requires_map))]))
+
+  gen-source-location-ann:
+  	x -> Anno(TypeName(Id("SourceLocation")),[ElemValPair(Id("file"),Lit(String([Chars(<original-file>x)]))),ElemValPair(Id("line"),Lit(Deci(<int-to-string><original-line><original-location>x))),ElemValPair(Id("offset"),Lit(Deci(<int-to-string><\(x,_)->x\><original-offset>x)))])
+
+  original-file = prim("SSL_EXT_origin_file", <id>)
+  original-location = prim("SSL_EXT_origin_location", <id>)
+  original-line = \ (x, _, _, _) -> x \
+  original-offset = prim("SSL_EXT_origin_offset", <id>)
 
   make-on-entry-method(|on_entry_map, coordname, on_entry_methods, method2index) =
     ?MethodSignature(Id(name), types);
