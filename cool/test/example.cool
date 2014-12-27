@@ -9,7 +9,7 @@ coordinator base.BoundedStack {
   int top = 0; 
   
   push(java.lang.Object):
-  	 requires (!full);
+      requires (!full);
       on_entry {top = top + 2;} 
       on_exit  {
         empty = false;
