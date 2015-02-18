@@ -298,13 +298,13 @@ rules
 		ThisClass() -> 
 				Within(
                  AnnoTypePattern(
-                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejp.runtime.ClassAnno")), Lit(Deci(class_name)))])
+                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejps.runtime.ClassAnno")), Lit(Deci(class_name)))])
                 , RefTypePattern(NamePattern("*"))))
 
 	pointcutarg(|class_name, method_name, block_name):
 		ThisMethod() ->
 				MethodPattern(
-                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejp.runtime.MethodAnno")), Lit(Deci(method_name)))])
+                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejps.runtime.MethodAnno")), Lit(Deci(method_name)))])
                 , ModPattern([])
                 , RefTypePattern(NamePattern("*"))
                 , MemberName("*")
@@ -314,7 +314,7 @@ rules
 	pointcutarg(|class_name, method_name, block_name):
 		ThisBlock() ->
 				MethodPattern(
-                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejp.runtime.EjpBlockAnno")), Lit(Deci(block_name)))])
+                  AnnoPattern([SimpleAnnoPatternValue(TypeName(Id("ejps.runtime.EjpBlockAnno")), Lit(Deci(block_name)))])
                 , ModPattern([])
                 , RefTypePattern(NamePattern("*"))
                 , MemberName("*")

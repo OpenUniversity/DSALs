@@ -39,7 +39,7 @@ rules
 			else
 				package_name := None()
 			end;
-			ImportDecs' := <conc>(ImportDecs, [TypeImportOnDemandDec(PackageName([Id("ejp"),Id("runtime")]))]);
+			ImportDecs' := <conc>(ImportDecs, [TypeImportOnDemandDec(PackageName([Id("ejps"),Id("runtime")]))]);
 			TypeDecs' := <all(try(ejp-converter-aspect-or-class(|package_name)))>TypeDecs
 		end
 		
