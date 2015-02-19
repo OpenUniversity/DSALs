@@ -1,0 +1,13 @@
+module editor/ejp-Outliner
+
+imports
+  
+  include/ejp
+  lib/runtime/editor/outline-library
+  lib/runtime/editor/origins
+  editor/ejp-Outliner.generated
+
+rules
+  
+  to-outline-label = fail
+  
