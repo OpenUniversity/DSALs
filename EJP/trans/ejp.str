@@ -19,8 +19,15 @@ imports
 	check
 	generate
 	pp
+	transform
+	aspectj/pretty-print
 
 rules // Analysis
+	transform:
+        (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := "result.aj";
+      result   := <pp-aspectj-string><convert>selected
 	
 	editor-analyze = analysis-default-editor
 	

@@ -33,4 +33,5 @@ menus
   menu: "Generation"                   (openeditor) (realtime)
     
     action: "Generate Java"          = generate-java
+    action: "transform"              = transform
 

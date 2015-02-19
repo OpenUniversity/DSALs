@@ -1,0 +1,82 @@
+/**
+ * Pretty-printing of Class Member Patterns
+ *
+ * @author Martin Bravenboer <martin.bravenboer@gmail.com>
+ */
+module aspectj/pp/pattern/ClassMember
+rules
+
+  aspectj-to-box :
+    MethodPattern(AnnoPattern(annos), ModPattern(mods), b2, b3, params, throws)
+      ->
+    H hs=1 [~*b1 b2 H hs=0[b3 b4] ~*b5]
+    where
+      <conc> (annos, mods) => b1
+      ; <list-to-args> params => b4
+      ; <option-to-boxes> throws => b5
+
+  aspectj-to-box :
+    ConstrPattern(AnnoPattern(annos), ModPattern(mods), b2, params, b4) -> H hs=1 [~*b1 H hs=0[b2 b3] b4]
+    where
+      <conc> (annos, mods) => b1
+      ; <list-to-args> params => b3
+
+  aspectj-to-box :
+    FieldPattern(AnnoPattern(annos), ModPattern(mods), b2, b3) -> H hs=1 [~*b1 b2 b3]
+    where
+      <conc> (annos, mods) => b1    
+
+rules
+
+  aspectj-to-box :
+    MemberName(s) -> box |[ s ]|
+
+  aspectj-to-box :
+    MemberName(b, s) -> H hs=0 [b "." s]
+
+  aspectj-to-box :
+    WildcardMemberName(b, s) -> H hs=0 [b ".." s]
+
+rules
+
+  aspectj-to-box :
+    ConstrName() -> box |[ KW["new"] ]|
+
+  aspectj-to-box :
+    ConstrName(b) -> H hs=0 [b "." KW["new"]]
+
+  aspectj-to-box :
+    WildcardConstrName(b) -> H hs=0 [b ".." KW["new"]]
+
+rules
+
+  aspectj-to-box :
+    Not(b) -> H hs=0 ["!" b]
+
+  aspectj-to-box :
+    ModPattern(mods) -> H hs=1 [ ~*mods ]
+
+  aspectj-to-box :
+    ThrowsPattern(b1) -> H hs=1 [KW["throws"] b2]
+    where   
+      b2 := <separate-by-comma> b1
+
+  aspectj-to-box :
+    NotThrowsCondition(b) -> H hs=0 ["!" b ]
+
+  aspectj-to-box :
+    ThrowsCondition(b) -> H hs=0 ["(" b ")"]
+    where
+      <has-leftmost-not> b
+
+  aspectj-to-box :
+    ThrowsCondition(b) -> b
+    where
+      <not(has-leftmost-not)> b
+
+  has-leftmost-not =
+    rec rec(
+      NotComp(id)
+      + AndComp(rec, id)
+      + OrComp(rec, id)
+    )

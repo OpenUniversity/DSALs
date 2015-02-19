@@ -1,0 +1,5 @@
+module aspectj/pp/pattern/ClassName
+rules
+
+  aspectj-to-box :
+   SimpleNamePattern(b) -> box |[ b ]|
