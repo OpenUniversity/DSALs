@@ -1,0 +1,13 @@
+%%%
+ %% Patterns
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pattern/Main
+imports
+  languages/aspectj/pattern/ClassMember
+  languages/aspectj/pattern/ClassName
+  languages/aspectj/pattern/FormalParameter
+  languages/aspectj/pattern/Name
+  languages/aspectj/pattern/Type
+  languages/aspectj/pattern/Annotation

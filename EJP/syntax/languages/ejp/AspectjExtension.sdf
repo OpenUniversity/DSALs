@@ -1,0 +1,9 @@
+module languages/ejp/AspectjExtension
+
+imports
+  languages/aspectj/JavaExtension
+	
+exports
+  context-free syntax
+	"@" TypeName "(" ElemVal ")" -> SimpleAnnoPattern {cons("SimpleAnnoPatternValue")}
+	

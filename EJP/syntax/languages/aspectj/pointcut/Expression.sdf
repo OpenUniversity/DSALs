@@ -1,0 +1,119 @@
+%%%
+ %% Pointcut Expressions
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pointcut/Expression
+imports
+  languages/aspectj/common/BooleanComposition[PointcutExpr]
+  languages/aspectj/pattern/ClassMember
+
+exports
+  sorts PointcutExpr PrimPointcutName
+  context-free syntax
+    "call"      "(" MethodConstrPattern ")" -> PointcutExpr {cons("Call")}
+    "execution" "(" MethodConstrPattern ")" -> PointcutExpr {cons("Exec")}
+  lexical syntax
+    "call" | "execution" -> PrimPointcutName
+
+  context-free syntax
+    "initialization"       "(" ConstrPattern ")"    -> PointcutExpr {cons("InitExec")}
+    "preinitialization"    "(" ConstrPattern ")"    -> PointcutExpr {cons("PreInitExec")}
+    "staticinitialization" "(" TopTypePattern ")" -> PointcutExpr {cons("StaticInitExec")}
+  lexical syntax
+    "initialization" | "preinitialization" | "staticinitialization" -> PrimPointcutName
+
+  context-free syntax
+    "get" "(" FieldPattern ")" -> PointcutExpr {cons("GetField")}
+    "set" "(" FieldPattern ")" -> PointcutExpr {cons("SetField")}
+  lexical syntax
+    "get" | "set" -> PrimPointcutName
+
+  context-free syntax
+    "handler" "(" TopTypePattern ")" -> PointcutExpr {cons("Handler")}
+  lexical syntax
+    "handler" -> PrimPointcutName
+
+  context-free syntax
+    "adviceexecution" "(" ")" -> PointcutExpr {cons("AdviceExec")}
+  lexical syntax
+    "adviceexecution" -> PrimPointcutName
+
+  context-free syntax
+    "within"     "(" TopTypePattern ")" -> PointcutExpr {cons("Within")}
+    "withincode" "(" MethodConstrPattern ")" -> PointcutExpr {cons("WithinCode")}
+  lexical syntax
+    "within" | "withincode" -> PrimPointcutName
+
+  context-free syntax
+    "cflow"      "(" PointcutExpr ")" -> PointcutExpr {cons("CFlow")}
+    "cflowbelow" "(" PointcutExpr ")" -> PointcutExpr {cons("CFlowBelow")}
+  lexical syntax
+    "cflow" | "cflowbelow" -> PrimPointcutName
+
+  context-free syntax
+    "if" "(" Expr ")" -> PointcutExpr {cons("If")}
+  lexical syntax
+    "if" -> PrimPointcutName
+
+  context-free syntax
+    "this"    "("  TypeOrIdPattern       ")" -> PointcutExpr {cons("This")}
+    "target"  "("  TypeOrIdPattern       ")" -> PointcutExpr {cons("Target")}
+    "args"    "(" {TypeOrIdPattern ","}* ")" -> PointcutExpr {cons("Args")}
+   
+  lexical syntax
+    "this" | "target" | "args" -> PrimPointcutName
+
+  context-free syntax    
+    "@this"       "(" AnnoOrId ")" -> PointcutExpr {cons("AtThis")}
+    "@target"     "(" AnnoOrId ")" -> PointcutExpr {cons("AtTarget")}
+    "@within"     "(" AnnoOrId ")" -> PointcutExpr {cons("AtWithin")}
+    "@withincode" "(" AnnoOrId ")" -> PointcutExpr {cons("AtWithinCode")}
+    "@annotation" "(" AnnoOrId ")" -> PointcutExpr {cons("AtAnno")}
+    "@args" "(" {AnnoOrIdPattern ","}* ")" -> PointcutExpr {cons("AtArgs")}
+   
+  context-free syntax
+    PointcutName "(" {TypeOrIdPattern ","}* ")" -> PointcutExpr {cons("NamedPointcut")}
+
+  sorts PointcutName
+  context-free syntax
+    Id                                 -> PointcutName {cons("PointcutName")}
+    ClassOrInterfaceType -> PointcutName {cons("PointcutName"), avoid}
+
+  sorts AnnoOrId AnnoOrIdPattern TypeOrIdPattern
+  context-free syntax
+    TypeName -> AnnoOrId
+    "*"      -> AnnoOrIdPattern {cons("Wildcard")}
+    ".."     -> AnnoOrIdPattern {cons("DotWildcard")}
+    AnnoOrId -> AnnoOrIdPattern
+ 
+    "*"             -> TypeOrIdPattern {cons("Wildcard")}
+    ".."            -> TypeOrIdPattern {cons("DotWildcard")}
+    Type     -> TypeOrIdPattern
+    Type "+" -> TypeOrIdPattern {cons("Subtype")}
+
+
+  lexical restrictions
+    "adviceexecution"
+    "args"
+    "call"
+    "cflow"
+    "cflowbelow"
+    "error"
+    "execution"
+    "get"
+    "handler"
+    "initialization"
+    "parents"
+    "precedence"
+    "preinitialization"
+    "returning"
+    "set"
+    "soft"
+    "staticinitialization"
+    "target"
+    "throwing"
+    "warning"
+    "within"
+    "withincode"
+      -/- [A-Za-z0-9\_\$]

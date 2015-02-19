@@ -1,0 +1,13 @@
+module ejp
+
+imports languages/ejp/Main
+
+exports
+sorts JavaCtxCompilationUnit
+context-free start-symbols
+
+  JavaCtxCompilationUnit
+
+context-free syntax
+
+  CompilationUnit -> JavaCtxCompilationUnit

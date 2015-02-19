@@ -1,0 +1,23 @@
+%%%
+ %% Keywords in the ejp in addition to those in the official AspectJ Compiler.
+ %%
+ %% @author  Arik Hadas
+ %%%
+module languages/ejp/Keyword
+
+imports
+	languages/aspectj/ajc/Keyword
+
+exports
+  lexical syntax
+      "joinpoint"
+    | "scoped"
+    | "pointcutargs"
+    | "handles" -> PseudoKeyword
+    
+  lexical syntax
+  	  "thisclass"
+  	| "thismethod"
+  	| "thisblock"
+	| "ejp"
+    | "ejpscope" -> Keyword

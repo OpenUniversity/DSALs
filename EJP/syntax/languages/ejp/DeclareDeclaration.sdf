@@ -1,0 +1,13 @@
+module languages/ejp/DeclareDeclaration
+imports
+  languages/aspectj/JavaExtension
+exports
+  context-free syntax
+    "declare" "error" "nomatch" Granularity ":" PointcutExpr ":" PointcutExpr ":" StringLiteral ";"
+     -> DeclareDec {cons("DecNoMatch")}
+
+    "by" "package" -> Granularity {cons("ByPackageGranularity")}
+    "by" "class"   -> Granularity {cons("ByClassGranularity")}
+    "by" "method"  -> Granularity {cons("ByMethodGranularity")}
+    "by" "ejp"     -> Granularity {cons("ByEjpGranularity")}
+		     
