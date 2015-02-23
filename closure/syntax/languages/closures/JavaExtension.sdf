@@ -1,16 +1,13 @@
 module languages/closures/JavaExtension
 
 imports
-  languages/aspectj/JavaExtension
   languages/java-15/Main
 
 exports
     
   context-free syntax
 	"exhibit" MethodName "(" {FormalParam ","}* ")" Block "(" {Expr ","}* ")" -> Expr {cons("ClosureJoinpoints")}
-
 	"exhibit" MethodName Block -> Expr {cons("ShortClosureJoinpoints")}
 
-  	
-
-	
+  lexical syntax
+	"exhibit" -> Keyword

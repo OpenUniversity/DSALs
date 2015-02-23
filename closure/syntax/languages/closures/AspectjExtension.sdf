@@ -1,11 +1,7 @@
 module languages/closures/AspectjExtension
 
 imports
-	languages/aspectj/aspect/BodyDeclaration
-	languages/java-15/types/ReferenceTypes
-	languages/java-15/classes/MethodDeclarations
-	languages/java-15/expressions/Main
-	languages/java-15/classes/MethodDeclarations
+	languages/aspectj/ajc/Main
 
 exports
 	sorts JoinpointDeclaration
@@ -30,3 +26,6 @@ exports
 		ResultType "around" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPAround")}
 
 		"@" TypeName "(" ElemVal ")" -> SimpleAnnoPattern {cons("SimpleAnnoPatternValue")}
+
+	lexical syntax
+		"joinpoint" -> PseudoKeyword
