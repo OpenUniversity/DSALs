@@ -1,9 +1,4 @@
 module languages/ejp/Main
 imports
-  languages/aspectj/ajc/Main
   languages/ejp/JavaExtension
-  languages/ejp/Keyword
-  languages/ejp/Declaration
-  languages/ejp/ClassMember
-  languages/ejp/DeclareDeclaration
   languages/ejp/AspectjExtension

@@ -6,4 +6,54 @@ imports
 exports
   context-free syntax
 	"@" TypeName "(" ElemVal ")" -> SimpleAnnoPattern {cons("SimpleAnnoPatternValue")}
+
+	ExplicitJoinPointDeclaration -> AspectBodyDec
+	ExplicitJoinPointPHeader PointcutargsDec? Handles? Throws? ExplicitJoinPointInitializer? ";" -> ExplicitJoinPointDeclaration {cons("ExplicitJoinPointDeclaration")}
+	Modifier? "scoped" ExplicitJoinPointDeclarator -> ExplicitJoinPointPHeader {cons("ScopedExplicitJoinPointPHeader")}
+	Modifier? ExplicitJoinPointDeclarator -> ExplicitJoinPointPHeader {cons("NonScopedExplicitJoinPointPHeader")}
+	"joinpoint" ResultType Id "(" {FormalParam ","}* ")" -> ExplicitJoinPointDeclarator {cons("ExplicitJoinPointDeclarator")}
+	"pointcutargs" {PointcutargDec ","}+ -> PointcutargsDec {cons("PointcutargsDec")}
+	Id "(" {FormalParam ","}* ")" -> PointcutargDec {cons("PointcutargDec")}
+	"handles" {ClassType ","}+ -> Handles {cons("Handles")}
+	"=" Expr -> ExplicitJoinPointInitializer {cons("ExplicitJoinPointInitializer")}
+
+	ExplicitJoinPointPattern -> MethodConstrPattern
+	ExplicitJoinPointScopePattern -> MethodConstrPattern
+	ThisClass -> PointcutExpr
+	ThisMethod -> MethodConstrPattern
+	ThisBlock -> MethodConstrPattern
+
+	"ejp"  "(" MethodPattern ")" -> ExplicitJoinPointPattern {cons("ExplicitJoinPointPattern")}
+	"ejp"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointPattern {cons("ExplicitJoinPointPattern")}
+	
+	"!ejp"  "(" MethodPattern ")" -> ExplicitJoinPointPattern {cons("NotExplicitJoinPointPattern")}
+	"!ejp"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointPattern {cons("NotExplicitJoinPointPattern")}
+
+	"ejpscope"  "(" MethodPattern ")" -> ExplicitJoinPointScopePattern {cons("ExplicitJoinPointScopePattern")}
+	"ejpscope"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointScopePattern {cons("ExplicitJoinPointScopePattern")}
+	
+	"!ejpscope"  "(" MethodPattern ")" -> ExplicitJoinPointScopePattern {cons("NotExplicitJoinPointScopePattern")}
+	"!ejpscope"  "(" ClassMemberNamePattern ")" -> ExplicitJoinPointScopePattern {cons("NotExplicitJoinPointScopePattern")}
+	
+	"thisclass" -> ThisClass {cons("ThisClass")}
+	"thismethod" -> ThisMethod {cons("ThisMethod")}
+	"thisblock" -> ThisBlock {cons("ThisBlock")}
+
+	"declare" "error" "nomatch" Granularity ":" PointcutExpr ":" PointcutExpr ":" StringLiteral ";"
+     -> DeclareDec {cons("DecNoMatch")}
+
+    "by" "package" -> Granularity {cons("ByPackageGranularity")}
+    "by" "class"   -> Granularity {cons("ByClassGranularity")}
+    "by" "method"  -> Granularity {cons("ByMethodGranularity")}
+    "by" "ejp"     -> Granularity {cons("ByEjpGranularity")}
+
+  lexical syntax
+      "joinpoint"
+    | "scoped"
+    | "ejp"
+    | "ejpscope"
+    | "thisclass"
+    | "thismethod"
+    | "thisblock"
+    | "handles" -> PseudoKeyword
 	
