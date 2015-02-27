@@ -32,7 +32,7 @@
                 </java>
         </target>
 
-        <target name="closure">
+        <target name="cjp">
                <mkdir dir="closure/dist"/>
                <java fork="true" jar="libs/strategoxt.jar">
                         <jvmarg value="-Xmx1024m"/>
