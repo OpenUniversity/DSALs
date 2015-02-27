@@ -1,14 +1,15 @@
-package ex_policy;
+package ex_base;
 
-import org.aspectj.lang.reflect.*;
-import org.aspectj.lang.annotation.Before;
+public class Main {
+        public static void main(String[] args) {
+            new Main().arik();
+        }
 
-public aspect Aspect {
- 
-  public scoped joinpoint int aa(int a, int b);
+        public void arik() {
 
-  declare error nomatch by ejp: 
-          call(* foo(..)):
-          call(* goo(..)):
-          "no match error";
+                ex_base.Aspect.sjp(4,4) {
+                     System.out.println("in scoped block");
+                     foo(1);
+                };
+        }
 }
