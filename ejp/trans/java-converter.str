@@ -108,7 +108,7 @@ strategies
 		<id>source
 
     // need to get the class name as a parameter
-	gen-auxilery-class(|vars_to_define, vars_table, ejp, class_name, gen_id) =
+	gen-auxilery-class(|vars_to_define, vars_table, ejp, class_name, gen_id, ejp_call) =
 		stms* := <id>;
 		<?ExplicitJoinPoint(aspect_id, joinpoint_id, args)>ejp;
 		!ClassDec(ClassDecHead([], Id(class_name), None(), None(), None()),
@@ -116,7 +116,9 @@ strategies
   			  	<gen-compact-var-declaration(|vars_to_define, vars_table)>,
   			  	[MethodDec(
             		MethodDecHead(
-            			[SingleElemAnno(TypeName(Id("MethodAnno")), Lit(Deci(gen_id))), <gen-method-annotation>ejp],
+						[SingleElemAnno(TypeName(Id("MethodAnno")), Lit(Deci(gen_id))),
+						 <gen-method-annotation>ejp,
+						 <gen-source-location-ann><debug>ejp_call],
             			None(),
             			Void(),
             			Id(<gen_ejpscope_method_name>ejp),
@@ -124,7 +126,16 @@ strategies
             			None())
           			, Block(stms*))]
   			  	]))
-  	
+
+	gen-source-location-ann:
+		x -> Anno(TypeName(Id("SourceLocation")),[
+		  ElemValPair(Id("file"),Lit(String([Chars(<get-file>x)]))),
+		  ElemValPair(Id("line"),Lit(Deci(<int-to-string><get-line><get-location>x)))])
+
+	get-location: t{[a|b]} -> a
+	get-file: t{[a|[b]]} -> b
+	get-line = \ (x, _, _, _) -> x \
+
   	gen-method-annotation =
   		?ExplicitJoinPoint(aspect_type, Id(joinpoint_id), args);
   		!Anno(TypeName(Id("ExplicitScopedJoinPoint"))
@@ -200,6 +211,7 @@ rules
 		ScopedEJPCall(ejp, pointcuts, Block(stms*)) ->
 		[ClassDecStm(class), local_field_declaration, first_assignments*, ExprStm(invoke_synthetic_method), second_assignments*, second_assignments2*]
 		with
+			ejp_call := <id>;
 			// pointcutargs handling
 			gen_id := <random-string>;
 			// replace thisblock, thismethod, thisclass keywords
@@ -215,7 +227,7 @@ rules
 			inner_class_name := <gen-auxilary-class-name>;
 			<my-hashtable-union(|inner_vars_table)>predefined_var2type;
 			new_stms* := <allow-extends(ejp-to-java(|inner_vars_table, class_name, method_name, pointcut_methods) | <remove-scoped-ejp-var-decs>stms*)>;
-			class := <gen-auxilery-class(|vars_to_define, predefined_var2type, ejp, inner_class_name, gen_id)>new_stms*;
+			class := <gen-auxilery-class(|vars_to_define, predefined_var2type, ejp, inner_class_name, gen_id, ejp_call)>new_stms*;
 			local_field_name := <concat-strings>[inner_class_name, "_instance"];
 			local_field_declaration := LocalVarDecStm(LocalVarDec([Final()],  ClassOrInterfaceType(TypeName(Id(inner_class_name)), None()),
 			    [ VarDec(Id(local_field_name) , NewInstance(None(), ClassOrInterfaceType(TypeName(Id(inner_class_name)), None()), [], None()))]));
@@ -239,10 +251,10 @@ rules
         !inner_vars_table
 	
 	ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods):
-		ExprStm(ScopedEJPCall(ejp, pointcuts, Block(stms*))) ->
+		ExprStm(ScopedEJPCall(ejp, pointcuts, Block(stms*)){y}) ->
 		<conc>(
 			[ExprStm(<create-method-invokation(|ejp)>)],
-			<scoped-ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)))
+			<scoped-ejp-to-java(|predefined_var2type, class_name, method_name, pointcut_methods)>ScopedEJPCall(ejp, pointcuts, Block(stms*)){y})
 	
 	handle-pointcutargs(|pointcut_methods, ejp) =
 		?Some(Pointcutargs(pointcutsargs*));

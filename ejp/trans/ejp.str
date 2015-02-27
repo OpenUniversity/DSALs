@@ -94,14 +94,11 @@ rules // Editor services
       );
       proposals' := <map(index-uri; index-uri-name)> proposals
 
-  transform:
+  convert:
   	(selected, position, ast, path, project-path) -> (filename, result)
     with
-      filename := "result.aj";
-      // result :=  <pp-ejp-string><topdown(try(ejp-converter))> selected
-      	//<guarantee-extension(|"java")> path;
-      // result   := <pp-java5-to-string><topdown(try(for-testing))> selected
-         result   := <pp-aspectj-string><convert>selected
+       result := <pp-aspectj-string><transform-ast><topdown(\ trm -> trm {<try(gen-source-location)>} \)>selected;
+       filename := "result.aj"
 
 rules // Debugging
   
