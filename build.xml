@@ -42,6 +42,7 @@
                         <arg line="-o closure/dist/transform.java"/>
                         <arg line="-la java-front"/>
                         <arg line="-la stratego-gpp"/>
+                        <arg line="-la stratego-sglr"/>
                </java>
         </target>
 </project>
