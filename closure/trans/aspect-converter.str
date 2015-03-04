@@ -28,7 +28,7 @@ strategies
 
 	closures-to-ajc(|package_name, aspect_name) =
 		?JoinpointDeclaration(return_type, jp_id, params, throws);
-		<joinpoint(|<joinpoint-params-to-string>params, return_type, throws)>jp_id;
+		<joinpoint(|<joinpoint-params-to-string>params, return_type, throws)><strip-annos>jp_id;
 		!MethodDec(
 			MethodDecHead([Private(), Static(), MarkerAnno(TypeName(Id("Joinpoint")))], None(), return_type, jp_id, params, throws),
 			Block([
