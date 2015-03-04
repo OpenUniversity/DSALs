@@ -1,10 +1,11 @@
 module transform
 
 imports
-	include/Closure
-	java-converter
-	aspect-converter
-    aspectj/pretty-print
+   include/Closure
+   java-converter
+   aspect-converter
+   aspectj/pretty-print
+   libstratego-sglr
 
 strategies
    main = handle-io
@@ -16,12 +17,26 @@ strategies
     ReadFromFile;
     ast := <id>;
     output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
-    result := <pp-aspectj-string><convert>ast;
-    handle := <fopen> (output_file_path, "w");
-    <fputs> (result, handle);
+    transformed_code := <transform>input_file_path;
+    handle := <fopen> (<string-replace(|"src", "generated")>input_file_path, "w");
+    <fputs> (transformed_code, handle);
     fclose
 
-	convert = <try(closures-converter-compilation-unit)><id>
+    transform =
+        path := <id>;
+	ast := <parse-file(|<import-term(Closure.tbl)>)>path;
+	annotated_ast := <topdown(\trm -> trm{<try(gen-source-location)>}\)>ast;
+	transformed_ast := <transform-ast>annotated_ast;
+        <pp-aspectj-string>transformed_ast
+
+    transform-ast =
+        <try(closures-converter-compilation-unit)><id>
+
+    gen-source-location:
+	trm -> [<origin-location>trm, <origin-file>trm]
+
+    origin-location = prim("SSL_EXT_origin_location", <id>)
+    origin-file = prim("SSL_EXT_origin_file", <id>)
 
 rules
 	closures-converter-compilation-unit: CompilationUnit(PackageDec, ImportDecs, TypeDecs) -> CompilationUnit(PackageDec, ImportDecs', TypeDecs')
