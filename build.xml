@@ -2,7 +2,7 @@
 	<target name="clean">
 		<delete dir="cool/dist"/>
 		<delete dir="ejp/dist"/>
-		<delete dir="closure/dist"/>
+		<delete dir="CJP/dist"/>
 	</target>
 
 	<target name="cool">
@@ -33,13 +33,14 @@
         </target>
 
         <target name="cjp">
-               <mkdir dir="closure/dist"/>
+               <mkdir dir="CJP/dist"/>
                <java fork="true" jar="libs/strategoxt.jar">
                         <jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
-                        <arg line="-I closure"/>
-                        <arg line="-i closure/trans/transform.str"/>
-                        <arg line="-o closure/dist/transform.java"/>
+                        <arg line="-I CJP"/>
+                        <arg line="-I CJP/include"/>
+                        <arg line="-i CJP/trans/transform.str"/>
+                        <arg line="-o CJP/dist/transform.java"/>
                         <arg line="-la java-front"/>
                         <arg line="-la stratego-gpp"/>
                         <arg line="-la stratego-sglr"/>
