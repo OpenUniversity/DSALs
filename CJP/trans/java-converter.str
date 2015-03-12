@@ -1,0 +1,79 @@
+module java-converter
+
+imports
+	include/cjp
+	utils
+
+strategies
+	remove-closures-calls:
+		ShortClosureJoinpoints(_, _) -> None()
+
+	remove-closures-calls:
+		ClosureJoinpoints(_, _, _, _) -> None()
+
+	closures-to-java =
+		?ClassDec(head, ClassBody(stms*));
+		!ClassDec(head, ClassBody(<topdown(try(closure-to-java-impl()))>stms*))
+
+	closure-to-java-impl =
+		?ClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, params*, block, exprs*);
+		<debug>"in closures..";
+		!Invoke(
+              Method(
+                NewInstance(
+                  None()
+                , ClassOrInterfaceType(TypeName(Id("JoinpointWrapper")), None())
+                , []
+                , Some(
+                    ClassBody(
+                      [ MethodDec(
+                          MethodDecHead(
+                            [MarkerAnno(TypeName(Id("Closure"))), Public()]
+                          , None()
+                          , Void()
+                          , Id(jp_name)
+                          , params*
+                          , None()
+                          )
+                        , block
+                        )
+                      ]
+                    )
+                  )
+                )
+              , None()
+              , Id(jp_name)
+              )
+            , exprs*
+            )
+
+	closure-to-java-impl =
+		?ShortClosureJoinpoints(<or(?MethodName(Id(jp_name)), ?MethodName(_, Id(jp_name)))>, block);
+		!Invoke(
+          Method(
+            NewInstance(
+              None()
+            , ClassOrInterfaceType(TypeName(Id("JoinpointWrapper")), None())
+            , []
+            , Some(
+                ClassBody(
+                  [ MethodDec(
+                      MethodDecHead(
+                        [MarkerAnno(TypeName(Id("Closure"))), Public()]
+                      , None()
+                      , Void()
+                      , Id(jp_name)
+                      , []
+                      , None()
+                      )
+                    , block
+                    )
+                  ]
+                )
+              )
+            )
+          , None()
+          , Id(jp_name)
+          )
+        , []
+        )

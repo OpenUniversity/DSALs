@@ -1,0 +1,57 @@
+/**
+ * Declare declarations.
+ *
+ * @author Martin Bravenboer <martin.bravenboer@gmail.com>
+ */
+module aspectj/pp/aspect/DeclareDeclaration
+rules
+
+  aspectj-to-box :
+    DecParent(mods, b1, b2) -> box |[
+      H hs=1 [~*mods KW["declare"] KW["parents"] KW[":"] b1 b2 KW[";"]]
+    ]|
+
+  aspectj-to-box :
+    DecWarning(mods, b1, b2) -> box |[
+      H hs=1 [~*mods KW["declare"] KW["warning"] KW[":"] b1 KW[":"] b2 KW[";"]]
+    ]|
+
+  aspectj-to-box :
+  	DecError(b1, b2) -> box |[
+       H hs=1 [KW["declare"] KW["error"] KW[":"] b1 KW[":"] b2 KW[";"]]
+     ]|
+    // DecError(mods, b1, b2) -> box |[
+      // H hs=1 [~*mods KW["declare"] KW["error"] KW[":"] b1 KW[":"] b2 KW[";"]]
+    // ]|
+
+  aspectj-to-box :
+  	DecSoft(b1, b2) -> box |[
+      H hs=1 [KW["declare"] KW["soft"] KW[":"] b1 KW[":"] b2 KW[";"]]
+    ]|
+    // DecSoft(mods, b1, b2) -> box |[
+    //   H hs=1 [~*mods KW["declare"] KW["soft"] ":" b1 ":" b2 KW[";"]]
+    // ]|
+
+  aspectj-to-box :
+    DecPrecedence(mods, b*) -> box |[
+      H hs=1 [~*mods KW["declare"] KW["precedence"] KW[":"] b KW[";"]]
+    ]|
+    where
+      <separate-by-comma> b* => b
+
+rules
+
+  aspectj-to-box :
+    DecAnno(mods, b1, b2, b3) -> H hs=1 [~*mods KW["declare"] b1 ":" b2 ":" b3 ";"]
+
+  aspectj-to-box :
+    DecAnnoType() -> box |[ "@type" ]|
+
+  aspectj-to-box :    
+    DecAnnoConstructor() -> box |[ "@constructor" ]|
+
+  aspectj-to-box :    
+    DecAnnoMethod() -> box |[ "@method" ]|
+
+  aspectj-to-box :    
+    DecAnnoField() -> box |[ "@field" ]|

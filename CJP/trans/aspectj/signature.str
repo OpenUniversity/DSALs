@@ -1,0 +1,1241 @@
+module aspectj/signature
+
+signature
+  constructors
+                            : Modifier_PointcutTheCtx -> Anno_PointcutTheCtx_Modifier_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_Modifier_PointcutTheCtx0
+                            : NotSimpleAnnoPattern -> SimpleAnnoPattern_NotSimpleAnnoPattern0
+                            : SimpleAnnoPattern -> SimpleAnnoPattern_NotSimpleAnnoPattern0
+                            : NotFieldMod -> FieldMod_PatternTheCtx_NotFieldMod0
+                            : FieldMod_PatternTheCtx -> FieldMod_PatternTheCtx_NotFieldMod0
+                            : NotConstrMod -> ConstrMod_PatternTheCtx_NotConstrMod0
+                            : ConstrMod_PatternTheCtx -> ConstrMod_PatternTheCtx_NotConstrMod0
+                            : NotMethodMod -> MethodMod_PatternTheCtx_NotMethodMod0
+                            : MethodMod_PatternTheCtx -> MethodMod_PatternTheCtx_NotMethodMod0
+    Conc                    : ListStarOfCharClass1 * ListPlusOfCharClass1 -> ListPlusOfCharClass1
+    Conc                    : ListPlusOfCharClass1 * ListStarOfCharClass1 -> ListPlusOfCharClass1
+    Conc                    : ListPlusOfCharClass1 * ListPlusOfCharClass1 -> ListPlusOfCharClass1
+    Cons                    : Int * ListStarOfCharClass1 -> ListPlusOfCharClass1
+                            : AspectMod -> Anno_AspectTheCtx_AspectMod0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_AspectMod0
+                            : FieldMod_AspectTheCtx -> Anno_AspectTheCtx_FieldMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_FieldMod_AspectTheCtx0
+                            : ConstrMod_AspectTheCtx -> Anno_AspectTheCtx_ConstrMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_ConstrMod_AspectTheCtx0
+                            : MethodMod_AspectTheCtx -> Anno_AspectTheCtx_MethodMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_MethodMod_AspectTheCtx0
+    Some                    : TypeArgs_PointcutTheCtx -> OptTypeArgs_PointcutTheCtx0
+    None                    : OptTypeArgs_PointcutTheCtx0
+                            : TypeArgs_PointcutTheCtx -> OptTypeArgs_PointcutTheCtx0
+                            : ClassMod_PointcutTheCtx -> Anno_PointcutTheCtx_ClassMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_ClassMod_PointcutTheCtx0
+                            : InterfaceMod_PointcutTheCtx -> Anno_PointcutTheCtx_InterfaceMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_InterfaceMod_PointcutTheCtx0
+                            : AbstractMethodMod_PointcutTheCtx -> Anno_PointcutTheCtx_AbstractMethodMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_AbstractMethodMod_PointcutTheCtx0
+                            : ConstantMod_PointcutTheCtx -> Anno_PointcutTheCtx_ConstantMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_ConstantMod_PointcutTheCtx0
+    None                    : OptEnumConstArgs_PointcutTheCtx0
+                            : ConstrMod_PointcutTheCtx -> Anno_PointcutTheCtx_ConstrMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_ConstrMod_PointcutTheCtx0
+                            : VarMod_PointcutTheCtx -> Anno_PointcutTheCtx_VarMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_VarMod_PointcutTheCtx0
+                            : MethodMod_PointcutTheCtx -> Anno_PointcutTheCtx_MethodMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_MethodMod_PointcutTheCtx0
+                            : FieldMod_PointcutTheCtx -> Anno_PointcutTheCtx_FieldMod_PointcutTheCtx0
+                            : Anno_PointcutTheCtx -> Anno_PointcutTheCtx_FieldMod_PointcutTheCtx0
+    Some                    : TypeArgs_AspectTheCtx -> OptTypeArgs_AspectTheCtx0
+    None                    : OptTypeArgs_AspectTheCtx0
+                            : TypeArgs_AspectTheCtx -> OptTypeArgs_AspectTheCtx0
+                            : ClassMod_AspectTheCtx -> Anno_AspectTheCtx_ClassMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_ClassMod_AspectTheCtx0
+                            : InterfaceMod_AspectTheCtx -> Anno_AspectTheCtx_InterfaceMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_InterfaceMod_AspectTheCtx0
+                            : AbstractMethodMod_AspectTheCtx -> Anno_AspectTheCtx_AbstractMethodMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_AbstractMethodMod_AspectTheCtx0
+                            : ConstantMod_AspectTheCtx -> Anno_AspectTheCtx_ConstantMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_ConstantMod_AspectTheCtx0
+    None                    : OptEnumConstArgs_AspectTheCtx0
+                            : VarMod_AspectTheCtx -> Anno_AspectTheCtx_VarMod_AspectTheCtx0
+                            : Anno_AspectTheCtx -> Anno_AspectTheCtx_VarMod_AspectTheCtx0
+    Some                    : TypeArgs_JavaTheCtx -> OptTypeArgs_JavaTheCtx0
+    None                    : OptTypeArgs_JavaTheCtx0
+                            : TypeArgs_JavaTheCtx -> OptTypeArgs_JavaTheCtx0
+                            : ClassMod_JavaTheCtx -> Anno_JavaTheCtx_ClassMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_ClassMod_JavaTheCtx0
+                            : InterfaceMod_JavaTheCtx -> Anno_JavaTheCtx_InterfaceMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_InterfaceMod_JavaTheCtx0
+                            : AbstractMethodMod_JavaTheCtx -> Anno_JavaTheCtx_AbstractMethodMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_AbstractMethodMod_JavaTheCtx0
+                            : ConstantMod_JavaTheCtx -> Anno_JavaTheCtx_ConstantMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_ConstantMod_JavaTheCtx0
+    None                    : OptEnumConstArgs_JavaTheCtx0
+                            : ConstrMod_JavaTheCtx -> Anno_JavaTheCtx_ConstrMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_ConstrMod_JavaTheCtx0
+                            : VarMod_JavaTheCtx -> Anno_JavaTheCtx_VarMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_VarMod_JavaTheCtx0
+                            : MethodMod_JavaTheCtx -> Anno_JavaTheCtx_MethodMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_MethodMod_JavaTheCtx0
+                            : FieldMod_JavaTheCtx -> Anno_JavaTheCtx_FieldMod_JavaTheCtx0
+                            : Anno_JavaTheCtx -> Anno_JavaTheCtx_FieldMod_JavaTheCtx0
+                            : CompilationUnit_JavaTheCtx -> JavaCtxCompilationUnit
+    Subtype                 : Type_PointcutTheCtx -> TypeOrIdPattern
+                            : Type_PointcutTheCtx -> TypeOrIdPattern
+    DotWildcard             : TypeOrIdPattern
+    Wildcard                : TypeOrIdPattern
+                            : AnnoOrId -> AnnoOrIdPattern
+    DotWildcard             : AnnoOrIdPattern
+    Wildcard                : AnnoOrIdPattern
+                            : TypeName_PointcutTheCtx -> AnnoOrId
+    PointcutName            : ClassOrInterfaceType_PointcutTheCtx * Id_PointcutTheCtx -> PointcutName
+    PointcutName            : Id_PointcutTheCtx -> PointcutName
+    NamedPointcut           : PointcutName * List(TypeOrIdPattern) -> PointcutExpr
+    AtArgs                  : List(AnnoOrIdPattern) -> PointcutExpr
+    AtAnno                  : AnnoOrId -> PointcutExpr
+    AtWithinCode            : AnnoOrId -> PointcutExpr
+    AtWithin                : AnnoOrId -> PointcutExpr
+    AtTarget                : AnnoOrId -> PointcutExpr
+    AtThis                  : AnnoOrId -> PointcutExpr
+    Args                    : List(TypeOrIdPattern) -> PointcutExpr
+    Target                  : TypeOrIdPattern -> PointcutExpr
+    This                    : TypeOrIdPattern -> PointcutExpr
+    If                      : Expr_JavaTheCtx -> PointcutExpr
+    CFlowBelow              : PointcutExpr -> PointcutExpr
+    CFlow                   : PointcutExpr -> PointcutExpr
+    WithinCode              : MethodConstrPattern -> PointcutExpr
+    Within                  : TopTypePattern -> PointcutExpr
+    AdviceExec              : PointcutExpr
+    Handler                 : TopTypePattern -> PointcutExpr
+    SetField                : FieldPattern -> PointcutExpr
+    GetField                : FieldPattern -> PointcutExpr
+    StaticInitExec          : TopTypePattern -> PointcutExpr
+    PreInitExec             : ConstrPattern -> PointcutExpr
+    InitExec                : ConstrPattern -> PointcutExpr
+    Exec                    : MethodConstrPattern -> PointcutExpr
+    Call                    : MethodConstrPattern -> PointcutExpr
+    OrComp                  : PointcutExpr * PointcutExpr -> PointcutExpr
+    AndComp                 : PointcutExpr * PointcutExpr -> PointcutExpr
+    NotComp                 : PointcutExpr -> PointcutExpr
+    NoPointcutBody          : PointcutBody
+    PointcutBody            : PointcutExpr -> PointcutBody
+    PointcutDecHead         : List(Anno_PointcutTheCtx_Modifier_PointcutTheCtx0) * Id_PointcutTheCtx * List(FormalParam_PointcutTheCtx) -> PointcutDecHead
+    PointcutDec             : PointcutDecHead * PointcutBody -> PointcutDec
+    AnnoPattern             : List(SimpleAnnoPattern_NotSimpleAnnoPattern0) -> AnnoPatternPlus
+    AnnoPattern             : List(SimpleAnnoPattern_NotSimpleAnnoPattern0) -> AnnoPattern
+    Not                     : SimpleAnnoPattern -> NotSimpleAnnoPattern
+    SimpleAnnoPatternExact  : TypeName_PatternTheCtx -> SimpleAnnoPattern
+    SimpleAnnoPattern       : TypePattern -> SimpleAnnoPattern
+                            : FieldPattern -> ElementPattern
+                            : TypePattern -> ElementPattern
+                            : MethodConstrPattern -> ElementPattern
+    ThrowsCondition         : ClassNamePattern -> ExceptionPattern
+    NotThrowsCondition      : ClassNamePattern -> ExceptionPattern
+    ThrowsPattern           : List(ExceptionPattern) -> ThrowsPattern
+    ModPattern              : List(FieldMod_PatternTheCtx_NotFieldMod0) -> FieldModPattern
+    ModPattern              : List(ConstrMod_PatternTheCtx_NotConstrMod0) -> ConstrModPattern
+    ModPattern              : List(MethodMod_PatternTheCtx_NotMethodMod0) -> MethodModPattern
+    Not                     : ConstrMod_PatternTheCtx -> NotConstrMod
+    Not                     : FieldMod_PatternTheCtx -> NotFieldMod
+    Not                     : MethodMod_PatternTheCtx -> NotMethodMod
+    WildcardConstrName      : TypePattern -> ConstrNamePattern
+    ConstrName              : TypePattern -> ConstrNamePattern
+    ConstrName              : ConstrNamePattern
+    WildcardMemberName      : TypePattern * IdPattern -> ClassMemberNamePattern
+    MemberName              : TypePattern * IdPattern -> ClassMemberNamePattern
+    MemberName              : IdPattern -> ClassMemberNamePattern
+    FieldPattern            : AnnoPattern * FieldModPattern * TypePattern * ClassMemberNamePattern -> FieldPattern
+                            : ConstrPattern -> MethodConstrPattern
+                            : MethodPattern -> MethodConstrPattern
+    ConstrPattern           : AnnoPattern * ConstrModPattern * ConstrNamePattern * List(FormalPattern) * Option(ThrowsPattern) -> ConstrPattern
+    MethodPattern           : AnnoPattern * MethodModPattern * TypePattern * ClassMemberNamePattern * List(FormalPattern) * Option(ThrowsPattern) -> MethodPattern
+    WildcardLowerBound      : List(TypePattern) -> TypeBoundPattern
+    WildcardUpperBound      : List(TypePattern) -> TypeBoundPattern
+    TypeParams              : List(TypeParamPattern) -> TypeParamsPattern
+    TypeParam               : TypePattern * Option(TypeBoundPattern) -> TypeParamPattern
+                            : TypePattern -> TopTypePattern
+    AnnoTypePattern         : AnnoPatternPlus * TypePattern -> TopTypePattern
+    Subtype                 : NamePattern -> TypeDecSpecPattern
+                            : NamePattern -> TypeDecSpecPattern
+    PrimTypePattern         : PrimType_PatternTheCtx -> BaseTypePattern
+    RefTypePattern          : TypeDecSpecPattern -> BaseTypePattern
+                            : String -> IdPattern
+    WildcardNamePattern     : NamePattern * IdPattern -> NamePattern
+    NamePattern             : NamePattern * IdPattern -> NamePattern
+    NamePattern             : IdPattern -> NamePattern
+    AnnoTypePattern         : AnnoPatternPlus * TypePattern -> TypePattern
+    GenericSubtypePattern   : NamePattern * TypeParamsPattern -> TypePattern
+    GenericTypePattern      : TypeDecSpecPattern * TypeParamsPattern -> TypePattern
+    Wildcard                : TypePattern
+    ArrayType               : TypePattern -> TypePattern
+    Void                    : TypePattern
+                            : BaseTypePattern -> TypePattern
+    OrComp                  : TypePattern * TypePattern -> TypePattern
+    AndComp                 : TypePattern * TypePattern -> TypePattern
+    NotComp                 : TypePattern -> TypePattern
+    VarArityParamPattern    : TypePattern -> FormalPattern
+                            : TypePattern -> FormalPattern
+    FormalWildcard          : FormalPattern
+    Subtype                 : NamePattern * TypeParamsPattern -> ClassNamePattern
+    Subtype                 : NamePattern -> ClassNamePattern
+    Generic                 : NamePattern * TypeParamsPattern -> ClassNamePattern
+    SimpleNamePattern       : NamePattern -> ClassNamePattern
+    OrComp                  : ClassNamePattern * ClassNamePattern -> ClassNamePattern
+    AndComp                 : ClassNamePattern * ClassNamePattern -> ClassNamePattern
+    NotComp                 : ClassNamePattern -> ClassNamePattern
+    Privileged              : AspectMod
+                            : ClassMod_JavaTheCtx -> AspectMod
+    AspectBody              : List(AspectBodyDec) -> AspectBody
+    IsSingleton             : PerClause
+    PerTypeWithin           : TypePattern -> PerClause
+    PerCFlowBelow           : PointcutExpr -> PerClause
+    PerCFlow                : PointcutExpr -> PerClause
+    PerThis                 : PointcutExpr -> PerClause
+    PerTarget               : PointcutExpr -> PerClause
+    AspectDecHead           : List(Anno_AspectTheCtx_AspectMod0) * Id_AspectTheCtx * Option(TypeParams_AspectTheCtx) * Option(Super_AspectTheCtx) * Option(Interfaces_AspectTheCtx) * Option(PerClause) -> AspectDecHead
+    AspectDec               : AspectDecHead * AspectBody -> AspectDec
+                            : IntertypeMemberDec -> AspectBodyDec
+                            : AdviceDec -> AspectBodyDec
+                            : DeclareDec -> AspectBodyDec
+                            : ClassBodyDec_AspectTheCtx -> AspectBodyDec
+    IntertypeConstrDecHead  : List(Anno_AspectTheCtx_ConstrMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * TypeName_AspectTheCtx * Option(TypeParams_AspectTheCtx) * List(FormalParam_AspectTheCtx) * Option(Throws_AspectTheCtx) -> IntertypeConstrDecHead
+    IntertypeMethodDecHead  : List(Anno_AspectTheCtx_MethodMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * ResultType_AspectTheCtx * TypeName_AspectTheCtx * Option(TypeParams_AspectTheCtx) * Id_AspectTheCtx * List(FormalParam_AspectTheCtx) * Option(Throws_AspectTheCtx) -> IntertypeMethodDecHead
+    IntertypeFieldDec       : List(Anno_AspectTheCtx_FieldMod_AspectTheCtx0) * Type_AspectTheCtx * TypeName_AspectTheCtx * Option(TypeParams_AspectTheCtx) * VarDec_AspectTheCtx -> IntertypeMemberDec
+    IntertypeConstrDec      : IntertypeConstrDecHead * ConstrBody_AspectTheCtx -> IntertypeMemberDec
+    IntertypeMethodDec      : IntertypeMethodDecHead * MethodBody_AspectTheCtx -> IntertypeMemberDec
+    Throwing                : FormalParam_AspectTheCtx -> ExitStatus
+    Throwing                : ExitStatus
+    Returning               : FormalParam_AspectTheCtx -> ExitStatus
+    Returning               : ExitStatus
+    Around                  : ResultType_AspectTheCtx * List(FormalParam_AspectTheCtx) -> AdviceSpec
+    After                   : List(FormalParam_AspectTheCtx) * Option(ExitStatus) -> AdviceSpec
+    Before                  : List(FormalParam_AspectTheCtx) -> AdviceSpec
+                            : Anno_AspectTheCtx -> AdviceMod
+                            : StrictFP_AspectTheCtx -> AdviceMod
+    AdviceDec               : List(AdviceMod) * AdviceSpec * Option(Throws_AspectTheCtx) * PointcutExpr * MethodBody_AspectTheCtx -> AdviceDec
+                            : ExtendsInterfaces_PointcutTheCtx -> Parent
+                            : Interfaces_PointcutTheCtx -> Parent
+                            : Super_PointcutTheCtx -> Parent
+    DecAnnoField            : AnnoDeclKind
+    DecAnnoMethod           : AnnoDeclKind
+    DecAnnoConstructor      : AnnoDeclKind
+    DecAnnoType             : AnnoDeclKind
+    DecAnno                 : List(Anno_AspectTheCtx) * AnnoDeclKind * ElementPattern * Anno_AspectTheCtx -> DeclareDec
+    DecPrecedence           : List(Anno_AspectTheCtx) * List(TopTypePattern) -> DeclareDec
+    DecSoft                 : List(Anno_AspectTheCtx) * Type_PointcutTheCtx * PointcutExpr -> DeclareDec
+    DecError                : List(Anno_AspectTheCtx) * PointcutExpr * StringLiteral_PointcutTheCtx -> DeclareDec
+    DecWarning              : List(Anno_AspectTheCtx) * PointcutExpr * StringLiteral_PointcutTheCtx -> DeclareDec
+    DecParent               : List(Anno_AspectTheCtx) * TopTypePattern * Parent -> DeclareDec
+                            : Private_PatternTheCtx -> ConstrMod_PatternTheCtx
+                            : Protected_PatternTheCtx -> ConstrMod_PatternTheCtx
+                            : Public_PatternTheCtx -> ConstrMod_PatternTheCtx
+                            : StrictFP_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Native_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Synchronized_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Final_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Static_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Abstract_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Private_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Protected_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Public_PatternTheCtx -> MethodMod_PatternTheCtx
+                            : Volatile_PatternTheCtx -> FieldMod_PatternTheCtx
+                            : Transient_PatternTheCtx -> FieldMod_PatternTheCtx
+                            : Final_PatternTheCtx -> FieldMod_PatternTheCtx
+                            : Static_PatternTheCtx -> FieldMod_PatternTheCtx
+                            : Private_PatternTheCtx -> FieldMod_PatternTheCtx
+                            : Protected_PatternTheCtx -> FieldMod_PatternTheCtx
+                            : Public_PatternTheCtx -> FieldMod_PatternTheCtx
+    PackageOrTypeName       : PackageOrTypeName_PatternTheCtx * Id_PatternTheCtx -> PackageOrTypeName_PatternTheCtx
+    PackageOrTypeName       : Id_PatternTheCtx -> PackageOrTypeName_PatternTheCtx
+    TypeName                : PackageOrTypeName_PatternTheCtx * Id_PatternTheCtx -> TypeName_PatternTheCtx
+    TypeName                : Id_PatternTheCtx -> TypeName_PatternTheCtx
+    Double                  : FloatType_PatternTheCtx
+    Float                   : FloatType_PatternTheCtx
+    Char                    : IntType_PatternTheCtx
+    Long                    : IntType_PatternTheCtx
+    Int                     : IntType_PatternTheCtx
+    Short                   : IntType_PatternTheCtx
+    Byte                    : IntType_PatternTheCtx
+                            : FloatType_PatternTheCtx -> NumType_PatternTheCtx
+                            : IntType_PatternTheCtx -> NumType_PatternTheCtx
+    Boolean                 : PrimType_PatternTheCtx
+                            : NumType_PatternTheCtx -> PrimType_PatternTheCtx
+    StrictFP                : StrictFP_PatternTheCtx
+    Synchronized            : Synchronized_PatternTheCtx
+    Volatile                : Volatile_PatternTheCtx
+    Transient               : Transient_PatternTheCtx
+    Native                  : Native_PatternTheCtx
+    Static                  : Static_PatternTheCtx
+    Final                   : Final_PatternTheCtx
+    Abstract                : Abstract_PatternTheCtx
+    Protected               : Protected_PatternTheCtx
+    Private                 : Private_PatternTheCtx
+    Public                  : Public_PatternTheCtx
+    Id                      : ID_PatternTheCtx -> Id_PatternTheCtx
+                            : String -> ID_PatternTheCtx
+    ElemValArrayInit        : List(ElemVal_PointcutTheCtx) -> ElemVal_PointcutTheCtx
+                            : Anno_PointcutTheCtx -> ElemVal_PointcutTheCtx
+                            : Expr_PointcutTheCtx -> ElemVal_PointcutTheCtx
+    ElemValPair             : Id_PointcutTheCtx * ElemVal_PointcutTheCtx -> ElemValPair_PointcutTheCtx
+    MarkerAnno              : TypeName_PointcutTheCtx -> Anno_PointcutTheCtx
+    SingleElemAnno          : TypeName_PointcutTheCtx * ElemVal_PointcutTheCtx -> Anno_PointcutTheCtx
+    Anno                    : TypeName_PointcutTheCtx * List(ElemValPair_PointcutTheCtx) -> Anno_PointcutTheCtx
+                            : FieldAccess_PointcutTheCtx -> LHS_PointcutTheCtx
+                            : ExprName_PointcutTheCtx -> LHS_PointcutTheCtx
+    GenericMethod           : AmbName_PointcutTheCtx * TypeArgs_PointcutTheCtx * Id_PointcutTheCtx -> MethodSpec_PointcutTheCtx
+    QSuperMethod            : TypeName_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 * Id_PointcutTheCtx -> MethodSpec_PointcutTheCtx
+    SuperMethod             : OptTypeArgs_PointcutTheCtx0 * Id_PointcutTheCtx -> MethodSpec_PointcutTheCtx
+    Method                  : Expr_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 * Id_PointcutTheCtx -> MethodSpec_PointcutTheCtx
+    Method                  : MethodName_PointcutTheCtx -> MethodSpec_PointcutTheCtx
+    QSuperField             : TypeName_PointcutTheCtx * Id_PointcutTheCtx -> FieldAccess_PointcutTheCtx
+    SuperField              : Id_PointcutTheCtx -> FieldAccess_PointcutTheCtx
+    Field                   : Expr_PointcutTheCtx * Id_PointcutTheCtx -> FieldAccess_PointcutTheCtx
+    Dim                     : Expr_PointcutTheCtx -> DimExpr_PointcutTheCtx
+    UnboundWld              : TypeName_PointcutTheCtx -> ArrayBaseType_PointcutTheCtx
+                            : TypeName_PointcutTheCtx -> ArrayBaseType_PointcutTheCtx
+                            : PrimType_PointcutTheCtx -> ArrayBaseType_PointcutTheCtx
+    NewArray                : ArrayBaseType_PointcutTheCtx * List(Dim_PointcutTheCtx) * ArrayInit_PointcutTheCtx -> ArrayCreationExpr_PointcutTheCtx
+    NewArray                : ArrayBaseType_PointcutTheCtx * List(DimExpr_PointcutTheCtx) * List(Dim_PointcutTheCtx) -> ArrayCreationExpr_PointcutTheCtx
+    Semicolon               : ClassMemberDec_PointcutTheCtx
+                            : InterfaceDec_PointcutTheCtx -> ClassMemberDec_PointcutTheCtx
+                            : ClassDec_PointcutTheCtx -> ClassMemberDec_PointcutTheCtx
+                            : MethodDec_PointcutTheCtx -> ClassMemberDec_PointcutTheCtx
+                            : FieldDec_PointcutTheCtx -> ClassMemberDec_PointcutTheCtx
+                            : ConstrDec_PointcutTheCtx -> ClassBodyDec_PointcutTheCtx
+                            : StaticInit_PointcutTheCtx -> ClassBodyDec_PointcutTheCtx
+                            : InstanceInit_PointcutTheCtx -> ClassBodyDec_PointcutTheCtx
+                            : ClassMemberDec_PointcutTheCtx -> ClassBodyDec_PointcutTheCtx
+    ImplementsDec           : List(InterfaceType_PointcutTheCtx) -> Interfaces_PointcutTheCtx
+    SuperDec                : ClassType_PointcutTheCtx -> Super_PointcutTheCtx
+                            : StrictFP_PointcutTheCtx -> ClassMod_PointcutTheCtx
+                            : Final_PointcutTheCtx -> ClassMod_PointcutTheCtx
+                            : Static_PointcutTheCtx -> ClassMod_PointcutTheCtx
+                            : Private_PointcutTheCtx -> ClassMod_PointcutTheCtx
+                            : Protected_PointcutTheCtx -> ClassMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> ClassMod_PointcutTheCtx
+                            : Abstract_PointcutTheCtx -> ClassMod_PointcutTheCtx
+    ClassDecHead            : List(Anno_PointcutTheCtx_ClassMod_PointcutTheCtx0) * Id_PointcutTheCtx * Option(TypeParams_PointcutTheCtx) * Option(Super_PointcutTheCtx) * Option(Interfaces_PointcutTheCtx) -> ClassDecHead_PointcutTheCtx
+    ClassBody               : List(ClassBodyDec_PointcutTheCtx) -> ClassBody_PointcutTheCtx
+    ClassDec                : ClassDecHead_PointcutTheCtx * ClassBody_PointcutTheCtx -> ClassDec_PointcutTheCtx
+                            : EnumDec_PointcutTheCtx -> ClassDec_PointcutTheCtx
+                            : StrictFP_PointcutTheCtx -> InterfaceMod_PointcutTheCtx
+                            : Static_PointcutTheCtx -> InterfaceMod_PointcutTheCtx
+                            : Abstract_PointcutTheCtx -> InterfaceMod_PointcutTheCtx
+                            : Private_PointcutTheCtx -> InterfaceMod_PointcutTheCtx
+                            : Protected_PointcutTheCtx -> InterfaceMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> InterfaceMod_PointcutTheCtx
+    Semicolon               : InterfaceMemberDec_PointcutTheCtx
+                            : InterfaceDec_PointcutTheCtx -> InterfaceMemberDec_PointcutTheCtx
+                            : ClassDec_PointcutTheCtx -> InterfaceMemberDec_PointcutTheCtx
+                            : AbstractMethodDec_PointcutTheCtx -> InterfaceMemberDec_PointcutTheCtx
+                            : ConstantDec_PointcutTheCtx -> InterfaceMemberDec_PointcutTheCtx
+    ExtendsInterfaces       : List(InterfaceType_PointcutTheCtx) -> ExtendsInterfaces_PointcutTheCtx
+    InterfaceDecHead        : List(Anno_PointcutTheCtx_InterfaceMod_PointcutTheCtx0) * Id_PointcutTheCtx * Option(TypeParams_PointcutTheCtx) * Option(ExtendsInterfaces_PointcutTheCtx) -> InterfaceDecHead_PointcutTheCtx
+    InterfaceDec            : InterfaceDecHead_PointcutTheCtx * List(InterfaceMemberDec_PointcutTheCtx) -> InterfaceDec_PointcutTheCtx
+                            : AnnoDec_PointcutTheCtx -> InterfaceDec_PointcutTheCtx
+    DefaultVal              : ElemVal_PointcutTheCtx -> DefaultVal_PointcutTheCtx
+    Semicolon               : AnnoElemDec_PointcutTheCtx
+                            : AnnoDec_PointcutTheCtx -> AnnoElemDec_PointcutTheCtx
+                            : EnumDec_PointcutTheCtx -> AnnoElemDec_PointcutTheCtx
+                            : InterfaceDec_PointcutTheCtx -> AnnoElemDec_PointcutTheCtx
+                            : ClassDec_PointcutTheCtx -> AnnoElemDec_PointcutTheCtx
+                            : ConstantDec_PointcutTheCtx -> AnnoElemDec_PointcutTheCtx
+    AnnoMethodDec           : List(AbstractMethodMod_PointcutTheCtx) * Type_PointcutTheCtx * Id_PointcutTheCtx * Option(DefaultVal_PointcutTheCtx) -> AnnoElemDec_PointcutTheCtx
+    AnnoDecHead             : List(Anno_PointcutTheCtx_InterfaceMod_PointcutTheCtx0) * Id_PointcutTheCtx -> AnnoDecHead_PointcutTheCtx
+    AnnoDec                 : AnnoDecHead_PointcutTheCtx * List(AnnoElemDec_PointcutTheCtx) -> AnnoDec_PointcutTheCtx
+                            : Abstract_PointcutTheCtx -> AbstractMethodMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> AbstractMethodMod_PointcutTheCtx
+    DeprAbstractMethodDec   : List(Anno_PointcutTheCtx_AbstractMethodMod_PointcutTheCtx0) * Option(TypeParams_PointcutTheCtx) * ResultType_PointcutTheCtx * Id_PointcutTheCtx * List(FormalParam_PointcutTheCtx) * List(Dim_PointcutTheCtx) * Option(Throws_PointcutTheCtx) -> AbstractMethodDec_PointcutTheCtx
+    AbstractMethodDec       : List(Anno_PointcutTheCtx_AbstractMethodMod_PointcutTheCtx0) * Option(TypeParams_PointcutTheCtx) * ResultType_PointcutTheCtx * Id_PointcutTheCtx * List(FormalParam_PointcutTheCtx) * Option(Throws_PointcutTheCtx) -> AbstractMethodDec_PointcutTheCtx
+                            : Final_PointcutTheCtx -> ConstantMod_PointcutTheCtx
+                            : Static_PointcutTheCtx -> ConstantMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> ConstantMod_PointcutTheCtx
+    ConstantDec             : List(Anno_PointcutTheCtx_ConstantMod_PointcutTheCtx0) * Type_PointcutTheCtx * List(VarDec_PointcutTheCtx) -> ConstantDec_PointcutTheCtx
+    EnumBodyDecs            : List(ClassBodyDec_PointcutTheCtx) -> EnumBodyDecs_PointcutTheCtx
+    EnumConst               : Id_PointcutTheCtx * OptEnumConstArgs_PointcutTheCtx0 * Option(ClassBody_PointcutTheCtx) -> EnumConst_PointcutTheCtx
+    EnumBody                : List(EnumConst_PointcutTheCtx) * Option(EnumBodyDecs_PointcutTheCtx) -> EnumBody_PointcutTheCtx
+    EnumDecHead             : List(Anno_PointcutTheCtx_ClassMod_PointcutTheCtx0) * Id_PointcutTheCtx * Option(Interfaces_PointcutTheCtx) -> EnumDecHead_PointcutTheCtx
+    EnumDec                 : EnumDecHead_PointcutTheCtx * EnumBody_PointcutTheCtx -> EnumDec_PointcutTheCtx
+                            : Private_PointcutTheCtx -> ConstrMod_PointcutTheCtx
+                            : Protected_PointcutTheCtx -> ConstrMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> ConstrMod_PointcutTheCtx
+    QSuperConstrInv         : Expr_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 * List(Expr_PointcutTheCtx) -> ConstrInv_PointcutTheCtx
+    SuperConstrInv          : OptTypeArgs_PointcutTheCtx0 * List(Expr_PointcutTheCtx) -> ConstrInv_PointcutTheCtx
+    AltConstrInv            : OptTypeArgs_PointcutTheCtx0 * List(Expr_PointcutTheCtx) -> ConstrInv_PointcutTheCtx
+    ConstrBody              : Option(ConstrInv_PointcutTheCtx) * List(BlockStm_PointcutTheCtx) -> ConstrBody_PointcutTheCtx
+    ConstrDecHead           : List(Anno_PointcutTheCtx_ConstrMod_PointcutTheCtx0) * Option(TypeParams_PointcutTheCtx) * Id_PointcutTheCtx * List(FormalParam_PointcutTheCtx) * Option(Throws_PointcutTheCtx) -> ConstrHead_PointcutTheCtx
+    ConstrDec               : ConstrHead_PointcutTheCtx * ConstrBody_PointcutTheCtx -> ConstrDec_PointcutTheCtx
+    StaticInit              : Block_PointcutTheCtx -> StaticInit_PointcutTheCtx
+    InstanceInit            : Block_PointcutTheCtx -> InstanceInit_PointcutTheCtx
+    NoMethodBody            : MethodBody_PointcutTheCtx
+                            : Block_PointcutTheCtx -> MethodBody_PointcutTheCtx
+                            : ClassType_PointcutTheCtx -> ExceptionType_PointcutTheCtx
+    ThrowsDec               : List(ExceptionType_PointcutTheCtx) -> Throws_PointcutTheCtx
+                            : StrictFP_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Native_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Synchronized_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Final_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Static_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Abstract_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Private_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Protected_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> MethodMod_PointcutTheCtx
+                            : Final_PointcutTheCtx -> VarMod_PointcutTheCtx
+    VarArityParam           : List(Anno_PointcutTheCtx_VarMod_PointcutTheCtx0) * Type_PointcutTheCtx * VarDecId_PointcutTheCtx -> FormalParam_PointcutTheCtx
+    Param                   : List(Anno_PointcutTheCtx_VarMod_PointcutTheCtx0) * Type_PointcutTheCtx * VarDecId_PointcutTheCtx -> FormalParam_PointcutTheCtx
+    Void                    : ResultType_PointcutTheCtx
+                            : Type_PointcutTheCtx -> ResultType_PointcutTheCtx
+    DeprMethodDecHead       : List(Anno_PointcutTheCtx_MethodMod_PointcutTheCtx0) * Option(TypeParams_PointcutTheCtx) * ResultType_PointcutTheCtx * Id_PointcutTheCtx * List(FormalParam_PointcutTheCtx) * List(Dim_PointcutTheCtx) * Option(Throws_PointcutTheCtx) -> MethodDecHead_PointcutTheCtx
+    MethodDecHead           : List(Anno_PointcutTheCtx_MethodMod_PointcutTheCtx0) * Option(TypeParams_PointcutTheCtx) * ResultType_PointcutTheCtx * Id_PointcutTheCtx * List(FormalParam_PointcutTheCtx) * Option(Throws_PointcutTheCtx) -> MethodDecHead_PointcutTheCtx
+    MethodDec               : MethodDecHead_PointcutTheCtx * MethodBody_PointcutTheCtx -> MethodDec_PointcutTheCtx
+                            : Stm_PointcutTheCtx -> BlockStm_PointcutTheCtx
+    ClassDecStm             : ClassDec_PointcutTheCtx -> BlockStm_PointcutTheCtx
+                            : LocalVarDecStm_PointcutTheCtx -> BlockStm_PointcutTheCtx
+    Block                   : List(BlockStm_PointcutTheCtx) -> Block_PointcutTheCtx
+    Catch                   : FormalParam_PointcutTheCtx * Block_PointcutTheCtx -> CatchClause_PointcutTheCtx
+    Default                 : SwitchLabel_PointcutTheCtx
+    Case                    : Expr_PointcutTheCtx -> SwitchLabel_PointcutTheCtx
+    SwitchGroup             : List(SwitchLabel_PointcutTheCtx) * List(BlockStm_PointcutTheCtx) -> SwitchGroup_PointcutTheCtx
+    SwitchBlock             : List(SwitchGroup_PointcutTheCtx) * List(SwitchLabel_PointcutTheCtx) -> SwitchBlock_PointcutTheCtx
+    Try                     : Block_PointcutTheCtx * List(CatchClause_PointcutTheCtx) * Block_PointcutTheCtx -> Stm_PointcutTheCtx
+    Try                     : Block_PointcutTheCtx * List(CatchClause_PointcutTheCtx) -> Stm_PointcutTheCtx
+    Synchronized            : Expr_PointcutTheCtx * Block_PointcutTheCtx -> Stm_PointcutTheCtx
+    Throw                   : Expr_PointcutTheCtx -> Stm_PointcutTheCtx
+    Return                  : Option(Expr_PointcutTheCtx) -> Stm_PointcutTheCtx
+    Continue                : Option(Id_PointcutTheCtx) -> Stm_PointcutTheCtx
+    Break                   : Option(Id_PointcutTheCtx) -> Stm_PointcutTheCtx
+    ForEach                 : FormalParam_PointcutTheCtx * Expr_PointcutTheCtx * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    For                     : List(Expr_PointcutTheCtx) * Option(Expr_PointcutTheCtx) * List(Expr_PointcutTheCtx) * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    For                     : LocalVarDec_PointcutTheCtx * Option(Expr_PointcutTheCtx) * List(Expr_PointcutTheCtx) * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    DoWhile                 : Stm_PointcutTheCtx * Expr_PointcutTheCtx -> Stm_PointcutTheCtx
+    While                   : Expr_PointcutTheCtx * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    Switch                  : Expr_PointcutTheCtx * SwitchBlock_PointcutTheCtx -> Stm_PointcutTheCtx
+    AssertStm               : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Stm_PointcutTheCtx
+    AssertStm               : Expr_PointcutTheCtx -> Stm_PointcutTheCtx
+    If                      : Expr_PointcutTheCtx * Stm_PointcutTheCtx * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    If                      : Expr_PointcutTheCtx * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    ExprStm                 : Expr_PointcutTheCtx -> Stm_PointcutTheCtx
+    Labeled                 : Id_PointcutTheCtx * Stm_PointcutTheCtx -> Stm_PointcutTheCtx
+    Empty                   : Stm_PointcutTheCtx
+                            : Block_PointcutTheCtx -> Stm_PointcutTheCtx
+    LocalVarDec             : List(Anno_PointcutTheCtx_VarMod_PointcutTheCtx0) * Type_PointcutTheCtx * List(VarDec_PointcutTheCtx) -> LocalVarDec_PointcutTheCtx
+    LocalVarDecStm          : LocalVarDec_PointcutTheCtx -> LocalVarDecStm_PointcutTheCtx
+                            : Volatile_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : Transient_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : Final_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : Static_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : Private_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : Protected_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : Public_PointcutTheCtx -> FieldMod_PointcutTheCtx
+                            : ArrayInit_PointcutTheCtx -> VarInit_PointcutTheCtx
+                            : Expr_PointcutTheCtx -> VarInit_PointcutTheCtx
+    Dim                     : Dim_PointcutTheCtx
+    ArrayVarDecId           : Id_PointcutTheCtx * List(Dim_PointcutTheCtx) -> VarDecId_PointcutTheCtx
+                            : Id_PointcutTheCtx -> VarDecId_PointcutTheCtx
+    VarDec                  : VarDecId_PointcutTheCtx * VarInit_PointcutTheCtx -> VarDec_PointcutTheCtx
+    VarDec                  : VarDecId_PointcutTheCtx -> VarDec_PointcutTheCtx
+    FieldDec                : List(Anno_PointcutTheCtx_FieldMod_PointcutTheCtx0) * Type_PointcutTheCtx * List(VarDec_PointcutTheCtx) -> FieldDec_PointcutTheCtx
+    ArrayInit               : List(VarInit_PointcutTheCtx) -> ArrayInit_PointcutTheCtx
+    VoidClass               : ClassLiteral_PointcutTheCtx
+    Class                   : Type_PointcutTheCtx -> ClassLiteral_PointcutTheCtx
+                            : ClassLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+                            : NullLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+                            : StringLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+                            : CharLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+                            : BoolLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+                            : FloatLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+                            : IntLiteral_PointcutTheCtx -> Literal_PointcutTheCtx
+    AssignOr                : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignExcOr             : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignAnd               : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignURightShift       : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignRightShift        : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignLeftShift         : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignMinus             : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignPlus              : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignRemain            : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignDiv               : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    AssignMul               : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Assign                  : LHS_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Or                      : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    ExcOr                   : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    And                     : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    LazyOr                  : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    LazyAnd                 : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    NotEq                   : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Eq                      : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    GtEq                    : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    LtEq                    : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Gt                      : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Lt                      : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    URightShift             : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    RightShift              : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    LeftShift               : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Minus                   : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Plus                    : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Remain                  : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Div                     : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Mul                     : Expr_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    InstanceOf              : Expr_PointcutTheCtx * RefType_PointcutTheCtx -> Expr_PointcutTheCtx
+    CastRef                 : RefType_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    CastPrim                : PrimType_PointcutTheCtx * Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Not                     : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Complement              : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    PreDecr                 : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    PreIncr                 : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Minus                   : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    Plus                    : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    PostDecr                : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+    PostIncr                : Expr_PointcutTheCtx -> Expr_PointcutTheCtx
+                            : ExprName_PointcutTheCtx -> Expr_PointcutTheCtx
+    Invoke                  : MethodSpec_PointcutTheCtx * List(Expr_PointcutTheCtx) -> Expr_PointcutTheCtx
+                            : FieldAccess_PointcutTheCtx -> Expr_PointcutTheCtx
+                            : ArrayCreationExpr_PointcutTheCtx -> Expr_PointcutTheCtx
+    QNewInstance            : Expr_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 * Id_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 * List(Expr_PointcutTheCtx) * Option(ClassBody_PointcutTheCtx) -> Expr_PointcutTheCtx
+    NewInstance             : OptTypeArgs_PointcutTheCtx0 * ClassOrInterfaceType_PointcutTheCtx * List(Expr_PointcutTheCtx) * Option(ClassBody_PointcutTheCtx) -> Expr_PointcutTheCtx
+    QThis                   : TypeName_PointcutTheCtx -> Expr_PointcutTheCtx
+    This                    : Expr_PointcutTheCtx
+    Lit                     : Literal_PointcutTheCtx -> Expr_PointcutTheCtx
+                            : RefType_PointcutTheCtx -> Type_PointcutTheCtx
+                            : PrimType_PointcutTheCtx -> Type_PointcutTheCtx
+    ArrayType               : Type_PointcutTheCtx -> ArrayType_PointcutTheCtx
+    Member                  : TypeDecSpec_PointcutTheCtx * TypeArgs_PointcutTheCtx * Id_PointcutTheCtx -> TypeDecSpec_PointcutTheCtx
+                            : TypeName_PointcutTheCtx -> TypeDecSpec_PointcutTheCtx
+    InterfaceType           : TypeDecSpec_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 -> InterfaceType_PointcutTheCtx
+    ClassType               : TypeDecSpec_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 -> ClassType_PointcutTheCtx
+    ClassOrInterfaceType    : TypeDecSpec_PointcutTheCtx * OptTypeArgs_PointcutTheCtx0 -> ClassOrInterfaceType_PointcutTheCtx
+                            : ArrayType_PointcutTheCtx -> RefType_PointcutTheCtx
+                            : ClassOrInterfaceType_PointcutTheCtx -> RefType_PointcutTheCtx
+                            : Id_PointcutTheCtx -> TypeVarId_PointcutTheCtx
+    TypeParams              : List(TypeParam_PointcutTheCtx) -> TypeParams_PointcutTheCtx
+    TypeBound               : List(ClassOrInterfaceType_PointcutTheCtx) -> TypeBound_PointcutTheCtx
+    TypeParam               : TypeVarId_PointcutTheCtx * Option(TypeBound_PointcutTheCtx) -> TypeParam_PointcutTheCtx
+    WildcardLowerBound      : RefType_PointcutTheCtx -> WildcardBound_PointcutTheCtx
+    WildcardUpperBound      : RefType_PointcutTheCtx -> WildcardBound_PointcutTheCtx
+    Wildcard                : Option(WildcardBound_PointcutTheCtx) -> ActualTypeArg_PointcutTheCtx
+                            : Type_PointcutTheCtx -> ActualTypeArg_PointcutTheCtx
+    TypeArgs                : List(ActualTypeArg_PointcutTheCtx) -> TypeArgs_PointcutTheCtx
+    PackageOrTypeName       : PackageOrTypeName_PointcutTheCtx * Id_PointcutTheCtx -> PackageOrTypeName_PointcutTheCtx
+    PackageOrTypeName       : Id_PointcutTheCtx -> PackageOrTypeName_PointcutTheCtx
+    MethodName              : AmbName_PointcutTheCtx * Id_PointcutTheCtx -> MethodName_PointcutTheCtx
+    MethodName              : Id_PointcutTheCtx -> MethodName_PointcutTheCtx
+    ExprName                : AmbName_PointcutTheCtx * Id_PointcutTheCtx -> ExprName_PointcutTheCtx
+    ExprName                : Id_PointcutTheCtx -> ExprName_PointcutTheCtx
+    TypeName                : PackageOrTypeName_PointcutTheCtx * Id_PointcutTheCtx -> TypeName_PointcutTheCtx
+    TypeName                : Id_PointcutTheCtx -> TypeName_PointcutTheCtx
+    AmbName                 : AmbName_PointcutTheCtx * Id_PointcutTheCtx -> AmbName_PointcutTheCtx
+    AmbName                 : Id_PointcutTheCtx -> AmbName_PointcutTheCtx
+    Double                  : FloatType_PointcutTheCtx
+    Float                   : FloatType_PointcutTheCtx
+    Char                    : IntType_PointcutTheCtx
+    Long                    : IntType_PointcutTheCtx
+    Int                     : IntType_PointcutTheCtx
+    Short                   : IntType_PointcutTheCtx
+    Byte                    : IntType_PointcutTheCtx
+                            : FloatType_PointcutTheCtx -> NumType_PointcutTheCtx
+                            : IntType_PointcutTheCtx -> NumType_PointcutTheCtx
+    Boolean                 : PrimType_PointcutTheCtx
+                            : NumType_PointcutTheCtx -> PrimType_PointcutTheCtx
+    Null                    : NullLiteral_PointcutTheCtx
+                            : String -> StringChars_PointcutTheCtx
+                            : EscapeSeq_PointcutTheCtx -> StringPart_PointcutTheCtx
+                            : UnicodeEscape -> StringPart_PointcutTheCtx
+    Chars                   : StringChars_PointcutTheCtx -> StringPart_PointcutTheCtx
+    String                  : List(StringPart_PointcutTheCtx) -> StringLiteral_PointcutTheCtx
+                            : Int -> SingleChar_PointcutTheCtx
+                            : EscapeSeq_PointcutTheCtx -> CharContent_PointcutTheCtx
+                            : UnicodeEscape -> CharContent_PointcutTheCtx
+    Single                  : SingleChar_PointcutTheCtx -> CharContent_PointcutTheCtx
+    Char                    : CharContent_PointcutTheCtx -> CharLiteral_PointcutTheCtx
+                            : Int -> LastOcta_PointcutTheCtx
+    OctaEscape3             : Int * Int * Int -> OctaEscape_PointcutTheCtx
+    OctaEscape2             : Int * Int -> OctaEscape_PointcutTheCtx
+    OctaEscape2             : Int * LastOcta_PointcutTheCtx -> OctaEscape_PointcutTheCtx
+    OctaEscape1             : LastOcta_PointcutTheCtx -> OctaEscape_PointcutTheCtx
+    NamedEscape             : Int -> NamedEscape_PointcutTheCtx
+                            : NamedEscape_PointcutTheCtx -> EscapeSeq_PointcutTheCtx
+                            : OctaEscape_PointcutTheCtx -> EscapeSeq_PointcutTheCtx
+    False                   : Bool_PointcutTheCtx
+    True                    : Bool_PointcutTheCtx
+    Bool                    : Bool_PointcutTheCtx -> BoolLiteral_PointcutTheCtx
+    Float                   : HexaFloatLiteral_PointcutTheCtx -> FloatLiteral_PointcutTheCtx
+    Float                   : DeciFloatLiteral_PointcutTheCtx -> FloatLiteral_PointcutTheCtx
+                            : String -> HexaFloatLiteral_PointcutTheCtx
+                            : String -> DeciFloatLiteral_PointcutTheCtx
+    Octa                    : OctaLiteral_PointcutTheCtx -> IntLiteral_PointcutTheCtx
+    Hexa                    : HexaLiteral_PointcutTheCtx -> IntLiteral_PointcutTheCtx
+    Deci                    : DeciLiteral_PointcutTheCtx -> IntLiteral_PointcutTheCtx
+                            : String -> OctaLiteral_PointcutTheCtx
+                            : String -> HexaLiteral_PointcutTheCtx
+                            : String -> DeciLiteral_PointcutTheCtx
+                            : StrictFP_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Synchronized_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Volatile_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Transient_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Native_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Static_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Final_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Abstract_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Protected_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Private_PointcutTheCtx -> Modifier_PointcutTheCtx
+                            : Public_PointcutTheCtx -> Modifier_PointcutTheCtx
+    StrictFP                : StrictFP_PointcutTheCtx
+    Synchronized            : Synchronized_PointcutTheCtx
+    Volatile                : Volatile_PointcutTheCtx
+    Transient               : Transient_PointcutTheCtx
+    Native                  : Native_PointcutTheCtx
+    Static                  : Static_PointcutTheCtx
+    Final                   : Final_PointcutTheCtx
+    Abstract                : Abstract_PointcutTheCtx
+    Protected               : Protected_PointcutTheCtx
+    Private                 : Private_PointcutTheCtx
+    Public                  : Public_PointcutTheCtx
+    Id                      : ID_PointcutTheCtx -> Id_PointcutTheCtx
+                            : String -> ID_PointcutTheCtx
+    ElemValArrayInit        : List(ElemVal_AspectTheCtx) -> ElemVal_AspectTheCtx
+                            : Anno_AspectTheCtx -> ElemVal_AspectTheCtx
+                            : Expr_AspectTheCtx -> ElemVal_AspectTheCtx
+    ElemValPair             : Id_AspectTheCtx * ElemVal_AspectTheCtx -> ElemValPair_AspectTheCtx
+    MarkerAnno              : TypeName_AspectTheCtx -> Anno_AspectTheCtx
+    SingleElemAnno          : TypeName_AspectTheCtx * ElemVal_AspectTheCtx -> Anno_AspectTheCtx
+    Anno                    : TypeName_AspectTheCtx * List(ElemValPair_AspectTheCtx) -> Anno_AspectTheCtx
+                            : FieldAccess_AspectTheCtx -> LHS_AspectTheCtx
+                            : ExprName_AspectTheCtx -> LHS_AspectTheCtx
+    GenericMethod           : AmbName_AspectTheCtx * TypeArgs_AspectTheCtx * Id_AspectTheCtx -> MethodSpec_AspectTheCtx
+    QSuperMethod            : TypeName_AspectTheCtx * OptTypeArgs_AspectTheCtx0 * Id_AspectTheCtx -> MethodSpec_AspectTheCtx
+    SuperMethod             : OptTypeArgs_AspectTheCtx0 * Id_AspectTheCtx -> MethodSpec_AspectTheCtx
+    Method                  : Expr_AspectTheCtx * OptTypeArgs_AspectTheCtx0 * Id_AspectTheCtx -> MethodSpec_AspectTheCtx
+    Method                  : MethodName_AspectTheCtx -> MethodSpec_AspectTheCtx
+    QSuperField             : TypeName_AspectTheCtx * Id_AspectTheCtx -> FieldAccess_AspectTheCtx
+    SuperField              : Id_AspectTheCtx -> FieldAccess_AspectTheCtx
+    Field                   : Expr_AspectTheCtx * Id_AspectTheCtx -> FieldAccess_AspectTheCtx
+    Dim                     : Expr_AspectTheCtx -> DimExpr_AspectTheCtx
+    UnboundWld              : TypeName_AspectTheCtx -> ArrayBaseType_AspectTheCtx
+                            : TypeName_AspectTheCtx -> ArrayBaseType_AspectTheCtx
+                            : PrimType_AspectTheCtx -> ArrayBaseType_AspectTheCtx
+    NewArray                : ArrayBaseType_AspectTheCtx * List(Dim_AspectTheCtx) * ArrayInit_AspectTheCtx -> ArrayCreationExpr_AspectTheCtx
+    NewArray                : ArrayBaseType_AspectTheCtx * List(DimExpr_AspectTheCtx) * List(Dim_AspectTheCtx) -> ArrayCreationExpr_AspectTheCtx
+                            : PointcutDec -> ClassMemberDec_AspectTheCtx
+                            : AspectDec -> ClassMemberDec_AspectTheCtx
+    Semicolon               : ClassMemberDec_AspectTheCtx
+                            : InterfaceDec_AspectTheCtx -> ClassMemberDec_AspectTheCtx
+                            : ClassDec_AspectTheCtx -> ClassMemberDec_AspectTheCtx
+                            : MethodDec_AspectTheCtx -> ClassMemberDec_AspectTheCtx
+                            : FieldDec_AspectTheCtx -> ClassMemberDec_AspectTheCtx
+                            : ConstrDec_AspectTheCtx -> ClassBodyDec_AspectTheCtx
+                            : StaticInit_AspectTheCtx -> ClassBodyDec_AspectTheCtx
+                            : InstanceInit_AspectTheCtx -> ClassBodyDec_AspectTheCtx
+                            : ClassMemberDec_AspectTheCtx -> ClassBodyDec_AspectTheCtx
+    ImplementsDec           : List(InterfaceType_AspectTheCtx) -> Interfaces_AspectTheCtx
+    SuperDec                : ClassType_AspectTheCtx -> Super_AspectTheCtx
+                            : StrictFP_AspectTheCtx -> ClassMod_AspectTheCtx
+                            : Final_AspectTheCtx -> ClassMod_AspectTheCtx
+                            : Static_AspectTheCtx -> ClassMod_AspectTheCtx
+                            : Private_AspectTheCtx -> ClassMod_AspectTheCtx
+                            : Protected_AspectTheCtx -> ClassMod_AspectTheCtx
+                            : Public_AspectTheCtx -> ClassMod_AspectTheCtx
+                            : Abstract_AspectTheCtx -> ClassMod_AspectTheCtx
+    ClassDecHead            : List(Anno_AspectTheCtx_ClassMod_AspectTheCtx0) * Id_AspectTheCtx * Option(TypeParams_AspectTheCtx) * Option(Super_AspectTheCtx) * Option(Interfaces_AspectTheCtx) -> ClassDecHead_AspectTheCtx
+    ClassBody               : List(ClassBodyDec_AspectTheCtx) -> ClassBody_AspectTheCtx
+    ClassDec                : ClassDecHead_AspectTheCtx * ClassBody_AspectTheCtx -> ClassDec_AspectTheCtx
+                            : EnumDec_AspectTheCtx -> ClassDec_AspectTheCtx
+                            : StrictFP_AspectTheCtx -> InterfaceMod_AspectTheCtx
+                            : Static_AspectTheCtx -> InterfaceMod_AspectTheCtx
+                            : Abstract_AspectTheCtx -> InterfaceMod_AspectTheCtx
+                            : Private_AspectTheCtx -> InterfaceMod_AspectTheCtx
+                            : Protected_AspectTheCtx -> InterfaceMod_AspectTheCtx
+                            : Public_AspectTheCtx -> InterfaceMod_AspectTheCtx
+    Semicolon               : InterfaceMemberDec_AspectTheCtx
+                            : InterfaceDec_AspectTheCtx -> InterfaceMemberDec_AspectTheCtx
+                            : ClassDec_AspectTheCtx -> InterfaceMemberDec_AspectTheCtx
+                            : AbstractMethodDec_AspectTheCtx -> InterfaceMemberDec_AspectTheCtx
+                            : ConstantDec_AspectTheCtx -> InterfaceMemberDec_AspectTheCtx
+    ExtendsInterfaces       : List(InterfaceType_AspectTheCtx) -> ExtendsInterfaces_AspectTheCtx
+    InterfaceDecHead        : List(Anno_AspectTheCtx_InterfaceMod_AspectTheCtx0) * Id_AspectTheCtx * Option(TypeParams_AspectTheCtx) * Option(ExtendsInterfaces_AspectTheCtx) -> InterfaceDecHead_AspectTheCtx
+    InterfaceDec            : InterfaceDecHead_AspectTheCtx * List(InterfaceMemberDec_AspectTheCtx) -> InterfaceDec_AspectTheCtx
+                            : AnnoDec_AspectTheCtx -> InterfaceDec_AspectTheCtx
+    DefaultVal              : ElemVal_AspectTheCtx -> DefaultVal_AspectTheCtx
+    Semicolon               : AnnoElemDec_AspectTheCtx
+                            : AnnoDec_AspectTheCtx -> AnnoElemDec_AspectTheCtx
+                            : EnumDec_AspectTheCtx -> AnnoElemDec_AspectTheCtx
+                            : InterfaceDec_AspectTheCtx -> AnnoElemDec_AspectTheCtx
+                            : ClassDec_AspectTheCtx -> AnnoElemDec_AspectTheCtx
+                            : ConstantDec_AspectTheCtx -> AnnoElemDec_AspectTheCtx
+    AnnoMethodDec           : List(AbstractMethodMod_AspectTheCtx) * Type_AspectTheCtx * Id_AspectTheCtx * Option(DefaultVal_AspectTheCtx) -> AnnoElemDec_AspectTheCtx
+    AnnoDecHead             : List(Anno_AspectTheCtx_InterfaceMod_AspectTheCtx0) * Id_AspectTheCtx -> AnnoDecHead_AspectTheCtx
+    AnnoDec                 : AnnoDecHead_AspectTheCtx * List(AnnoElemDec_AspectTheCtx) -> AnnoDec_AspectTheCtx
+                            : Abstract_AspectTheCtx -> AbstractMethodMod_AspectTheCtx
+                            : Public_AspectTheCtx -> AbstractMethodMod_AspectTheCtx
+    DeprAbstractMethodDec   : List(Anno_AspectTheCtx_AbstractMethodMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * ResultType_AspectTheCtx * Id_AspectTheCtx * List(FormalParam_AspectTheCtx) * List(Dim_AspectTheCtx) * Option(Throws_AspectTheCtx) -> AbstractMethodDec_AspectTheCtx
+    AbstractMethodDec       : List(Anno_AspectTheCtx_AbstractMethodMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * ResultType_AspectTheCtx * Id_AspectTheCtx * List(FormalParam_AspectTheCtx) * Option(Throws_AspectTheCtx) -> AbstractMethodDec_AspectTheCtx
+                            : Final_AspectTheCtx -> ConstantMod_AspectTheCtx
+                            : Static_AspectTheCtx -> ConstantMod_AspectTheCtx
+                            : Public_AspectTheCtx -> ConstantMod_AspectTheCtx
+    ConstantDec             : List(Anno_AspectTheCtx_ConstantMod_AspectTheCtx0) * Type_AspectTheCtx * List(VarDec_AspectTheCtx) -> ConstantDec_AspectTheCtx
+    EnumBodyDecs            : List(ClassBodyDec_AspectTheCtx) -> EnumBodyDecs_AspectTheCtx
+    EnumConst               : Id_AspectTheCtx * OptEnumConstArgs_AspectTheCtx0 * Option(ClassBody_AspectTheCtx) -> EnumConst_AspectTheCtx
+    EnumBody                : List(EnumConst_AspectTheCtx) * Option(EnumBodyDecs_AspectTheCtx) -> EnumBody_AspectTheCtx
+    EnumDecHead             : List(Anno_AspectTheCtx_ClassMod_AspectTheCtx0) * Id_AspectTheCtx * Option(Interfaces_AspectTheCtx) -> EnumDecHead_AspectTheCtx
+    EnumDec                 : EnumDecHead_AspectTheCtx * EnumBody_AspectTheCtx -> EnumDec_AspectTheCtx
+                            : Private_AspectTheCtx -> ConstrMod_AspectTheCtx
+                            : Protected_AspectTheCtx -> ConstrMod_AspectTheCtx
+                            : Public_AspectTheCtx -> ConstrMod_AspectTheCtx
+    QSuperConstrInv         : Expr_AspectTheCtx * OptTypeArgs_AspectTheCtx0 * List(Expr_AspectTheCtx) -> ConstrInv_AspectTheCtx
+    SuperConstrInv          : OptTypeArgs_AspectTheCtx0 * List(Expr_AspectTheCtx) -> ConstrInv_AspectTheCtx
+    AltConstrInv            : OptTypeArgs_AspectTheCtx0 * List(Expr_AspectTheCtx) -> ConstrInv_AspectTheCtx
+    ConstrBody              : Option(ConstrInv_AspectTheCtx) * List(BlockStm_AspectTheCtx) -> ConstrBody_AspectTheCtx
+    ConstrDecHead           : List(Anno_AspectTheCtx_ConstrMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * Id_AspectTheCtx * List(FormalParam_AspectTheCtx) * Option(Throws_AspectTheCtx) -> ConstrHead_AspectTheCtx
+    ConstrDec               : ConstrHead_AspectTheCtx * ConstrBody_AspectTheCtx -> ConstrDec_AspectTheCtx
+    StaticInit              : Block_AspectTheCtx -> StaticInit_AspectTheCtx
+    InstanceInit            : Block_AspectTheCtx -> InstanceInit_AspectTheCtx
+    NoMethodBody            : MethodBody_AspectTheCtx
+                            : Block_AspectTheCtx -> MethodBody_AspectTheCtx
+                            : ClassType_AspectTheCtx -> ExceptionType_AspectTheCtx
+    ThrowsDec               : List(ExceptionType_AspectTheCtx) -> Throws_AspectTheCtx
+                            : StrictFP_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Native_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Synchronized_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Final_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Static_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Abstract_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Private_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Protected_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Public_AspectTheCtx -> MethodMod_AspectTheCtx
+                            : Final_AspectTheCtx -> VarMod_AspectTheCtx
+    VarArityParam           : List(Anno_AspectTheCtx_VarMod_AspectTheCtx0) * Type_AspectTheCtx * VarDecId_AspectTheCtx -> FormalParam_AspectTheCtx
+    Param                   : List(Anno_AspectTheCtx_VarMod_AspectTheCtx0) * Type_AspectTheCtx * VarDecId_AspectTheCtx -> FormalParam_AspectTheCtx
+    Void                    : ResultType_AspectTheCtx
+                            : Type_AspectTheCtx -> ResultType_AspectTheCtx
+    DeprMethodDecHead       : List(Anno_AspectTheCtx_MethodMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * ResultType_AspectTheCtx * Id_AspectTheCtx * List(FormalParam_AspectTheCtx) * List(Dim_AspectTheCtx) * Option(Throws_AspectTheCtx) -> MethodDecHead_AspectTheCtx
+    MethodDecHead           : List(Anno_AspectTheCtx_MethodMod_AspectTheCtx0) * Option(TypeParams_AspectTheCtx) * ResultType_AspectTheCtx * Id_AspectTheCtx * List(FormalParam_AspectTheCtx) * Option(Throws_AspectTheCtx) -> MethodDecHead_AspectTheCtx
+    MethodDec               : MethodDecHead_AspectTheCtx * MethodBody_AspectTheCtx -> MethodDec_AspectTheCtx
+                            : Stm_AspectTheCtx -> BlockStm_AspectTheCtx
+    ClassDecStm             : ClassDec_AspectTheCtx -> BlockStm_AspectTheCtx
+                            : LocalVarDecStm_AspectTheCtx -> BlockStm_AspectTheCtx
+    Block                   : List(BlockStm_AspectTheCtx) -> Block_AspectTheCtx
+    Catch                   : FormalParam_AspectTheCtx * Block_AspectTheCtx -> CatchClause_AspectTheCtx
+    Default                 : SwitchLabel_AspectTheCtx
+    Case                    : Expr_AspectTheCtx -> SwitchLabel_AspectTheCtx
+    SwitchGroup             : List(SwitchLabel_AspectTheCtx) * List(BlockStm_AspectTheCtx) -> SwitchGroup_AspectTheCtx
+    SwitchBlock             : List(SwitchGroup_AspectTheCtx) * List(SwitchLabel_AspectTheCtx) -> SwitchBlock_AspectTheCtx
+    Try                     : Block_AspectTheCtx * List(CatchClause_AspectTheCtx) * Block_AspectTheCtx -> Stm_AspectTheCtx
+    Try                     : Block_AspectTheCtx * List(CatchClause_AspectTheCtx) -> Stm_AspectTheCtx
+    Synchronized            : Expr_AspectTheCtx * Block_AspectTheCtx -> Stm_AspectTheCtx
+    Throw                   : Expr_AspectTheCtx -> Stm_AspectTheCtx
+    Return                  : Option(Expr_AspectTheCtx) -> Stm_AspectTheCtx
+    Continue                : Option(Id_AspectTheCtx) -> Stm_AspectTheCtx
+    Break                   : Option(Id_AspectTheCtx) -> Stm_AspectTheCtx
+    ForEach                 : FormalParam_AspectTheCtx * Expr_AspectTheCtx * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    For                     : List(Expr_AspectTheCtx) * Option(Expr_AspectTheCtx) * List(Expr_AspectTheCtx) * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    For                     : LocalVarDec_AspectTheCtx * Option(Expr_AspectTheCtx) * List(Expr_AspectTheCtx) * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    DoWhile                 : Stm_AspectTheCtx * Expr_AspectTheCtx -> Stm_AspectTheCtx
+    While                   : Expr_AspectTheCtx * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    Switch                  : Expr_AspectTheCtx * SwitchBlock_AspectTheCtx -> Stm_AspectTheCtx
+    AssertStm               : Expr_AspectTheCtx * Expr_AspectTheCtx -> Stm_AspectTheCtx
+    AssertStm               : Expr_AspectTheCtx -> Stm_AspectTheCtx
+    If                      : Expr_AspectTheCtx * Stm_AspectTheCtx * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    If                      : Expr_AspectTheCtx * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    ExprStm                 : Expr_AspectTheCtx -> Stm_AspectTheCtx
+    Labeled                 : Id_AspectTheCtx * Stm_AspectTheCtx -> Stm_AspectTheCtx
+    Empty                   : Stm_AspectTheCtx
+                            : Block_AspectTheCtx -> Stm_AspectTheCtx
+    LocalVarDec             : List(Anno_AspectTheCtx_VarMod_AspectTheCtx0) * Type_AspectTheCtx * List(VarDec_AspectTheCtx) -> LocalVarDec_AspectTheCtx
+    LocalVarDecStm          : LocalVarDec_AspectTheCtx -> LocalVarDecStm_AspectTheCtx
+                            : Volatile_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : Transient_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : Final_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : Static_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : Private_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : Protected_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : Public_AspectTheCtx -> FieldMod_AspectTheCtx
+                            : ArrayInit_AspectTheCtx -> VarInit_AspectTheCtx
+                            : Expr_AspectTheCtx -> VarInit_AspectTheCtx
+    Dim                     : Dim_AspectTheCtx
+    ArrayVarDecId           : Id_AspectTheCtx * List(Dim_AspectTheCtx) -> VarDecId_AspectTheCtx
+                            : Id_AspectTheCtx -> VarDecId_AspectTheCtx
+    VarDec                  : VarDecId_AspectTheCtx * VarInit_AspectTheCtx -> VarDec_AspectTheCtx
+    VarDec                  : VarDecId_AspectTheCtx -> VarDec_AspectTheCtx
+    FieldDec                : List(Anno_AspectTheCtx_FieldMod_AspectTheCtx0) * Type_AspectTheCtx * List(VarDec_AspectTheCtx) -> FieldDec_AspectTheCtx
+    ArrayInit               : List(VarInit_AspectTheCtx) -> ArrayInit_AspectTheCtx
+    VoidClass               : ClassLiteral_AspectTheCtx
+    Class                   : Type_AspectTheCtx -> ClassLiteral_AspectTheCtx
+                            : ClassLiteral_AspectTheCtx -> Literal_AspectTheCtx
+                            : NullLiteral_AspectTheCtx -> Literal_AspectTheCtx
+                            : StringLiteral_AspectTheCtx -> Literal_AspectTheCtx
+                            : CharLiteral_AspectTheCtx -> Literal_AspectTheCtx
+                            : BoolLiteral_AspectTheCtx -> Literal_AspectTheCtx
+                            : FloatLiteral_AspectTheCtx -> Literal_AspectTheCtx
+                            : IntLiteral_AspectTheCtx -> Literal_AspectTheCtx
+    AssignOr                : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignExcOr             : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignAnd               : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignURightShift       : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignRightShift        : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignLeftShift         : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignMinus             : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignPlus              : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignRemain            : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignDiv               : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    AssignMul               : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Assign                  : LHS_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Or                      : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    ExcOr                   : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    And                     : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    LazyOr                  : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    LazyAnd                 : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    NotEq                   : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Eq                      : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    GtEq                    : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    LtEq                    : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Gt                      : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Lt                      : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    URightShift             : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    RightShift              : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    LeftShift               : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Minus                   : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Plus                    : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Remain                  : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Div                     : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Mul                     : Expr_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    InstanceOf              : Expr_AspectTheCtx * RefType_AspectTheCtx -> Expr_AspectTheCtx
+    CastRef                 : RefType_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    CastPrim                : PrimType_AspectTheCtx * Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Not                     : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Complement              : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    PreDecr                 : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    PreIncr                 : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Minus                   : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    Plus                    : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    PostDecr                : Expr_AspectTheCtx -> Expr_AspectTheCtx
+    PostIncr                : Expr_AspectTheCtx -> Expr_AspectTheCtx
+                            : ExprName_AspectTheCtx -> Expr_AspectTheCtx
+    Invoke                  : MethodSpec_AspectTheCtx * List(Expr_AspectTheCtx) -> Expr_AspectTheCtx
+                            : FieldAccess_AspectTheCtx -> Expr_AspectTheCtx
+                            : ArrayCreationExpr_AspectTheCtx -> Expr_AspectTheCtx
+    QNewInstance            : Expr_AspectTheCtx * OptTypeArgs_AspectTheCtx0 * Id_AspectTheCtx * OptTypeArgs_AspectTheCtx0 * List(Expr_AspectTheCtx) * Option(ClassBody_AspectTheCtx) -> Expr_AspectTheCtx
+    NewInstance             : OptTypeArgs_AspectTheCtx0 * ClassOrInterfaceType_AspectTheCtx * List(Expr_AspectTheCtx) * Option(ClassBody_AspectTheCtx) -> Expr_AspectTheCtx
+    QThis                   : TypeName_AspectTheCtx -> Expr_AspectTheCtx
+    This                    : Expr_AspectTheCtx
+    Lit                     : Literal_AspectTheCtx -> Expr_AspectTheCtx
+                            : RefType_AspectTheCtx -> Type_AspectTheCtx
+                            : PrimType_AspectTheCtx -> Type_AspectTheCtx
+    ArrayType               : Type_AspectTheCtx -> ArrayType_AspectTheCtx
+    Member                  : TypeDecSpec_AspectTheCtx * TypeArgs_AspectTheCtx * Id_AspectTheCtx -> TypeDecSpec_AspectTheCtx
+                            : TypeName_AspectTheCtx -> TypeDecSpec_AspectTheCtx
+    InterfaceType           : TypeDecSpec_AspectTheCtx * OptTypeArgs_AspectTheCtx0 -> InterfaceType_AspectTheCtx
+    ClassType               : TypeDecSpec_AspectTheCtx * OptTypeArgs_AspectTheCtx0 -> ClassType_AspectTheCtx
+    ClassOrInterfaceType    : TypeDecSpec_AspectTheCtx * OptTypeArgs_AspectTheCtx0 -> ClassOrInterfaceType_AspectTheCtx
+                            : ArrayType_AspectTheCtx -> RefType_AspectTheCtx
+                            : ClassOrInterfaceType_AspectTheCtx -> RefType_AspectTheCtx
+                            : Id_AspectTheCtx -> TypeVarId_AspectTheCtx
+    TypeParams              : List(TypeParam_AspectTheCtx) -> TypeParams_AspectTheCtx
+    TypeBound               : List(ClassOrInterfaceType_AspectTheCtx) -> TypeBound_AspectTheCtx
+    TypeParam               : TypeVarId_AspectTheCtx * Option(TypeBound_AspectTheCtx) -> TypeParam_AspectTheCtx
+    WildcardLowerBound      : RefType_AspectTheCtx -> WildcardBound_AspectTheCtx
+    WildcardUpperBound      : RefType_AspectTheCtx -> WildcardBound_AspectTheCtx
+    Wildcard                : Option(WildcardBound_AspectTheCtx) -> ActualTypeArg_AspectTheCtx
+                            : Type_AspectTheCtx -> ActualTypeArg_AspectTheCtx
+    TypeArgs                : List(ActualTypeArg_AspectTheCtx) -> TypeArgs_AspectTheCtx
+    PackageOrTypeName       : PackageOrTypeName_AspectTheCtx * Id_AspectTheCtx -> PackageOrTypeName_AspectTheCtx
+    PackageOrTypeName       : Id_AspectTheCtx -> PackageOrTypeName_AspectTheCtx
+    MethodName              : AmbName_AspectTheCtx * Id_AspectTheCtx -> MethodName_AspectTheCtx
+    MethodName              : Id_AspectTheCtx -> MethodName_AspectTheCtx
+    ExprName                : AmbName_AspectTheCtx * Id_AspectTheCtx -> ExprName_AspectTheCtx
+    ExprName                : Id_AspectTheCtx -> ExprName_AspectTheCtx
+    TypeName                : PackageOrTypeName_AspectTheCtx * Id_AspectTheCtx -> TypeName_AspectTheCtx
+    TypeName                : Id_AspectTheCtx -> TypeName_AspectTheCtx
+    AmbName                 : AmbName_AspectTheCtx * Id_AspectTheCtx -> AmbName_AspectTheCtx
+    AmbName                 : Id_AspectTheCtx -> AmbName_AspectTheCtx
+    Double                  : FloatType_AspectTheCtx
+    Float                   : FloatType_AspectTheCtx
+    Char                    : IntType_AspectTheCtx
+    Long                    : IntType_AspectTheCtx
+    Int                     : IntType_AspectTheCtx
+    Short                   : IntType_AspectTheCtx
+    Byte                    : IntType_AspectTheCtx
+                            : FloatType_AspectTheCtx -> NumType_AspectTheCtx
+                            : IntType_AspectTheCtx -> NumType_AspectTheCtx
+    Boolean                 : PrimType_AspectTheCtx
+                            : NumType_AspectTheCtx -> PrimType_AspectTheCtx
+    Null                    : NullLiteral_AspectTheCtx
+                            : String -> StringChars_AspectTheCtx
+                            : EscapeSeq_AspectTheCtx -> StringPart_AspectTheCtx
+                            : UnicodeEscape -> StringPart_AspectTheCtx
+    Chars                   : StringChars_AspectTheCtx -> StringPart_AspectTheCtx
+    String                  : List(StringPart_AspectTheCtx) -> StringLiteral_AspectTheCtx
+                            : Int -> SingleChar_AspectTheCtx
+                            : EscapeSeq_AspectTheCtx -> CharContent_AspectTheCtx
+                            : UnicodeEscape -> CharContent_AspectTheCtx
+    Single                  : SingleChar_AspectTheCtx -> CharContent_AspectTheCtx
+    Char                    : CharContent_AspectTheCtx -> CharLiteral_AspectTheCtx
+                            : Int -> LastOcta_AspectTheCtx
+    OctaEscape3             : Int * Int * Int -> OctaEscape_AspectTheCtx
+    OctaEscape2             : Int * Int -> OctaEscape_AspectTheCtx
+    OctaEscape2             : Int * LastOcta_AspectTheCtx -> OctaEscape_AspectTheCtx
+    OctaEscape1             : LastOcta_AspectTheCtx -> OctaEscape_AspectTheCtx
+    NamedEscape             : Int -> NamedEscape_AspectTheCtx
+                            : NamedEscape_AspectTheCtx -> EscapeSeq_AspectTheCtx
+                            : OctaEscape_AspectTheCtx -> EscapeSeq_AspectTheCtx
+    False                   : Bool_AspectTheCtx
+    True                    : Bool_AspectTheCtx
+    Bool                    : Bool_AspectTheCtx -> BoolLiteral_AspectTheCtx
+    Float                   : HexaFloatLiteral_AspectTheCtx -> FloatLiteral_AspectTheCtx
+    Float                   : DeciFloatLiteral_AspectTheCtx -> FloatLiteral_AspectTheCtx
+                            : String -> HexaFloatLiteral_AspectTheCtx
+                            : String -> DeciFloatLiteral_AspectTheCtx
+    Octa                    : OctaLiteral_AspectTheCtx -> IntLiteral_AspectTheCtx
+    Hexa                    : HexaLiteral_AspectTheCtx -> IntLiteral_AspectTheCtx
+    Deci                    : DeciLiteral_AspectTheCtx -> IntLiteral_AspectTheCtx
+                            : String -> OctaLiteral_AspectTheCtx
+                            : String -> HexaLiteral_AspectTheCtx
+                            : String -> DeciLiteral_AspectTheCtx
+    StrictFP                : StrictFP_AspectTheCtx
+    Synchronized            : Synchronized_AspectTheCtx
+    Volatile                : Volatile_AspectTheCtx
+    Transient               : Transient_AspectTheCtx
+    Native                  : Native_AspectTheCtx
+    Static                  : Static_AspectTheCtx
+    Final                   : Final_AspectTheCtx
+    Abstract                : Abstract_AspectTheCtx
+    Protected               : Protected_AspectTheCtx
+    Private                 : Private_AspectTheCtx
+    Public                  : Public_AspectTheCtx
+    Id                      : ID_AspectTheCtx -> Id_AspectTheCtx
+                            : String -> ID_AspectTheCtx
+    CompilationUnit         : Option(PackageDec_JavaTheCtx) * List(ImportDec_JavaTheCtx) * List(TypeDec_JavaTheCtx) -> CompilationUnit_JavaTheCtx
+                            : AspectDec -> TypeDec_JavaTheCtx
+    Semicolon               : TypeDec_JavaTheCtx
+                            : InterfaceDec_JavaTheCtx -> TypeDec_JavaTheCtx
+                            : ClassDec_JavaTheCtx -> TypeDec_JavaTheCtx
+    StaticImportOnDemandDec : TypeName_JavaTheCtx -> ImportDec_JavaTheCtx
+    StaticImportDec         : TypeName_JavaTheCtx * Id_JavaTheCtx -> ImportDec_JavaTheCtx
+    TypeImportOnDemandDec   : PackageName_JavaTheCtx -> ImportDec_JavaTheCtx
+    TypeImportDec           : TypeName_JavaTheCtx -> ImportDec_JavaTheCtx
+    PackageDec              : List(Anno_JavaTheCtx) * PackageName_JavaTheCtx -> PackageDec_JavaTheCtx
+    ElemValArrayInit        : List(ElemVal_JavaTheCtx) -> ElemVal_JavaTheCtx
+                            : Anno_JavaTheCtx -> ElemVal_JavaTheCtx
+                            : Expr_JavaTheCtx -> ElemVal_JavaTheCtx
+    ElemValPair             : Id_JavaTheCtx * ElemVal_JavaTheCtx -> ElemValPair_JavaTheCtx
+    MarkerAnno              : TypeName_JavaTheCtx -> Anno_JavaTheCtx
+    SingleElemAnno          : TypeName_JavaTheCtx * ElemVal_JavaTheCtx -> Anno_JavaTheCtx
+    Anno                    : TypeName_JavaTheCtx * List(ElemValPair_JavaTheCtx) -> Anno_JavaTheCtx
+                            : FieldAccess_JavaTheCtx -> LHS_JavaTheCtx
+                            : ExprName_JavaTheCtx -> LHS_JavaTheCtx
+    GenericMethod           : AmbName_JavaTheCtx * TypeArgs_JavaTheCtx * Id_JavaTheCtx -> MethodSpec_JavaTheCtx
+    QSuperMethod            : TypeName_JavaTheCtx * OptTypeArgs_JavaTheCtx0 * Id_JavaTheCtx -> MethodSpec_JavaTheCtx
+    SuperMethod             : OptTypeArgs_JavaTheCtx0 * Id_JavaTheCtx -> MethodSpec_JavaTheCtx
+    Method                  : Expr_JavaTheCtx * OptTypeArgs_JavaTheCtx0 * Id_JavaTheCtx -> MethodSpec_JavaTheCtx
+    Method                  : MethodName_JavaTheCtx -> MethodSpec_JavaTheCtx
+    QSuperField             : TypeName_JavaTheCtx * Id_JavaTheCtx -> FieldAccess_JavaTheCtx
+    SuperField              : Id_JavaTheCtx -> FieldAccess_JavaTheCtx
+    Field                   : Expr_JavaTheCtx * Id_JavaTheCtx -> FieldAccess_JavaTheCtx
+    Dim                     : Expr_JavaTheCtx -> DimExpr_JavaTheCtx
+    UnboundWld              : TypeName_JavaTheCtx -> ArrayBaseType_JavaTheCtx
+                            : TypeName_JavaTheCtx -> ArrayBaseType_JavaTheCtx
+                            : PrimType_JavaTheCtx -> ArrayBaseType_JavaTheCtx
+    NewArray                : ArrayBaseType_JavaTheCtx * List(Dim_JavaTheCtx) * ArrayInit_JavaTheCtx -> ArrayCreationExpr_JavaTheCtx
+    NewArray                : ArrayBaseType_JavaTheCtx * List(DimExpr_JavaTheCtx) * List(Dim_JavaTheCtx) -> ArrayCreationExpr_JavaTheCtx
+                            : PointcutDec -> ClassMemberDec_JavaTheCtx
+                            : AspectDec -> ClassMemberDec_JavaTheCtx
+    Semicolon               : ClassMemberDec_JavaTheCtx
+                            : InterfaceDec_JavaTheCtx -> ClassMemberDec_JavaTheCtx
+                            : ClassDec_JavaTheCtx -> ClassMemberDec_JavaTheCtx
+                            : MethodDec_JavaTheCtx -> ClassMemberDec_JavaTheCtx
+                            : FieldDec_JavaTheCtx -> ClassMemberDec_JavaTheCtx
+                            : ConstrDec_JavaTheCtx -> ClassBodyDec_JavaTheCtx
+                            : StaticInit_JavaTheCtx -> ClassBodyDec_JavaTheCtx
+                            : InstanceInit_JavaTheCtx -> ClassBodyDec_JavaTheCtx
+                            : ClassMemberDec_JavaTheCtx -> ClassBodyDec_JavaTheCtx
+    ImplementsDec           : List(InterfaceType_JavaTheCtx) -> Interfaces_JavaTheCtx
+    SuperDec                : ClassType_JavaTheCtx -> Super_JavaTheCtx
+                            : StrictFP_JavaTheCtx -> ClassMod_JavaTheCtx
+                            : Final_JavaTheCtx -> ClassMod_JavaTheCtx
+                            : Static_JavaTheCtx -> ClassMod_JavaTheCtx
+                            : Private_JavaTheCtx -> ClassMod_JavaTheCtx
+                            : Protected_JavaTheCtx -> ClassMod_JavaTheCtx
+                            : Public_JavaTheCtx -> ClassMod_JavaTheCtx
+                            : Abstract_JavaTheCtx -> ClassMod_JavaTheCtx
+    ClassDecHead            : List(Anno_JavaTheCtx_ClassMod_JavaTheCtx0) * Id_JavaTheCtx * Option(TypeParams_JavaTheCtx) * Option(Super_JavaTheCtx) * Option(Interfaces_JavaTheCtx) -> ClassDecHead_JavaTheCtx
+    ClassBody               : List(ClassBodyDec_JavaTheCtx) -> ClassBody_JavaTheCtx
+    ClassDec                : ClassDecHead_JavaTheCtx * ClassBody_JavaTheCtx -> ClassDec_JavaTheCtx
+                            : EnumDec_JavaTheCtx -> ClassDec_JavaTheCtx
+                            : StrictFP_JavaTheCtx -> InterfaceMod_JavaTheCtx
+                            : Static_JavaTheCtx -> InterfaceMod_JavaTheCtx
+                            : Abstract_JavaTheCtx -> InterfaceMod_JavaTheCtx
+                            : Private_JavaTheCtx -> InterfaceMod_JavaTheCtx
+                            : Protected_JavaTheCtx -> InterfaceMod_JavaTheCtx
+                            : Public_JavaTheCtx -> InterfaceMod_JavaTheCtx
+                            : PointcutDec -> InterfaceMemberDec_JavaTheCtx
+                            : AspectDec -> InterfaceMemberDec_JavaTheCtx
+    Semicolon               : InterfaceMemberDec_JavaTheCtx
+                            : InterfaceDec_JavaTheCtx -> InterfaceMemberDec_JavaTheCtx
+                            : ClassDec_JavaTheCtx -> InterfaceMemberDec_JavaTheCtx
+                            : AbstractMethodDec_JavaTheCtx -> InterfaceMemberDec_JavaTheCtx
+                            : ConstantDec_JavaTheCtx -> InterfaceMemberDec_JavaTheCtx
+    ExtendsInterfaces       : List(InterfaceType_JavaTheCtx) -> ExtendsInterfaces_JavaTheCtx
+    InterfaceDecHead        : List(Anno_JavaTheCtx_InterfaceMod_JavaTheCtx0) * Id_JavaTheCtx * Option(TypeParams_JavaTheCtx) * Option(ExtendsInterfaces_JavaTheCtx) -> InterfaceDecHead_JavaTheCtx
+    InterfaceDec            : InterfaceDecHead_JavaTheCtx * List(InterfaceMemberDec_JavaTheCtx) -> InterfaceDec_JavaTheCtx
+                            : AnnoDec_JavaTheCtx -> InterfaceDec_JavaTheCtx
+    DefaultVal              : ElemVal_JavaTheCtx -> DefaultVal_JavaTheCtx
+    Semicolon               : AnnoElemDec_JavaTheCtx
+                            : AnnoDec_JavaTheCtx -> AnnoElemDec_JavaTheCtx
+                            : EnumDec_JavaTheCtx -> AnnoElemDec_JavaTheCtx
+                            : InterfaceDec_JavaTheCtx -> AnnoElemDec_JavaTheCtx
+                            : ClassDec_JavaTheCtx -> AnnoElemDec_JavaTheCtx
+                            : ConstantDec_JavaTheCtx -> AnnoElemDec_JavaTheCtx
+    AnnoMethodDec           : List(AbstractMethodMod_JavaTheCtx) * Type_JavaTheCtx * Id_JavaTheCtx * Option(DefaultVal_JavaTheCtx) -> AnnoElemDec_JavaTheCtx
+    AnnoDecHead             : List(Anno_JavaTheCtx_InterfaceMod_JavaTheCtx0) * Id_JavaTheCtx -> AnnoDecHead_JavaTheCtx
+    AnnoDec                 : AnnoDecHead_JavaTheCtx * List(AnnoElemDec_JavaTheCtx) -> AnnoDec_JavaTheCtx
+                            : Abstract_JavaTheCtx -> AbstractMethodMod_JavaTheCtx
+                            : Public_JavaTheCtx -> AbstractMethodMod_JavaTheCtx
+    DeprAbstractMethodDec   : List(Anno_JavaTheCtx_AbstractMethodMod_JavaTheCtx0) * Option(TypeParams_JavaTheCtx) * ResultType_JavaTheCtx * Id_JavaTheCtx * List(FormalParam_JavaTheCtx) * List(Dim_JavaTheCtx) * Option(Throws_JavaTheCtx) -> AbstractMethodDec_JavaTheCtx
+    AbstractMethodDec       : List(Anno_JavaTheCtx_AbstractMethodMod_JavaTheCtx0) * Option(TypeParams_JavaTheCtx) * ResultType_JavaTheCtx * Id_JavaTheCtx * List(FormalParam_JavaTheCtx) * Option(Throws_JavaTheCtx) -> AbstractMethodDec_JavaTheCtx
+                            : Final_JavaTheCtx -> ConstantMod_JavaTheCtx
+                            : Static_JavaTheCtx -> ConstantMod_JavaTheCtx
+                            : Public_JavaTheCtx -> ConstantMod_JavaTheCtx
+    ConstantDec             : List(Anno_JavaTheCtx_ConstantMod_JavaTheCtx0) * Type_JavaTheCtx * List(VarDec_JavaTheCtx) -> ConstantDec_JavaTheCtx
+    EnumBodyDecs            : List(ClassBodyDec_JavaTheCtx) -> EnumBodyDecs_JavaTheCtx
+    EnumConst               : Id_JavaTheCtx * OptEnumConstArgs_JavaTheCtx0 * Option(ClassBody_JavaTheCtx) -> EnumConst_JavaTheCtx
+    EnumBody                : List(EnumConst_JavaTheCtx) * Option(EnumBodyDecs_JavaTheCtx) -> EnumBody_JavaTheCtx
+    EnumDecHead             : List(Anno_JavaTheCtx_ClassMod_JavaTheCtx0) * Id_JavaTheCtx * Option(Interfaces_JavaTheCtx) -> EnumDecHead_JavaTheCtx
+    EnumDec                 : EnumDecHead_JavaTheCtx * EnumBody_JavaTheCtx -> EnumDec_JavaTheCtx
+                            : Private_JavaTheCtx -> ConstrMod_JavaTheCtx
+                            : Protected_JavaTheCtx -> ConstrMod_JavaTheCtx
+                            : Public_JavaTheCtx -> ConstrMod_JavaTheCtx
+    QSuperConstrInv         : Expr_JavaTheCtx * OptTypeArgs_JavaTheCtx0 * List(Expr_JavaTheCtx) -> ConstrInv_JavaTheCtx
+    SuperConstrInv          : OptTypeArgs_JavaTheCtx0 * List(Expr_JavaTheCtx) -> ConstrInv_JavaTheCtx
+    AltConstrInv            : OptTypeArgs_JavaTheCtx0 * List(Expr_JavaTheCtx) -> ConstrInv_JavaTheCtx
+    ConstrBody              : Option(ConstrInv_JavaTheCtx) * List(BlockStm_JavaTheCtx) -> ConstrBody_JavaTheCtx
+    ConstrDecHead           : List(Anno_JavaTheCtx_ConstrMod_JavaTheCtx0) * Option(TypeParams_JavaTheCtx) * Id_JavaTheCtx * List(FormalParam_JavaTheCtx) * Option(Throws_JavaTheCtx) -> ConstrHead_JavaTheCtx
+    ConstrDec               : ConstrHead_JavaTheCtx * ConstrBody_JavaTheCtx -> ConstrDec_JavaTheCtx
+    StaticInit              : Block_JavaTheCtx -> StaticInit_JavaTheCtx
+    InstanceInit            : Block_JavaTheCtx -> InstanceInit_JavaTheCtx
+    NoMethodBody            : MethodBody_JavaTheCtx
+                            : Block_JavaTheCtx -> MethodBody_JavaTheCtx
+                            : ClassType_JavaTheCtx -> ExceptionType_JavaTheCtx
+    ThrowsDec               : List(ExceptionType_JavaTheCtx) -> Throws_JavaTheCtx
+                            : StrictFP_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Native_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Synchronized_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Final_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Static_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Abstract_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Private_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Protected_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Public_JavaTheCtx -> MethodMod_JavaTheCtx
+                            : Final_JavaTheCtx -> VarMod_JavaTheCtx
+    VarArityParam           : List(Anno_JavaTheCtx_VarMod_JavaTheCtx0) * Type_JavaTheCtx * VarDecId_JavaTheCtx -> FormalParam_JavaTheCtx
+    Param                   : List(Anno_JavaTheCtx_VarMod_JavaTheCtx0) * Type_JavaTheCtx * VarDecId_JavaTheCtx -> FormalParam_JavaTheCtx
+    Void                    : ResultType_JavaTheCtx
+                            : Type_JavaTheCtx -> ResultType_JavaTheCtx
+    DeprMethodDecHead       : List(Anno_JavaTheCtx_MethodMod_JavaTheCtx0) * Option(TypeParams_JavaTheCtx) * ResultType_JavaTheCtx * Id_JavaTheCtx * List(FormalParam_JavaTheCtx) * List(Dim_JavaTheCtx) * Option(Throws_JavaTheCtx) -> MethodDecHead_JavaTheCtx
+    MethodDecHead           : List(Anno_JavaTheCtx_MethodMod_JavaTheCtx0) * Option(TypeParams_JavaTheCtx) * ResultType_JavaTheCtx * Id_JavaTheCtx * List(FormalParam_JavaTheCtx) * Option(Throws_JavaTheCtx) -> MethodDecHead_JavaTheCtx
+    MethodDec               : MethodDecHead_JavaTheCtx * MethodBody_JavaTheCtx -> MethodDec_JavaTheCtx
+                            : Stm_JavaTheCtx -> BlockStm_JavaTheCtx
+    ClassDecStm             : ClassDec_JavaTheCtx -> BlockStm_JavaTheCtx
+                            : LocalVarDecStm_JavaTheCtx -> BlockStm_JavaTheCtx
+    Block                   : List(BlockStm_JavaTheCtx) -> Block_JavaTheCtx
+    Catch                   : FormalParam_JavaTheCtx * Block_JavaTheCtx -> CatchClause_JavaTheCtx
+    Default                 : SwitchLabel_JavaTheCtx
+    Case                    : Expr_JavaTheCtx -> SwitchLabel_JavaTheCtx
+    SwitchGroup             : List(SwitchLabel_JavaTheCtx) * List(BlockStm_JavaTheCtx) -> SwitchGroup_JavaTheCtx
+    SwitchBlock             : List(SwitchGroup_JavaTheCtx) * List(SwitchLabel_JavaTheCtx) -> SwitchBlock_JavaTheCtx
+    Try                     : Block_JavaTheCtx * List(CatchClause_JavaTheCtx) * Block_JavaTheCtx -> Stm_JavaTheCtx
+    Try                     : Block_JavaTheCtx * List(CatchClause_JavaTheCtx) -> Stm_JavaTheCtx
+    Synchronized            : Expr_JavaTheCtx * Block_JavaTheCtx -> Stm_JavaTheCtx
+    Throw                   : Expr_JavaTheCtx -> Stm_JavaTheCtx
+    Return                  : Option(Expr_JavaTheCtx) -> Stm_JavaTheCtx
+    Continue                : Option(Id_JavaTheCtx) -> Stm_JavaTheCtx
+    Break                   : Option(Id_JavaTheCtx) -> Stm_JavaTheCtx
+    ForEach                 : FormalParam_JavaTheCtx * Expr_JavaTheCtx * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    For                     : List(Expr_JavaTheCtx) * Option(Expr_JavaTheCtx) * List(Expr_JavaTheCtx) * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    For                     : LocalVarDec_JavaTheCtx * Option(Expr_JavaTheCtx) * List(Expr_JavaTheCtx) * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    DoWhile                 : Stm_JavaTheCtx * Expr_JavaTheCtx -> Stm_JavaTheCtx
+    While                   : Expr_JavaTheCtx * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    Switch                  : Expr_JavaTheCtx * SwitchBlock_JavaTheCtx -> Stm_JavaTheCtx
+    AssertStm               : Expr_JavaTheCtx * Expr_JavaTheCtx -> Stm_JavaTheCtx
+    AssertStm               : Expr_JavaTheCtx -> Stm_JavaTheCtx
+    If                      : Expr_JavaTheCtx * Stm_JavaTheCtx * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    If                      : Expr_JavaTheCtx * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    ExprStm                 : Expr_JavaTheCtx -> Stm_JavaTheCtx
+    Labeled                 : Id_JavaTheCtx * Stm_JavaTheCtx -> Stm_JavaTheCtx
+    Empty                   : Stm_JavaTheCtx
+                            : Block_JavaTheCtx -> Stm_JavaTheCtx
+    LocalVarDec             : List(Anno_JavaTheCtx_VarMod_JavaTheCtx0) * Type_JavaTheCtx * List(VarDec_JavaTheCtx) -> LocalVarDec_JavaTheCtx
+    LocalVarDecStm          : LocalVarDec_JavaTheCtx -> LocalVarDecStm_JavaTheCtx
+                            : Volatile_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : Transient_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : Final_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : Static_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : Private_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : Protected_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : Public_JavaTheCtx -> FieldMod_JavaTheCtx
+                            : ArrayInit_JavaTheCtx -> VarInit_JavaTheCtx
+                            : Expr_JavaTheCtx -> VarInit_JavaTheCtx
+    Dim                     : Dim_JavaTheCtx
+    ArrayVarDecId           : Id_JavaTheCtx * List(Dim_JavaTheCtx) -> VarDecId_JavaTheCtx
+                            : Id_JavaTheCtx -> VarDecId_JavaTheCtx
+    VarDec                  : VarDecId_JavaTheCtx * VarInit_JavaTheCtx -> VarDec_JavaTheCtx
+    VarDec                  : VarDecId_JavaTheCtx -> VarDec_JavaTheCtx
+    FieldDec                : List(Anno_JavaTheCtx_FieldMod_JavaTheCtx0) * Type_JavaTheCtx * List(VarDec_JavaTheCtx) -> FieldDec_JavaTheCtx
+    ArrayInit               : List(VarInit_JavaTheCtx) -> ArrayInit_JavaTheCtx
+    VoidClass               : ClassLiteral_JavaTheCtx
+    Class                   : Type_JavaTheCtx -> ClassLiteral_JavaTheCtx
+                            : ClassLiteral_JavaTheCtx -> Literal_JavaTheCtx
+                            : NullLiteral_JavaTheCtx -> Literal_JavaTheCtx
+                            : StringLiteral_JavaTheCtx -> Literal_JavaTheCtx
+                            : CharLiteral_JavaTheCtx -> Literal_JavaTheCtx
+                            : BoolLiteral_JavaTheCtx -> Literal_JavaTheCtx
+                            : FloatLiteral_JavaTheCtx -> Literal_JavaTheCtx
+                            : IntLiteral_JavaTheCtx -> Literal_JavaTheCtx
+    AssignOr                : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignExcOr             : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignAnd               : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignURightShift       : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignRightShift        : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignLeftShift         : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignMinus             : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignPlus              : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignRemain            : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignDiv               : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    AssignMul               : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Assign                  : LHS_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Or                      : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    ExcOr                   : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    And                     : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    LazyOr                  : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    LazyAnd                 : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    NotEq                   : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Eq                      : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    GtEq                    : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    LtEq                    : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Gt                      : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Lt                      : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    URightShift             : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    RightShift              : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    LeftShift               : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Minus                   : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Plus                    : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Remain                  : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Div                     : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Mul                     : Expr_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    InstanceOf              : Expr_JavaTheCtx * RefType_JavaTheCtx -> Expr_JavaTheCtx
+    CastRef                 : RefType_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    CastPrim                : PrimType_JavaTheCtx * Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Not                     : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Complement              : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    PreDecr                 : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    PreIncr                 : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Minus                   : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    Plus                    : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    PostDecr                : Expr_JavaTheCtx -> Expr_JavaTheCtx
+    PostIncr                : Expr_JavaTheCtx -> Expr_JavaTheCtx
+                            : ExprName_JavaTheCtx -> Expr_JavaTheCtx
+    Invoke                  : MethodSpec_JavaTheCtx * List(Expr_JavaTheCtx) -> Expr_JavaTheCtx
+                            : FieldAccess_JavaTheCtx -> Expr_JavaTheCtx
+                            : ArrayCreationExpr_JavaTheCtx -> Expr_JavaTheCtx
+    QNewInstance            : Expr_JavaTheCtx * OptTypeArgs_JavaTheCtx0 * Id_JavaTheCtx * OptTypeArgs_JavaTheCtx0 * List(Expr_JavaTheCtx) * Option(ClassBody_JavaTheCtx) -> Expr_JavaTheCtx
+    NewInstance             : OptTypeArgs_JavaTheCtx0 * ClassOrInterfaceType_JavaTheCtx * List(Expr_JavaTheCtx) * Option(ClassBody_JavaTheCtx) -> Expr_JavaTheCtx
+    QThis                   : TypeName_JavaTheCtx -> Expr_JavaTheCtx
+    This                    : Expr_JavaTheCtx
+    Lit                     : Literal_JavaTheCtx -> Expr_JavaTheCtx
+                            : RefType_JavaTheCtx -> Type_JavaTheCtx
+                            : PrimType_JavaTheCtx -> Type_JavaTheCtx
+    ArrayType               : Type_JavaTheCtx -> ArrayType_JavaTheCtx
+    Member                  : TypeDecSpec_JavaTheCtx * TypeArgs_JavaTheCtx * Id_JavaTheCtx -> TypeDecSpec_JavaTheCtx
+                            : TypeName_JavaTheCtx -> TypeDecSpec_JavaTheCtx
+    InterfaceType           : TypeDecSpec_JavaTheCtx * OptTypeArgs_JavaTheCtx0 -> InterfaceType_JavaTheCtx
+    ClassType               : TypeDecSpec_JavaTheCtx * OptTypeArgs_JavaTheCtx0 -> ClassType_JavaTheCtx
+    ClassOrInterfaceType    : TypeDecSpec_JavaTheCtx * OptTypeArgs_JavaTheCtx0 -> ClassOrInterfaceType_JavaTheCtx
+                            : ArrayType_JavaTheCtx -> RefType_JavaTheCtx
+                            : ClassOrInterfaceType_JavaTheCtx -> RefType_JavaTheCtx
+                            : Id_JavaTheCtx -> TypeVarId_JavaTheCtx
+    TypeParams              : List(TypeParam_JavaTheCtx) -> TypeParams_JavaTheCtx
+    TypeBound               : List(ClassOrInterfaceType_JavaTheCtx) -> TypeBound_JavaTheCtx
+    TypeParam               : TypeVarId_JavaTheCtx * Option(TypeBound_JavaTheCtx) -> TypeParam_JavaTheCtx
+    WildcardLowerBound      : RefType_JavaTheCtx -> WildcardBound_JavaTheCtx
+    WildcardUpperBound      : RefType_JavaTheCtx -> WildcardBound_JavaTheCtx
+    Wildcard                : Option(WildcardBound_JavaTheCtx) -> ActualTypeArg_JavaTheCtx
+                            : Type_JavaTheCtx -> ActualTypeArg_JavaTheCtx
+    TypeArgs                : List(ActualTypeArg_JavaTheCtx) -> TypeArgs_JavaTheCtx
+    PackageOrTypeName       : PackageOrTypeName_JavaTheCtx * Id_JavaTheCtx -> PackageOrTypeName_JavaTheCtx
+    PackageOrTypeName       : Id_JavaTheCtx -> PackageOrTypeName_JavaTheCtx
+    MethodName              : AmbName_JavaTheCtx * Id_JavaTheCtx -> MethodName_JavaTheCtx
+    MethodName              : Id_JavaTheCtx -> MethodName_JavaTheCtx
+    ExprName                : AmbName_JavaTheCtx * Id_JavaTheCtx -> ExprName_JavaTheCtx
+    ExprName                : Id_JavaTheCtx -> ExprName_JavaTheCtx
+    TypeName                : PackageOrTypeName_JavaTheCtx * Id_JavaTheCtx -> TypeName_JavaTheCtx
+    TypeName                : Id_JavaTheCtx -> TypeName_JavaTheCtx
+    AmbName                 : AmbName_JavaTheCtx * Id_JavaTheCtx -> AmbName_JavaTheCtx
+    AmbName                 : Id_JavaTheCtx -> AmbName_JavaTheCtx
+    PackageName             : List(Id_JavaTheCtx) -> PackageName_JavaTheCtx
+    Double                  : FloatType_JavaTheCtx
+    Float                   : FloatType_JavaTheCtx
+    Char                    : IntType_JavaTheCtx
+    Long                    : IntType_JavaTheCtx
+    Int                     : IntType_JavaTheCtx
+    Short                   : IntType_JavaTheCtx
+    Byte                    : IntType_JavaTheCtx
+                            : FloatType_JavaTheCtx -> NumType_JavaTheCtx
+                            : IntType_JavaTheCtx -> NumType_JavaTheCtx
+    Boolean                 : PrimType_JavaTheCtx
+                            : NumType_JavaTheCtx -> PrimType_JavaTheCtx
+    Null                    : NullLiteral_JavaTheCtx
+                            : String -> StringChars_JavaTheCtx
+                            : EscapeSeq_JavaTheCtx -> StringPart_JavaTheCtx
+                            : UnicodeEscape -> StringPart_JavaTheCtx
+    Chars                   : StringChars_JavaTheCtx -> StringPart_JavaTheCtx
+    String                  : List(StringPart_JavaTheCtx) -> StringLiteral_JavaTheCtx
+                            : Int -> SingleChar_JavaTheCtx
+                            : EscapeSeq_JavaTheCtx -> CharContent_JavaTheCtx
+                            : UnicodeEscape -> CharContent_JavaTheCtx
+    Single                  : SingleChar_JavaTheCtx -> CharContent_JavaTheCtx
+    Char                    : CharContent_JavaTheCtx -> CharLiteral_JavaTheCtx
+                            : Int -> LastOcta_JavaTheCtx
+    OctaEscape3             : Int * Int * Int -> OctaEscape_JavaTheCtx
+    OctaEscape2             : Int * Int -> OctaEscape_JavaTheCtx
+    OctaEscape2             : Int * LastOcta_JavaTheCtx -> OctaEscape_JavaTheCtx
+    OctaEscape1             : LastOcta_JavaTheCtx -> OctaEscape_JavaTheCtx
+    NamedEscape             : Int -> NamedEscape_JavaTheCtx
+                            : NamedEscape_JavaTheCtx -> EscapeSeq_JavaTheCtx
+                            : OctaEscape_JavaTheCtx -> EscapeSeq_JavaTheCtx
+    False                   : Bool_JavaTheCtx
+    True                    : Bool_JavaTheCtx
+    Bool                    : Bool_JavaTheCtx -> BoolLiteral_JavaTheCtx
+    Float                   : HexaFloatLiteral_JavaTheCtx -> FloatLiteral_JavaTheCtx
+    Float                   : DeciFloatLiteral_JavaTheCtx -> FloatLiteral_JavaTheCtx
+                            : String -> HexaFloatLiteral_JavaTheCtx
+                            : String -> DeciFloatLiteral_JavaTheCtx
+    Octa                    : OctaLiteral_JavaTheCtx -> IntLiteral_JavaTheCtx
+    Hexa                    : HexaLiteral_JavaTheCtx -> IntLiteral_JavaTheCtx
+    Deci                    : DeciLiteral_JavaTheCtx -> IntLiteral_JavaTheCtx
+                            : String -> OctaLiteral_JavaTheCtx
+                            : String -> HexaLiteral_JavaTheCtx
+                            : String -> DeciLiteral_JavaTheCtx
+    StrictFP                : StrictFP_JavaTheCtx
+    Synchronized            : Synchronized_JavaTheCtx
+    Volatile                : Volatile_JavaTheCtx
+    Transient               : Transient_JavaTheCtx
+    Native                  : Native_JavaTheCtx
+    Static                  : Static_JavaTheCtx
+    Final                   : Final_JavaTheCtx
+    Abstract                : Abstract_JavaTheCtx
+    Protected               : Protected_JavaTheCtx
+    Private                 : Private_JavaTheCtx
+    Public                  : Public_JavaTheCtx
+    Id                      : ID_JavaTheCtx -> Id_JavaTheCtx
+                            : String -> ID_JavaTheCtx
+                            : String -> UnicodeEscape
+    UnicodeEscape           : ListPlusOfCharClass1 * Int * Int * Int * Int -> UnicodeEscape
+
+
+signature
+  constructors
+    Some : a -> Option(a)
+    None : Option(a)
+
+
+signature
+  constructors
+    Cons : a * List(a) -> List(a)
+    Nil  : List(a)
+    Conc : List(a) * List(a) -> List(a)

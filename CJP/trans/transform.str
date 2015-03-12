@@ -1,0 +1,76 @@
+module transform
+
+imports
+   include/cjp
+   java-converter
+   aspect-converter
+   aspectj/pretty-print
+   libstratego-sglr
+
+strategies
+   main = handle-io
+
+   handle-io =
+    ?[ program | args ];
+    // <debug>args;
+    input_file_path := < \ [input|rest] -> input\ >args;
+    ReadFromFile;
+    ast := <id>;
+    output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
+    transformed_code := <transform>input_file_path;
+    handle := <fopen> (<string-replace(|"src", "generated")>input_file_path, "w");
+    <fputs> (transformed_code, handle);
+    fclose
+
+    transform =
+        path := <id>;
+	ast := <parse-file(|<import-term(cjp.tbl)>)>path;
+	annotated_ast := <topdown(\trm -> trm{<try(gen-source-location)>}\)>ast;
+	transformed_ast := <transform-ast>annotated_ast;
+        <pp-aspectj-string>transformed_ast
+
+    transform-ast =
+        <try(closures-converter-compilation-unit)><id>
+
+    gen-source-location:
+	trm -> [<origin-location>trm, <origin-file>trm]
+
+    origin-location = prim("SSL_EXT_origin_location", <id>)
+    origin-file = prim("SSL_EXT_origin_file", <id>)
+
+rules
+	closures-converter-compilation-unit: CompilationUnit(PackageDec, ImportDecs, TypeDecs) -> CompilationUnit(PackageDec, ImportDecs', TypeDecs')
+	with
+		if (<?(x,x)>(TypeDecs, <all(try(check-for-change-in-aspect-or-class))>TypeDecs))
+		then
+			ImportDecs' := ImportDecs;
+			TypeDecs' := TypeDecs
+		else
+			if (<?(Some(PackageDec(_, _)))>PackageDec)
+			then
+				<?(Some(PackageDec(_, package_name)))>PackageDec
+			else
+				package_name := None()
+			end;
+			ImportDecs' := <conc>(ImportDecs,
+			 [TypeImportOnDemandDec(PackageName([Id("closures"),Id("runtime")])),
+			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang"), Id("annotation")])),
+			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang")]))]);
+			TypeDecs' := <all(try(closures-converter-aspect-or-class(|package_name)))>TypeDecs
+		end
+		
+	check-for-change-in-aspect-or-class: ClassDec(head, body) -> result
+	with
+		result := <topdown(try(remove-closures-calls))>ClassDec(head, body)
+	
+	check-for-change-in-aspect-or-class: AspectDec(head, body) -> result
+	with
+		result := <topdown(try(remove-closures-additions))>AspectDec(head, body)
+	
+	closures-converter-aspect-or-class(|package_name): AspectDec(head, body) -> aspect
+	with
+		aspect := <closures-to-ajc(|package_name)>AspectDec(head, body)
+
+	closures-converter-aspect-or-class(|package_name): ClassDec(head, body) -> class'
+	with
+		class' := <closures-to-java>ClassDec(head, body)
