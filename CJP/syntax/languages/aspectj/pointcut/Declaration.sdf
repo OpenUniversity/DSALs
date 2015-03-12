@@ -1,0 +1,23 @@
+%%%
+ %% Pointcut Declarations
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pointcut/Declaration[Ctx]
+exports
+  sorts
+    PointcutDec
+    PointcutDecBody
+    PointcutDecHead
+
+  context-free syntax
+    PointcutDecHead PointcutBody -> PointcutDec {cons("PointcutDec")}
+
+    %%%
+     %% @todo What modifiers are allowed for a pointcut?
+     %%%
+    (Anno | Modifier)* "pointcut" Id "(" {FormalParam ","}* ")"
+      -> PointcutDecHead {cons("PointcutDecHead")}
+
+    ":" PointcutExpr ";" -> PointcutBody {cons("PointcutBody")}
+                     ";" -> PointcutBody {cons("NoPointcutBody")}

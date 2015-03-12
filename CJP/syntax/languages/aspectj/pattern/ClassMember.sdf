@@ -1,0 +1,70 @@
+%%%
+ %% Class Member Patterns
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pattern/ClassMember
+imports
+  languages/aspectj/pattern/ClassName
+  languages/aspectj/pattern/FormalParameter
+  languages/aspectj/pattern/Type
+
+exports
+  sorts
+    MethodConstrPattern
+    MethodPattern
+    ConstrPattern
+
+  context-free syntax
+    AnnoPattern MethodModPattern TypePattern ClassMemberNamePattern "(" {FormalPattern ","}* ")" ThrowsPattern? -> MethodPattern {cons("MethodPattern")}
+    AnnoPattern ConstrModPattern             ConstrNamePattern      "(" {FormalPattern ","}* ")" ThrowsPattern? -> ConstrPattern {cons("ConstrPattern")}
+
+    MethodPattern -> MethodConstrPattern
+    ConstrPattern -> MethodConstrPattern
+
+  sorts FieldPattern
+  context-free syntax
+    AnnoPattern FieldModPattern TypePattern ClassMemberNamePattern -> FieldPattern {cons("FieldPattern")}
+
+  %%%
+   %% @todo Parenthesized type pattern
+   %%%
+  sorts
+    ClassMemberNamePattern
+    ConstrNamePattern
+  context-free syntax
+                     IdPattern -> ClassMemberNamePattern {cons("MemberName")}
+    TypePattern "."  IdPattern -> ClassMemberNamePattern {cons("MemberName")}
+    TypePattern ".." IdPattern -> ClassMemberNamePattern {cons("WildcardMemberName")}
+
+                     "new" -> ConstrNamePattern      {cons("ConstrName")}
+    TypePattern "."  "new" -> ConstrNamePattern      {cons("ConstrName")}
+    TypePattern ".." "new" -> ConstrNamePattern      {cons("WildcardConstrName")}
+
+  sorts
+    MethodModPattern
+    ConstrModPattern
+    FieldModPattern
+  context-free syntax
+    "!" MethodMod -> NotMethodMod {cons("Not")}
+    "!" FieldMod  -> NotFieldMod  {cons("Not")}
+    "!" ConstrMod -> NotConstrMod {cons("Not")}
+
+    (MethodMod | NotMethodMod)* -> MethodModPattern {cons("ModPattern")}
+    (ConstrMod | NotConstrMod)* -> ConstrModPattern {cons("ModPattern")}
+    (FieldMod  | NotFieldMod )* -> FieldModPattern  {cons("ModPattern")}
+
+  sorts ThrowsPattern ExceptionPattern
+  context-free syntax
+    "throws" {ExceptionPattern ","}+ -> ThrowsPattern {cons("ThrowsPattern")}
+
+    %% a top-level not binds weaker than other nots.
+    "!" ClassNamePattern -> ExceptionPattern {cons("NotThrowsCondition"), prefer}
+    ClassNamePattern     -> ExceptionPattern {cons("ThrowsCondition")}
+
+  sorts ElementPattern
+  context-free syntax
+    MethodConstrPattern -> ElementPattern
+            TypePattern -> ElementPattern
+           FieldPattern -> ElementPattern
+    

@@ -1,0 +1,27 @@
+module languages/closures/Main
+
+imports
+    languages/aspectj/ajc/Main
+    languages/java-15/Main
+    languages/closures/AspectjExtension
+
+exports
+    sorts JoinpointDeclaration
+
+    context-free syntax
+	    JoinpointDeclaration -> AspectBodyDec
+        "joinpoint" ResultType Id "(" {FormalParam ","}* ")" Throws? ";" -> JoinpointDeclaration{cons("JoinpointDeclaration")}
+        (Anno | MethodMod)* CJPAdviceSpec Throws? Block -> AdviceDec {cons("CJPAdvice")}
+        "before" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPBefore")}
+        "after" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPAfter")}
+        "after" Id "(" {FormalParam ","}* ")" "returning" CJPSingleParam? -> CJPAdviceSpec {cons("CJPAfterReturning")}
+        "after" Id "(" {FormalParam ","}* ")" "throwing" CJPSingleParam? -> CJPAdviceSpec {cons("CJPAfterThrowing")}
+        "(" FormalParam? ")" -> CJPSingleParam {cons("CJPSingleParam")}
+        ResultType "around" Id "(" {FormalParam ","}* ")" -> CJPAdviceSpec {cons("CJPAround")}
+
+        "exhibit" MethodName "(" {FormalParam ","}* ")" Block "(" {Expr ","}* ")" -> Expr {cons("ClosureJoinpoints")}
+        "exhibit" MethodName Block -> Expr {cons("ShortClosureJoinpoints")}
+
+    lexical syntax
+        "exhibit" -> Keyword
+        "joinpoint" -> PseudoKeyword

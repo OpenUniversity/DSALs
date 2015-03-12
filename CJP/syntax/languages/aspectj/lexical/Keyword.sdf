@@ -1,0 +1,21 @@
+%%%
+ %% Keywords in AspectJ
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/lexical/Keyword
+exports
+  lexical restrictions
+    "privileged"
+    "aspect"
+    "after"
+    "around"
+    "before"
+    "declare"
+    "issingleton"
+    "percflow"
+    "percflowbelow"
+    "pertarget"
+    "perthis"
+    "pointcut"
+      -/- [A-Za-z0-9\_\$]

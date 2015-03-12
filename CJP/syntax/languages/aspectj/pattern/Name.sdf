@@ -1,0 +1,19 @@
+%%%
+ %% Name Patterns
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pattern/Name
+exports
+  sorts NamePattern
+  context-free syntax
+    IdPattern                  -> NamePattern {cons("NamePattern")}
+    NamePattern "."  IdPattern -> NamePattern {cons("NamePattern")} 
+    NamePattern ".." IdPattern -> NamePattern {cons("WildcardNamePattern")} 
+
+  sorts IdPattern
+  lexical syntax	
+    [a-zA-Z\_\$\*][a-zA-Z0-9\_\$\*]* -> IdPattern
+
+  lexical restrictions 	 
+    IdPattern -/- [a-zA-Z0-9\_\$\*]

@@ -1,0 +1,47 @@
+%%%
+ %% Declare Declarations
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/aspect/DeclareDeclaration
+exports
+  sorts DeclareDec
+  context-free syntax
+    Anno* "declare" "parents" ":" TopTypePattern Parent ";"
+      -> DeclareDec {cons("DecParent")}
+
+    Anno ";"
+      -> DeclareDec {cons("DecWarning")}
+
+    "declare" "error" ":" PointcutExpr ":" StringLiteral  ";"
+      -> DeclareDec {cons("DecError")}
+
+    "declare" "soft" ":" TypeName ":" PointcutExpr ";"
+      -> DeclareDec {cons("DecSoft")}
+      
+    %% Strange parenthesis in ajc testsuite ....
+    Anno ")" ":" PointcutExpr ";"
+      -> DeclareDec {cons("DecSoft")}
+
+    Anno* "declare" "precedence" ":" {TopTypePattern ","}+ ";"
+      -> DeclareDec {cons("DecPrecedence")}
+
+    Anno ";"
+      -> DeclareDec {cons("DecAnno")}
+
+  sorts AnnoDeclKind
+  context-free syntax
+           "@type" -> AnnoDeclKind {cons("DecAnnoType")}
+    "@constructor" -> AnnoDeclKind {cons("DecAnnoConstructor")}
+         "@method" -> AnnoDeclKind {cons("DecAnnoMethod")}
+          "@field" -> AnnoDeclKind {cons("DecAnnoField")}
+
+  sorts Parent
+  context-free syntax
+    Super             -> Parent
+    Interfaces        -> Parent
+    
+    %%%
+     %% Undocumented feature (AspectJ guide) : add interfaces with extends.
+     %%%
+    ExtendsInterfaces -> Parent {avoid}
