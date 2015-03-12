@@ -1,0 +1,31 @@
+module cjp.main
+
+imports
+  cjp-Colorer
+  cjp-Completions
+  cjp-Folding
+  cjp-Menus
+  cjp-Refactorings
+  cjp-References
+  cjp-Syntax
+  cjp-Views
+
+language General properties
+  
+  name:          cjp
+  id:            CJP
+  extends:       Root
+  
+  description:   "Spoofax-generated editor for the cjp language"
+  url:           http://strategoxt.org
+  
+  extensions:    aj, java
+  table:         include/cjp.tbl
+  start symbols: Start
+  
+  provider:      include/cjp.ctree
+  provider:      include/cjp-java.jar
+  
+  observer:      editor-analyze (multifile)
+  
+  on save:       editor-save

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         point="org.eclipse.imp.runtime.languageDescription">
+      <language
+            extensions="aj, java"
+            description="cjp"
+            language="cjp"
+            derivedFrom="DynamicRoot"
+            validator="CJP.CjpValidator"
+            validatorClass="CJP.CjpValidator"
+      ></language>
+   </extension>
+   <extension
+         id="CJP.parser"
+         name="cjp Parser"
+         point="org.eclipse.imp.runtime.parser">
+      <parser
+            class="CJP.CjpParseController"
+            language="cjp">
+      </parser>
+   </extension>    
+</plugin>

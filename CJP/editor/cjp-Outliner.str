@@ -1,0 +1,13 @@
+module editor/cjp-Outliner
+
+imports
+  
+  include/cjp
+  lib/runtime/editor/outline-library
+  lib/runtime/editor/origins
+  editor/cjp-Outliner.generated
+
+rules
+  
+  to-outline-label = fail
+  
