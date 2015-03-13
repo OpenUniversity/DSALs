@@ -26,6 +26,6 @@ language General properties
   provider:      include/ejp.ctree
   provider:      include/ejp-java.jar
   
-  observer:      editor-analyze (multifile)
+  // observer:      editor-analyze (multifile)
   
   on save:       editor-save
