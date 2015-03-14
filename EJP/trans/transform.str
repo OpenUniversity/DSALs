@@ -1,8 +1,8 @@
 module transform
 
 imports
-  libstratego-sglr
-  include/ejp
+  libstratego-lib
+  ejp
   aspectj/pretty-print
   aspect-converter
   java-converter
