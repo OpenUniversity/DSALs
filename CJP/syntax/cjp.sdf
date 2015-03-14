@@ -1,0 +1,12 @@
+%% Grammar for the closure extension
+%% By default, based on an example "entities" syntax
+module cjp
+
+imports
+   languages/closures/Main
+
+exports
+  sorts JavaTheCtx AspectTheCtx PointcutTheCtx PatternTheCtx JavaCtxCompilationUnit
+  context-free start-symbols JavaCtxCompilationUnit
+  context-free syntax
+    CompilationUnit -> JavaCtxCompilationUnit
