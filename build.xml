@@ -1,7 +1,7 @@
 <project>
 	<target name="clean">
 		<delete dir="cool/dist"/>
-		<delete dir="ejp/dist"/>
+		<delete dir="EJP/dist"/>
 		<delete dir="CJP/dist"/>
 	</target>
 
@@ -18,17 +18,17 @@
 	</target>
 
 	<target name="ejp">
-                <mkdir dir="ejp/dist"/>
+                <mkdir dir="EJP/dist"/>
                 <java fork="true" jar="libs/strategoxt.jar">
                         <jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
-                        <arg line="-I ejp"/>
-                        <arg line="-i ejp/trans/transform.str"/>
-                        <arg line="-o ejp/dist/transform.java"/>
+                        <arg line="-I EJP"/>
+                        <arg line="-I EJP/include"/>
+                        <arg line="-i EJP/trans/transform.str"/>
+                        <arg line="-o EJP/dist/transform.java"/>
                         <arg line="-la java-front"/>
                         <arg line="-la stratego-gpp"/>
                         <arg line="-la stratego-sglr"/>
-<!--                        <arg line="-la stratego-lib"/> -->
                 </java>
         </target>
 
