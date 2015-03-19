@@ -19,6 +19,8 @@ imports
 	check
 	generate
 	pp
+	transform
+	aspectj/pretty-print
 
 rules // Analysis
 	
@@ -32,6 +34,12 @@ rules // Analysis
 	editor-save = analysis-save-default(|<language>)
 
 rules // Editor services
+
+	transform:
+        (selected, position, ast, path, project-path) -> (filename, result)
+    with
+       result   := <pp-aspectj-string><transform-ast><topdown(\ trm -> trm {<try(gen-source-location)>} \)>selected;
+       filename := "result.aj"
 	
 	// Resolves a reference when the user control-clicks or presses F3 in the editor.
 	editor-resolve:
