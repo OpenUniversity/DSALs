@@ -5,8 +5,8 @@ imports
   include/cool
   externals
   tools
-
   libstratego-gpp
+  libstratego-sglr
 strategies
   // main = io-wrap(transform)
   main = handle-io	
@@ -30,7 +30,20 @@ strategies
  	fclose 	
 
   transform =
-     <pp-java5-to-string><convert><id>
+        path := <id>;
+        ast := <parse-file(|<import-term(cool.tbl)>)>path;
+        annotated_ast := <topdown(\trm -> trm{<try(gen-source-location)>}\)>ast;
+        transformed_ast := <transform-ast>annotated_ast;
+        <pp-java5-to-string>transformed_ast
+
+  transform-ast =
+        <convert><id>
+
+  gen-source-location:
+	trm -> [<origin-location>trm, <origin-file>trm]
+
+  origin-location = prim("SSL_EXT_origin_location", <id>)
+  origin-file = prim("SSL_EXT_origin_file", <id>)
 
   gen-isRunByOthers-method = 
      !MethodDec(
