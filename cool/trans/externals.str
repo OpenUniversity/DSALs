@@ -12,7 +12,7 @@ strategies
     <topdown(try(\ ClassBody(declarations*) -> ClassBody(<conc>(declarations*, <iset-elements>syntetic_methods)) \))>modified_class
 
   add-external-impl(|methods, coordname) = 
-    node := <id>;
+    node := <strip-annos><id>;
     env := <new-hashtable>;
     enclosing_env  := <new-hashtable>;
     var2method := <new-hashtable>;

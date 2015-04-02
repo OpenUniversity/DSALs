@@ -61,22 +61,22 @@ strategies
 
   gen-method-state-name(|method2index) =
      ?MethodSignature(Id(name), _);
-     methodsig := <id>;
+     methodsig := <strip-annos><id>;
      <concat-strings>[name, <int-to-string><hashtable-get(|methodsig)>method2index, "State"]
 
   gen-requires-method-name(|method2index) =
      ?MethodSignature(Id(name), _);
-     methodsig := <id>;
+     methodsig := <strip-annos><id>;
      <concat-strings>["requires_", name, <int-to-string><hashtable-get(|methodsig)>method2index]
 
   gen-on-entry-method-name(|method2index) =
      ?MethodSignature(Id(name), _);
-     methodsig := <id>;
+     methodsig := <strip-annos><id>;
      <concat-strings>["on_entry_", name, <int-to-string><hashtable-get(|methodsig)>method2index]
 
   gen-on-exit-method-name(|method2index) =
      ?MethodSignature(Id(name), _);
-     methodsig := <id>;
+     methodsig := <strip-annos><id>;
      <concat-strings>["on_exit_", name, <int-to-string><hashtable-get(|methodsig)>method2index]
 
   make-while-statement(|condition, whileStatements*) =
@@ -213,10 +213,10 @@ rules
       condition      := <getfirst(?ConditionDec(_))>declarations*;
       selfex_methods := <get-methods-list><getfirst(?Selfex(_))>declarations*;
       mutex_methods  := <get-methods-list><getfirst(?Mutex(_))>declarations*;
-      <map(\ methodsig -> <hashtable-put(|methodsig, methodsig)>method2selfex_sig \ )>selfex_methods;
-      <map(\ methodsig -> <hashtable-put(|methodsig, methodsig)>method2mutex_sig \ )>mutex_methods;
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2selfex_sig \ )>selfex_methods;
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2mutex_sig \ )>mutex_methods;
       methods	     := <union>(selfex_methods, mutex_methods);
-      <map(\ methodsig -> <hashtable-put(|methodsig, <length><hashtable-keys>method2index)>method2index \ )>methods;
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, <length><hashtable-keys>method2index)>method2index \ )>methods;
       method_additions := <retain-all(?MethodAdditions(_,_,_,_))>declarations*;
       <map(\ MethodAdditions(methodsig, _, _, _) -> <hashtable-put(|methodsig, methodsig)>method2additions_sig \ )>method_additions;
       <map(fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index))>method_additions
@@ -248,7 +248,7 @@ rules
    make-lock-method(|coordname, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig):
      MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["lock_", name]), [Param([], TypeName(Id(coordname)), Id("target"))], None()), Block(statements*))
      with
-       methodsig := <id>;
+       methodsig := <strip-annos><id>;
        
        if <elem>(methodsig, mutex_methods)
        then
