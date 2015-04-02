@@ -8,4 +8,5 @@ utils
 result.aj
 *.aterm
 .ant-targets-build.xml
+**/*.generated.pp
 
