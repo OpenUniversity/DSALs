@@ -213,10 +213,10 @@ rules
       condition      := <getfirst(?ConditionDec(_))>declarations*;
       selfex_methods := <get-methods-list><getfirst(?Selfex(_))>declarations*;
       mutex_methods  := <get-methods-list><getfirst(?Mutex(_))>declarations*;
-      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2selfex_sig \ )>selfex_methods;
-      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2mutex_sig \ )>mutex_methods;
+      <map(\ methodsig -> <hashtable-put(|methodsig, methodsig)>method2selfex_sig \ )>selfex_methods;
+      <map(\ methodsig -> <hashtable-put(|methodsig, methodsig)>method2mutex_sig \ )>mutex_methods;
       methods	     := <union>(selfex_methods, mutex_methods);
-      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, <length><hashtable-keys>method2index)>method2index \ )>methods;
+      <map(\ methodsig -> <hashtable-put(|methodsig, <length><hashtable-keys>method2index)>method2index \ )>methods;
       method_additions := <retain-all(?MethodAdditions(_,_,_,_))>declarations*;
       <map(\ MethodAdditions(methodsig, _, _, _) -> <hashtable-put(|methodsig, methodsig)>method2additions_sig \ )>method_additions;
       <map(fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index))>method_additions
@@ -323,11 +323,13 @@ rules
      with
 	 	declarations'* := <retain-all(?FieldDec(_,_,_))>declarations*
 
-   get-methods-list:
-     Selfex(methodsignatures*) -> methodsignatures*
+   get-methods-list =
+     ?Selfex(methodsignatures*);
+     <map(\ methodsig -> <strip-annos>methodsig \)>methodsignatures*
 
-   get-methods-list:
-     Mutex(methodsignatures*) -> methodsignatures*
+   get-methods-list =
+     ?Mutex(methodsignatures*);
+     <map(\ methodsig -> <strip-annos>methodsig \)>methodsignatures*
 
    get-methods-list:
      None() -> []
