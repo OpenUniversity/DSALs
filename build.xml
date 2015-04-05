@@ -15,6 +15,8 @@
                         <arg line="-i cool/trans/transform.str"/>
                         <arg line="-o cool/dist/transform.java"/>
                         <arg line="-la java-front"/>
+                        <arg line="-la stratego-gpp"/>
+                        <arg line="-la stratego-sglr"/>
 		</java>
 	</target>
 
