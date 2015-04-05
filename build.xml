@@ -11,6 +11,7 @@
 			<jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
                         <arg line="-I cool"/>
+                        <arg line="-I cool/include"/>
                         <arg line="-i cool/trans/transform.str"/>
                         <arg line="-o cool/dist/transform.java"/>
                         <arg line="-la java-front"/>
