@@ -97,7 +97,7 @@ rules // Editor services
    generate-java:
     (selected, position, ast, path, project-path) -> (filename, result)
     with
-      filename := <guarantee-extension(|"java")> path;
+      filename := result.java;
       result   := <pp-java5-to-string><transform-ast><topdown(\ trm -> trm {<try(gen-source-location)>} \)> selected
 
 rules // Debugging
