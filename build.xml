@@ -10,6 +10,7 @@
 		<java fork="true" jar="libs/strategoxt.jar">
 			<jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
+                        <arg line="-p cool"/>
                         <arg line="-I cool"/>
                         <arg line="-I cool/include"/>
                         <arg line="-i cool/trans/transform.str"/>
@@ -25,6 +26,7 @@
                 <java fork="true" jar="libs/strategoxt.jar">
                         <jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
+                        <arg line="-p ejp"/>
                         <arg line="-I EJP"/>
                         <arg line="-I EJP/include"/>
                         <arg line="-i EJP/trans/transform.str"/>
@@ -40,6 +42,7 @@
                <java fork="true" jar="libs/strategoxt.jar">
                         <jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
+                        <arg line="-p closure"/>
                         <arg line="-I CJP"/>
                         <arg line="-I CJP/include"/>
                         <arg line="-i CJP/trans/transform.str"/>
