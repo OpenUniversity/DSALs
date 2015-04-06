@@ -6,6 +6,7 @@ editor/java/trans
 .settings
 utils
 result.aj
+result.java
 *.aterm
 .ant-targets-build.xml
 **/*.generated.pp
