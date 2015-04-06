@@ -119,18 +119,18 @@ strategies
 
   gen-source-location-ann(|name):
   	x -> Anno(TypeName(Id(name)),[
-  		ElemValPair(Id("file"),Lit(String([Chars(<original-file>x)]))),
-  		ElemValPair(Id("startLine"),Lit(Deci(<int-to-string><original-start-line><original-location>x))),
-  		ElemValPair(Id("endLine"),Lit(Deci(<int-to-string><original-end-line><original-location>x))),
-  		ElemValPair(Id("column"),Lit(Deci(<int-to-string><original-column><original-location>x))),
-  		ElemValPair(Id("offset"),Lit(Deci(<int-to-string><\(x,_)->x\><original-offset>x)))])
+  		ElemValPair(Id("file"),Lit(String([Chars(<get-file>x)]))),
+  		ElemValPair(Id("startLine"),Lit(Deci(<int-to-string><get-start-line><get-location>x))),
+  		ElemValPair(Id("endLine"),Lit(Deci(<int-to-string><get-end-line><get-location>x))),
+  		ElemValPair(Id("column"),Lit(Deci(<int-to-string><get-column><get-location>x))),
+  		ElemValPair(Id("offset"),Lit(Deci(<int-to-string><get-offset><get-location>x)))])
 
-  original-file = prim("SSL_EXT_origin_file", <id>)
-  original-location = prim("SSL_EXT_origin_location", <id>)
-  original-start-line = \ (x, _, _, _) -> x \
-  original-column = \ (_, x, _, _) -> x \
-  original-end-line = \ (_, _, x, _) -> x \
-  original-offset = prim("SSL_EXT_origin_offset", <id>)
+  get-location: t{[a|b]} -> a
+  get-file: t{[a|[b]]} -> b
+  get-start-line = \ (x, _, _, _) -> x \
+  get-end-line = \ (_, _, x, _) -> x \
+  get-column = \ (_, x, _, _) -> x \
+  get-offset = \ (_, _, _, x) -> x \
 
   make-on-entry-method(|on_entry_map, coordname, on_entry_methods, method2index) =
     ?MethodSignature(Id(name), types);
@@ -211,10 +211,12 @@ rules
       method2mutex_sig     := <new-hashtable>;
 
       condition      := <getfirst(?ConditionDec(_))>declarations*;
-      selfex_methods := <get-methods-list><getfirst(?Selfex(_))>declarations*;
-      mutex_methods  := <get-methods-list><getfirst(?Mutex(_))>declarations*;
-      <map(\ methodsig -> <hashtable-put(|methodsig, methodsig)>method2selfex_sig \ )>selfex_methods;
-      <map(\ methodsig -> <hashtable-put(|methodsig, methodsig)>method2mutex_sig \ )>mutex_methods;
+      selfex_methods' := <get-methods-list><getfirst(?Selfex(_))>declarations*;
+      mutex_methods'  := <get-methods-list><getfirst(?Mutex(_))>declarations*;
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2selfex_sig \ )>selfex_methods';
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2mutex_sig \ )>mutex_methods';
+      selfex_methods := <map(\ methodsig -> <strip-annos>methodsig \)>selfex_methods';
+      mutex_methods  := <map(\ methodsig -> <strip-annos>methodsig \)>mutex_methods';
       methods	     := <union>(selfex_methods, mutex_methods);
       <map(\ methodsig -> <hashtable-put(|methodsig, <length><hashtable-keys>method2index)>method2index \ )>methods;
       method_additions := <retain-all(?MethodAdditions(_,_,_,_))>declarations*;
@@ -249,7 +251,6 @@ rules
      MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["lock_", name]), [Param([], TypeName(Id(coordname)), Id("target"))], None()), Block(statements*))
      with
        methodsig := <strip-annos><id>;
-       
        if <elem>(methodsig, mutex_methods)
        then
          mutexMethods* := <remove-all(equal(|methodsig))>mutex_methods;
@@ -323,13 +324,11 @@ rules
      with
 	 	declarations'* := <retain-all(?FieldDec(_,_,_))>declarations*
 
-   get-methods-list =
-     ?Selfex(methodsignatures*);
-     <map(\ methodsig -> <strip-annos>methodsig \)>methodsignatures*
+   get-methods-list:
+     Selfex(methodsignatures*) -> methodsignatures*
 
-   get-methods-list =
-     ?Mutex(methodsignatures*);
-     <map(\ methodsig -> <strip-annos>methodsig \)>methodsignatures*
+   get-methods-list:
+     Mutex(methodsignatures*) -> methodsignatures*
 
    get-methods-list:
      None() -> []
