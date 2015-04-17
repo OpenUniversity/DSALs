@@ -6,15 +6,15 @@
 	</target>
 
 	<target name="cool">
-		<mkdir dir="cool/dist"/>
+		<mkdir dir="COOL/dist"/>
 		<java fork="true" jar="libs/strategoxt.jar">
 			<jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
                         <arg line="-p cool"/>
-                        <arg line="-I cool"/>
-                        <arg line="-I cool/include"/>
-                        <arg line="-i cool/trans/transform.str"/>
-                        <arg line="-o cool/dist/transform.java"/>
+                        <arg line="-I COOL"/>
+                        <arg line="-I COOL/include"/>
+                        <arg line="-i COOL/trans/transform.str"/>
+                        <arg line="-o COOL/dist/transform.java"/>
                         <arg line="-la java-front"/>
                         <arg line="-la stratego-gpp"/>
                         <arg line="-la stratego-sglr"/>
