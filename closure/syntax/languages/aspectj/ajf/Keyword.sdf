@@ -1,9 +1,0 @@
-%%%
- %% Keywords in AJF
- %%
- %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- %%%
-module languages/aspectj/ajf/Keyword
-exports
-  context-free syntax
-    PrimPointcutName -> PointcutName {reject}

@@ -1,4 +1,0 @@
-module languages/aspectj/abc/Main
-imports
-  languages/aspectj/JavaExtension
-  languages/aspectj/abc/Keyword

@@ -1,4 +1,0 @@
-module languages/ejp/Main
-imports
-  languages/ejp/JavaExtension
-  languages/ejp/AspectjExtension

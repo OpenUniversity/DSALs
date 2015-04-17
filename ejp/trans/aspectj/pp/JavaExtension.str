@@ -1,9 +1,0 @@
-module aspectj/pp/JavaExtension
-rules
-
-  aspectj-to-box :
-    Proceed() -> box |[ KW["proceed"] ]|
-
-signature
-  constructors
-    Proceed : MethodId
