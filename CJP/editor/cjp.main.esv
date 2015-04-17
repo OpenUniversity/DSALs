@@ -19,7 +19,7 @@ language General properties
   description:   "Spoofax-generated editor for the cjp language"
   url:           http://strategoxt.org
   
-  extensions:    aj, java
+  extensions:    aj,java
   table:         include/cjp.tbl
   start symbols: JavaCtxCompilationUnit
   
@@ -29,3 +29,5 @@ language General properties
   // observer:      editor-analyze (multifile)
   
   // on save:       editor-save
+  
+  jvm opts:      -server -Xss8m -Xmx1024m

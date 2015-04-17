@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.imp.runtime.languageDescription">
       <language
-            extensions="aj, java"
+            extensions="aj,java"
             description="cjp"
             language="cjp"
             derivedFrom="DynamicRoot"
