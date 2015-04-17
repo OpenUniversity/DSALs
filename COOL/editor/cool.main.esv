@@ -1,0 +1,33 @@
+module cool.main
+
+imports
+  cool-Colorer
+  cool-Completions
+  cool-Folding
+  cool-Menus
+  cool-Refactorings
+  cool-References
+  cool-Syntax
+  cool-Views
+
+language General properties
+  
+  name:          cool
+  id:            COOL
+  extends:       Root
+  
+  description:   "Spoofax-generated editor for the cool language"
+  url:           http://strategoxt.org
+  
+  extensions:    cool
+  table:         include/cool.tbl
+  start symbols: CompilationUnit
+  
+  provider:      include/cool.ctree
+  provider:      include/cool-java.jar
+  
+  // observer:      editor-analyze (multifile)
+  
+  // on save:       editor-save
+  
+  jvm opts:      -server -Xss8m -Xmx1024m

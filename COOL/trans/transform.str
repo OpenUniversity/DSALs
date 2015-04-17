@@ -1,0 +1,334 @@
+module transform
+imports
+  libstratego-lib
+  libjava-front
+  include/cool
+  externals
+  tools
+  libstratego-gpp
+  libstratego-sglr
+strategies
+  // main = io-wrap(transform)
+  main = handle-io	
+
+  handle-io =
+  	?[ program | args ];
+  	<debug>"arguments:";<debug>args;
+  	input_file_path := < \ [input|rest] -> input\ >args;
+  	ReadFromFile;
+  	ast := <id>;
+  	output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
+  	result := <transform>ast;
+  	input_file_dir := <dirname>input_file_path;
+  	input_file_name := <base-filename>input_file_path;
+  	input_file_name_without_extension := <remove-extension>input_file_name;
+  	modified_input_file_name_without_extension := <concat-strings>[input_file_name_without_extension, "Coord"];
+  	modified_input_file_name := <add-extension>(modified_input_file_name_without_extension, "java");
+  	//output_file_path := <concat-strings>[input_file_dir, "/", modified_input_file_name];
+  	handle := <fopen> (output_file_path, "w");
+	<fputs> (result, handle);
+ 	fclose 	
+
+  transform =
+        path := <id>;
+        ast := <parse-file(|<import-term(cool.tbl)>)>path;
+        annotated_ast := <topdown(\trm -> trm{<try(gen-source-location)>}\)>ast;
+        transformed_ast := <transform-ast>annotated_ast;
+        <pp-java5-to-string>transformed_ast
+
+  transform-ast =
+        <convert><id>
+
+  gen-source-location:
+	trm -> [<origin-location>trm, <origin-file>trm]
+
+  origin-location = prim("SSL_EXT_origin_location", <id>)
+  origin-file = prim("SSL_EXT_origin_file", <id>)
+
+  gen-isRunByOthers-method = 
+     !MethodDec(
+        MethodDecHead([Private(), Static()], None(), Boolean(), Id("isRunByOthers"), [Param([], TypeName(Id("List")), Id("methState"))], None()),
+		Block(
+		   [Return(Some(Not(Invoke(Method(MethodName(AmbName(Id("methState")), Id("contains"))), [Invoke(Method(MethodName(AmbName(Id("Thread")), Id("currentThread"))), [])]))))]))
+
+  gen-method-state(|method2index) =
+     ?MethodSignature(Id(name), _);
+     methodsig := <id>;
+     !FieldDec( [Private()], 
+     		ClassOrInterfaceType(TypeName(Id("List")), None()), 
+		[VarDec(Id(<gen-method-state-name(|method2index)>methodsig),
+		       Invoke(Method(MethodName(AmbName(Id("Collections")),Id("synchronizedList"))), [NewInstance(None(), ClassOrInterfaceType(TypeName(Id("Vector")), None()), [], None())]))] )
+
+  gen-method-state-name(|method2index) =
+     ?MethodSignature(Id(name), _);
+     methodsig := <strip-annos><id>;
+     <concat-strings>[name, <int-to-string><hashtable-get(|methodsig)>method2index, "State"]
+
+  gen-requires-method-name(|method2index) =
+     ?MethodSignature(Id(name), _);
+     methodsig := <strip-annos><id>;
+     <concat-strings>["requires_", name, <int-to-string><hashtable-get(|methodsig)>method2index]
+
+  gen-on-entry-method-name(|method2index) =
+     ?MethodSignature(Id(name), _);
+     methodsig := <strip-annos><id>;
+     <concat-strings>["on_entry_", name, <int-to-string><hashtable-get(|methodsig)>method2index]
+
+  gen-on-exit-method-name(|method2index) =
+     ?MethodSignature(Id(name), _);
+     methodsig := <strip-annos><id>;
+     <concat-strings>["on_exit_", name, <int-to-string><hashtable-get(|methodsig)>method2index]
+
+  make-while-statement(|condition, whileStatements*) =
+     !While(condition, Block(whileStatements*))
+
+  make-while-condition(|literals*) =
+     switch <length>literals*
+     	case equal(|0) : !False()
+     	case equal(|1) : <\ [x] -> x \>literals*
+     	otherwise      : [prefix | rest*] := literals*;
+					   	 !LazyOr(<make-while-condition(|rest*)>, prefix)
+     end
+     
+  gen-class-head(|coordinator_type) =
+  	name := <fetch_class_name>coordinator_type;
+    fullTypeName := <fetch_full_class_name>coordinator_type;
+    annos := [Anno(TypeName(Id("COOLAspect")),[ElemValPair(Id("className"),Lit(String([Chars(fullTypeName)])))]),
+			  Public()];
+    !ClassDecHead(annos, Id(<concat-strings>[name, "Coord"]), None(), None(), None())
+
+  make-requires-method(|requires_map, requires_methods, method2index) =
+     ?MethodSignature(Id(name), types);
+     methodsig := <id>;
+     annos := [
+     	Anno(TypeName(Id("COOLRequires")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
+     	Private()
+     	];
+     newmethodname := <gen-requires-method-name(|method2index)>methodsig;
+     <hashtable-put(|methodsig, newmethodname)>requires_methods;
+     !MethodDec(MethodDecHead(annos, None(), Boolean(), Id(newmethodname), [], None()), Block([Return(Some(<hashtable-get(|methodsig)>requires_map))]))
+
+  gen-selfex-signature-location-ann =
+  	<gen-source-location-ann(|"COOLSelfexLocation")><id>
+  
+  gen-mutex-signature-location-ann =
+  	<gen-source-location-ann(|"COOLMutexLocation")><id>
+
+  gen-additions-signature-location-ann =
+  	<gen-source-location-ann(|"COOLAdditionsLocation")><id>
+
+  gen-source-location-ann(|name):
+  	x -> Anno(TypeName(Id(name)),[
+  		ElemValPair(Id("file"),Lit(String([Chars(<get-file>x)]))),
+  		ElemValPair(Id("startLine"),Lit(Deci(<int-to-string><get-start-line><get-location>x))),
+  		ElemValPair(Id("endLine"),Lit(Deci(<int-to-string><get-end-line><get-location>x))),
+  		ElemValPair(Id("column"),Lit(Deci(<int-to-string><get-column><get-location>x))),
+  		ElemValPair(Id("offset"),Lit(Deci(<int-to-string><get-offset><get-location>x)))])
+
+  get-location: t{[a|b]} -> a
+  get-file: t{[a|[b]]} -> b
+  get-start-line = \ (x, _, _, _) -> x \
+  get-end-line = \ (_, _, x, _) -> x \
+  get-column = \ (_, x, _, _) -> x \
+  get-offset = \ (_, _, _, x) -> x \
+
+  make-on-entry-method(|on_entry_map, coordname, on_entry_methods, method2index) =
+    ?MethodSignature(Id(name), types);
+    methodsig := <id>;
+    annos := [Anno(TypeName(Id("COOLOnEntry")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)])) \)><map(pp-type)>types))]), Private()];
+    newmethodname := <gen-on-entry-method-name(|method2index)>methodsig;
+    <hashtable-put(|methodsig, newmethodname)>on_entry_methods;
+    !MethodDec(MethodDecHead(annos, None(), Void(), Id(newmethodname), [Param([], TypeName(Id(coordname)), Id("target"))], None()), <hashtable-get(|methodsig)>on_entry_map)
+
+  make-on-exit-method(|on_exit_map, coordname, on_exit_methods, method2index) =
+    ?MethodSignature(Id(name), types);
+    methodsig := <id>;
+    annos := [Anno(TypeName(Id("COOLOnExit")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)])) \)><map(pp-type)>types))]), Private()];
+    newmethodname := <gen-on-exit-method-name(|method2index)>methodsig;
+    <hashtable-put(|methodsig, newmethodname)>on_exit_methods;
+    !MethodDec(MethodDecHead(annos, None(), Void(), Id(newmethodname), [Param([], TypeName(Id(coordname)), Id("target"))], None()), <hashtable-get(|methodsig)>on_exit_map)
+
+  convert =
+  	?CompilationUnit(package, imports, types);
+  	compilation_unit := <id>;
+  	if coordinator := <get-coordinator(|types)>compilation_unit
+  	then
+  		coordinator_type := <fetch-coordinator-type>coordinator; 
+  		converted_coordinator := <convert-coordinator-declaration(|coordinator_type)>coordinator;
+    	other_types := <remove-all(?CoordinatorDec(_, _))>types;
+    	!CompilationUnit(package, // the package stays the same
+    					 <generate-imports(|imports, coordinator_type)>,
+    					 <conc>([converted_coordinator], other_types))
+  	else
+  		// or maybe raise an error?
+  		<id>compilation_unit
+  	end
+  	
+  generate-imports(|original_imports, coordinator_type) =
+  	<conc>(original_imports,
+  		   [TypeImportDec(coordinator_type)],
+  		   [TypeImportOnDemandDec(PackageName([Id("java"),Id("util")]))],
+  		   [TypeImportOnDemandDec(PackageName([Id("cool"),Id("runtime")]))])
+
+  get-coordinator(|types) =
+  	<getfirst(?CoordinatorDec(_, _))>types  	
+
+rules
+
+  fetch-coordinator-type:
+  	CoordinatorDec(header, body) -> <\ CoordinatorDecHead(type) -> type \>header
+
+  convert-coordinator-declaration(|coordinator_type):
+    CoordinatorDec(header, body) -> <add_externals(|classname)>ClassDec(<gen-class-head(|coordinator_type)>, <gen-coordinator-body(|classname)>body)
+    with
+		classname := <fetch_class_name>coordinator_type
+
+  gen-coordinator-body(|coordname):
+    CoordinatorBody(declarations*) -> ClassBody(
+    				   <conc> (
+				   	  <add-condition-fields>condition,
+					  <add-coordinator-fields> declarations*,
+					  <map(gen-method-state(|method2index))>methods,
+					  [<gen-isRunByOthers-method>],
+					  <map(make-requires-method(|requires_map, requires_methods, method2index))><hashtable-keys>requires_map, 
+					  <map(make-on-entry-method(|on_entry_map, coordname, on_entry_methods, method2index))><hashtable-keys>on_entry_map,
+					  <map(make-on-exit-method(|on_exit_map, coordname, on_exit_methods, method2index))><hashtable-keys>on_exit_map,
+					  <concat><map(make-lock-and-unlock-methods(|coordname, on_exit_methods, requires_methods, on_entry_methods, selfex_methods, mutex_methods,
+					   method2index, method2selfex_sig, method2mutex_sig, method2additions_sig))>methods
+					  ))
+    with
+      requires_map   := <new-hashtable>;
+      on_exit_map    := <new-hashtable>;
+      on_entry_map   := <new-hashtable>;
+
+      requires_methods := <new-hashtable>;
+      on_exit_methods  := <new-hashtable>;
+      on_entry_methods := <new-hashtable>;
+      method2index     := <new-hashtable>;
+
+      method2additions_sig := <new-hashtable>;
+      method2selfex_sig    := <new-hashtable>;
+      method2mutex_sig     := <new-hashtable>;
+
+      condition      := <getfirst(?ConditionDec(_))>declarations*;
+      selfex_methods' := <get-methods-list><getfirst(?Selfex(_))>declarations*;
+      mutex_methods'  := <get-methods-list><getfirst(?Mutex(_))>declarations*;
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2selfex_sig \ )>selfex_methods';
+      <map(\ methodsig -> <hashtable-put(|<strip-annos>methodsig, methodsig)>method2mutex_sig \ )>mutex_methods';
+      selfex_methods := <map(\ methodsig -> <strip-annos>methodsig \)>selfex_methods';
+      mutex_methods  := <map(\ methodsig -> <strip-annos>methodsig \)>mutex_methods';
+      methods	     := <union>(selfex_methods, mutex_methods);
+      <map(\ methodsig -> <hashtable-put(|methodsig, <length><hashtable-keys>method2index)>method2index \ )>methods;
+      method_additions := <retain-all(?MethodAdditions(_,_,_,_))>declarations*;
+      <map(\ MethodAdditions(methodsig, _, _, _) -> <hashtable-put(|methodsig, methodsig)>method2additions_sig \ )>method_additions;
+      <map(fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index))>method_additions
+
+   make-lock-and-unlock-methods(|coordname, on_exit_methods, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig):
+     method -> [
+     	       	<make-lock-method(|coordname, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig)>method,
+    	       	<make-unlock-method(|coordname, on_exit_methods, method2index)>method
+	           ]
+
+   make-unlock-method(|coordname, on_exit_methods, method2index):
+     MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["unlock_", name]), [Param([], TypeName(Id(coordname)), Id("target"))], None()), Block(statements*))
+     with
+		methodsig := <id>;
+		annos := [Anno(TypeName(Id("COOLUnlock")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
+			Public(),
+			Synchronized()];
+	        if <elem>(methodsig ,<hashtable-keys>on_exit_methods)
+	        then 
+	          callOnExitMethod := <\ name -> ExprStm(Invoke(Method(MethodName(Id(name))),[ExprName(Id("target"))])) \><hashtable-get(|methodsig)>on_exit_methods
+	        else 
+	          callOnExitMethod := None()
+			end;
+       	statements* := <conc> (
+       		   [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)), Id("remove"))), [Invoke(Method(MethodName(AmbName(Id("Thread")), Id("currentThread"))), [])]))],
+		   [callOnExitMethod],
+		   [ExprStm(Invoke(Method(MethodName(Id("notifyAll"))), []))])
+
+   make-lock-method(|coordname, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig):
+     MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["lock_", name]), [Param([], TypeName(Id(coordname)), Id("target"))], None()), Block(statements*))
+     with
+       methodsig := <strip-annos><id>;
+       if <elem>(methodsig, mutex_methods)
+       then
+         mutexMethods* := <remove-all(equal(|methodsig))>mutex_methods;
+         mutex_location := [<gen-mutex-signature-location-ann><hashtable-get(|methodsig)>method2mutex_sig]
+       else
+         mutexMethods* := [];
+         mutex_location := []
+       end;
+       if <elem>(methodsig, selfex_methods)
+       then
+         exclusiveMethods* := <conc> ([methodsig], mutexMethods*);
+         exclusivelocations := <conc> ([<gen-selfex-signature-location-ann><hashtable-get(|methodsig)>method2selfex_sig], mutex_location)
+       else
+         exclusiveMethods* := mutexMethods*;
+         exclusivelocations := mutex_location
+       end;
+       literalsExceptRequirement* := <map(\ methodsig -> Invoke(Method(MethodName(Id("isRunByOthers"))),[ExprName(Id(<gen-method-state-name(|method2index)>methodsig))]) \)>exclusiveMethods*;
+       if <elem>(methodsig, <hashtable-keys>requires_methods)
+       then
+         requirement := <\ expr -> Not(expr) \><\ name -> Invoke(Method(MethodName(Id(name))),[]) \><hashtable-get(|methodsig)>requires_methods;
+	 literals* := [requirement | literalsExceptRequirement*]
+       else
+         literals* := literalsExceptRequirement*
+       end;
+       whileCondition := <make-while-condition(|<reverse>literals*)>;
+       if <elem>(methodsig, <hashtable-keys>on_entry_methods)
+       then 
+         callOnEntryMethod := <\ name -> ExprStm(Invoke(Method(MethodName(Id(name))),[ExprName(Id("target"))])) \><hashtable-get(|methodsig)>on_entry_methods
+       else
+         callOnEntryMethod := None() 
+       end;
+       if <elem>(methodsig, <hashtable-keys>method2additions_sig)
+       then
+       	 source_locations := <conc> ([<gen-additions-signature-location-ann><hashtable-get(|methodsig)>method2additions_sig], exclusivelocations)
+       else
+       	 source_locations := exclusivelocations
+       end;
+       statements* := <conc> ([<make-while-statement(|whileCondition, 
+			                                          [Try(Block([ExprStm(Invoke(Method(MethodName(Id("wait"))),[]))]),[Catch(Param([],ClassOrInterfaceType(TypeName(Id("InterruptedException")),None()),Id("e")),Block([Return(None())]))])])>],
+       		       	       [callOnEntryMethod],
+			       [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)),Id("add"))),[Invoke(Method(MethodName(AmbName(Id("Thread")),Id("currentThread"))),[])]))]);
+
+	   annos := <conc>([Anno(TypeName(Id("COOLLock")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
+		Public(),
+		Synchronized()],
+		source_locations)
+
+   fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index):
+     MethodAdditions(methodsig, requires, on_entry, on_exit) -> None()
+     with
+      if not(<equal>(requires, None()))
+      then
+	<hashtable-put(|methodsig, <\ Some(Requires(expr)) -> expr \>requires)>requires_map
+      end;
+      if not(<equal>(on_entry, None()))
+      then
+	<hashtable-put(|methodsig, <\ Some(OnEntry(block)) -> block \>on_entry)>on_entry_map
+      end;
+      if not(<equal>(on_exit, None()))
+      then
+	<hashtable-put(|methodsig, <\ Some(OnExit(block)) -> block \>on_exit) >on_exit_map  
+      end
+
+   add-condition-fields:
+     ConditionDec(assignments*) -> declarations*
+     with
+     	declarations* := <map(\ Assign(ExprName(name),expr) -> FieldDec([Private(), MarkerAnno(TypeName(Id("COOLConditionField")))], Boolean(), [VarDec(name, expr)]) \)>assignments*
+
+   add-coordinator-fields:
+     declarations* -> <map(\ FieldDec(anno*, type, var_decs*) -> FieldDec([Private(), MarkerAnno(TypeName(Id("COOLCoordinatorField"))) | anno*], type, var_decs*) \)>declarations'*
+     with
+	 	declarations'* := <retain-all(?FieldDec(_,_,_))>declarations*
+
+   get-methods-list:
+     Selfex(methodsignatures*) -> methodsignatures*
+
+   get-methods-list:
+     Mutex(methodsignatures*) -> methodsignatures*
+
+   get-methods-list:
+     None() -> []
