@@ -307,7 +307,7 @@ strategies
 		// !Anno(TypeName(Id("ExplicitJoinPoint")),[ ElemValPair(Id("handles"),ElemValArrayInit(<fetch-handles-list>handles)) ])
 	
 	gen-method-body(|default_value, return_type) =
-		if <equal>(default_value, None())
+		if <equal>(<strip-annos>default_value, None())
 		then
 			!Block([Return(<get-default-return-value-for-return-type>return_type)])
 		else
@@ -316,7 +316,7 @@ strategies
 		
 	get-default-return-value-for-return-type =
 		return_type := <id>;
-		switch <id>return_type
+		switch <strip-annos>return_type
 			case ?Void(): !None()
 			case ?Int() : !Some(Lit(Deci("0")))
 			case ?Long() : !Some(Lit(Deci("0")))

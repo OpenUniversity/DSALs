@@ -98,13 +98,13 @@ strategies
 		or(?VarDec(Id(name)), ?VarDec(Id(name), _));
 		source := <id>;
 		<hashtable-remove(|name)>vars_table;
-		<hashtable-put(|name, type)>vars_table;
+		<hashtable-put(|<strip-annos>name, <strip-annos>type)>vars_table;
 		<id>source
 	
 	process-method-param(|table) =
 		or(?Param(_, type, Id(name)), ?VarArityParam(_, type, Id(name)));
 		source := <id>;
-		<hashtable-put(|name, type)>table;
+		<hashtable-put(|<strip-annos>name, <strip-annos>type)>table;
 		<id>source
 
     // need to get the class name as a parameter

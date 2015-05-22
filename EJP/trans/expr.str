@@ -69,6 +69,6 @@ rules
    fetch(|vars_set):
 	AmbName(name) -> <fetch(|vars_set)>name
    fetch(|vars_set):
-        Id(name) -> <iset-add(|name)>vars_set
+        Id(name) -> <iset-add(|<strip-annos>name)>vars_set
         
    
