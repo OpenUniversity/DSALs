@@ -28,7 +28,7 @@ rules // Analysis
         (selected, position, ast, path, project-path) -> (filename, result)
     with
       filename := "result.aj";
-      result   := <pp-aspectj-string><convert>selected
+      result   := <pp-aspectj-string><transform-ast>selected
 
 	editor-analyze = analysis-default-editor
 	

@@ -17,13 +17,27 @@ strategies
   	ReadFromFile;
   	ast := <id>;
   	output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
-  	result := <pp-aspectj-string><convert>ast;
+  	result := <transform>ast;
   	// output_file_path := <concat-strings>[input_file_dir, "/", modified_input_file_name];
   	handle := <fopen> (output_file_path, "w");
 	<fputs> (result, handle);
  	fclose
 
-	convert = <try(ejp-converter-compilation-unit)><id>
+	transform =
+		path := <id>;
+		ast := <parse-file(|<import-term(ejp.tbl)>)>path;
+		annotated_ast := <topdown(\trm -> trm{<try(gen-source-location)>}\)>ast;
+		transformed_ast := <transform-ast>annotated_ast;
+        <pp-aspectj-string>transformed_ast
+
+	transform-ast =
+		<try(ejp-converter-compilation-unit)><id>
+
+	gen-source-location:
+	trm -> [<origin-location>trm, <origin-file>trm]
+
+    origin-location = prim("SSL_EXT_origin_location", <id>)
+    origin-file = prim("SSL_EXT_origin_file", <id>)
 
 rules
 	ejp-converter-compilation-unit: CompilationUnit(PackageDec, ImportDecs, TypeDecs) -> CompilationUnit(PackageDec, ImportDecs', TypeDecs')
