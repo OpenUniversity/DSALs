@@ -53,7 +53,7 @@ rules
 				package_name := None()
 			end;
 			ImportDecs' := <conc>(ImportDecs,
-			 [TypeImportOnDemandDec(PackageName([Id("closures"),Id("runtime")])),
+			 [TypeImportOnDemandDec(PackageName([Id("cjp"),Id("runtime")])),
 			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang"), Id("annotation")])),
 			 TypeImportOnDemandDec(PackageName([Id("org"), Id("aspectj"), Id("lang")]))]);
 			TypeDecs' := <all(try(closures-converter-aspect-or-class(|package_name)))>TypeDecs
