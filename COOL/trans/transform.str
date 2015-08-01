@@ -298,25 +298,27 @@ rules
 	 	methodsig := <strip-annos><id>
 
    make-unlock-method(|coordinator_type, on_exit_methods, method2index):
-     MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["unlock_", name]), [Param([], coordinator_type, Id("target"))], None()), Block(statements*))
+     MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["unlock_", name]), [Param([], coordinator_type, Id("obj"))], None()), Block(statements*))
      with
 		methodsig := <id>;
-		annos := [Anno(TypeName(Id("COOLUnlock")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
-			Public(),
-			Synchronized()];
-	        if <elem>(methodsig ,<hashtable-keys>on_exit_methods)
-	        then 
-	          callOnExitMethod := <\ name -> ExprStm(Invoke(Method(MethodName(Id(name))),[ExprName(Id("target"))])) \><hashtable-get(|methodsig)>on_exit_methods
-	        else 
-	          callOnExitMethod := None()
-			end;
+		pointcut := <concat-strings>["execution(* ", name ,"(..)) && this(obj)"];
+        annos := [
+           SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("After")), Lit(String([Chars(pointcut)]))),
+           Public(),
+           Synchronized()];
+        if <elem>(methodsig ,<hashtable-keys>on_exit_methods)
+        then
+          callOnExitMethod := <\ name -> ExprStm(Invoke(Method(MethodName(AmbName(Id("obj")), Id(name))), [])) \><hashtable-get(|methodsig)>on_exit_methods
+        else
+          callOnExitMethod := None()
+		end;
        	statements* := <conc> (
-       		   [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)), Id("remove"))), [Invoke(Method(MethodName(AmbName(Id("Thread")), Id("currentThread"))), [])]))],
+       	   [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)), Id("remove"))), [Invoke(Method(MethodName(AmbName(Id("Thread")), Id("currentThread"))), [])]))],
 		   [callOnExitMethod],
 		   [ExprStm(Invoke(Method(MethodName(Id("notifyAll"))), []))])
 
    make-lock-method(|coordinator_type, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig):
-     MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["lock_", name]), [Param([], coordinator_type, Id("target"))], None()), Block(statements*))
+     MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["lock_", name]), [Param([], coordinator_type, Id("obj"))], None()), Block(statements*))
      with
        methodsig := <strip-annos><id>;
        if <elem>(methodsig, mutex_methods)
@@ -338,15 +340,15 @@ rules
        literalsExceptRequirement* := <map(\ methodsig -> Invoke(Method(MethodName(Id("isRunByOthers"))),[ExprName(Id(<gen-method-state-name(|method2index)>methodsig))]) \)>exclusiveMethods*;
        if <elem>(methodsig, <hashtable-keys>requires_methods)
        then
-         requirement := <\ expr -> Not(expr) \><\ name -> Invoke(Method(MethodName(Id(name))),[]) \><hashtable-get(|methodsig)>requires_methods;
-	 literals* := [requirement | literalsExceptRequirement*]
+         requirement := <\ expr -> Not(expr) \><\ name -> Invoke(Method(MethodName(AmbName(Id("obj")), Id(name))),[]) \><hashtable-get(|methodsig)>requires_methods;
+	     literals* := [requirement | literalsExceptRequirement*]
        else
          literals* := literalsExceptRequirement*
        end;
        whileCondition := <make-while-condition(|<reverse>literals*)>;
        if <elem>(methodsig, <hashtable-keys>on_entry_methods)
        then 
-         callOnEntryMethod := <\ name -> ExprStm(Invoke(Method(MethodName(Id(name))),[ExprName(Id("target"))])) \><hashtable-get(|methodsig)>on_entry_methods
+         callOnEntryMethod := <\ name -> ExprStm(Invoke(Method(MethodName(AmbName(Id("obj")), Id(name))),[])) \><hashtable-get(|methodsig)>on_entry_methods
        else
          callOnEntryMethod := None() 
        end;
@@ -360,11 +362,13 @@ rules
 			                                          [Try(Block([ExprStm(Invoke(Method(MethodName(Id("wait"))),[]))]),[Catch(Param([],ClassOrInterfaceType(TypeName(Id("InterruptedException")),None()),Id("e")),Block([Throw(NewInstance(None(), ClassOrInterfaceType(TypeName(Id("RuntimeException")), None()), [], None()))]))])])>],
        		       	       [callOnEntryMethod],
 			       [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)),Id("add"))),[Invoke(Method(MethodName(AmbName(Id("Thread")),Id("currentThread"))),[])]))]);
-
-	   annos := <conc>([Anno(TypeName(Id("COOLLock")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
-		Public(),
-		Synchronized()],
-		source_locations)
+	   pointcut := <concat-strings>["execution(* ", name ,"(..)) && this(obj)"];
+       annos :=
+         //<conc>(
+         [SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("Before")), Lit(String([Chars(pointcut)]))),
+          Public(),
+          Synchronized()]
+          //, source_locations)
 
    fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index):
      MethodAdditions(methodsig, requires, on_entry, on_exit) -> None()
