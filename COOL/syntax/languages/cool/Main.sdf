@@ -1,6 +1,8 @@
 module languages/cool/Main
 imports
 	languages/java-15/Main
+	languages/cool/AspectjExtension
+
 exports
   sorts
     ConditionDec CoordinatorBodyDec CoordinatorDec CoordinatorBody MethodAdditionsDec MethodSignature MutexDec SelfexDec

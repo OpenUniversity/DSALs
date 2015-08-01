@@ -7,6 +7,8 @@ imports
   tools
   libstratego-gpp
   libstratego-sglr
+  aspectj/pretty-print
+
 strategies
   // main = io-wrap(transform)
   main = handle-io	
@@ -34,7 +36,7 @@ strategies
         ast := <parse-file(|<import-term(cool.tbl)>)>path;
         annotated_ast := <topdown(\trm -> trm{<try(gen-source-location)>}\)>ast;
         transformed_ast := <transform-ast>annotated_ast;
-        <pp-java5-to-string>transformed_ast
+        <pp-aspectj-string>transformed_ast
 
   transform-ast =
         <convert><id>
