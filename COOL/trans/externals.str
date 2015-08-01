@@ -9,7 +9,7 @@ strategies
     class := <id>;
     syntetic_methods := <new-iset>;
     modified_class := <add-external-impl(|syntetic_methods, coordname)>class;
-    <topdown(try(\ ClassBody(declarations*) -> ClassBody(<conc>(declarations*, <iset-elements>syntetic_methods)) \))>modified_class
+    <topdown(try(\ AspectBody(declarations*) -> AspectBody(<conc>(declarations*, <iset-elements>syntetic_methods)) \))>modified_class
 
   add-external-impl(|methods, coordname) = 
     node := <strip-annos><id>;

@@ -1,0 +1,18 @@
+%%%
+ %% Annotation Patterns
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pattern/Annotation
+exports
+  sorts
+    AnnoPattern
+    SimpleAnnoPattern
+
+  context-free syntax
+    "@" "(" TypePattern ")" -> SimpleAnnoPattern {cons("SimpleAnnoPattern")}
+    "@" TypeName     -> SimpleAnnoPattern {cons("SimpleAnnoPatternExact")}
+    "!" SimpleAnnoPattern   -> NotSimpleAnnoPattern {cons("Not")}
+    
+    (SimpleAnnoPattern | NotSimpleAnnoPattern)* -> AnnoPattern {cons("AnnoPattern")}
+    (SimpleAnnoPattern | NotSimpleAnnoPattern)+ -> AnnoPatternPlus {cons("AnnoPattern")}

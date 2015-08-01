@@ -1,0 +1,18 @@
+%%%
+ %% Class Name Patterns
+ %%
+ %% @author  Martin Bravenboer <martin.bravenboer@gmail.com>
+ %%%
+module languages/aspectj/pattern/ClassName
+imports
+  languages/aspectj/common/BooleanComposition[ClassNamePattern]
+
+exports
+  sorts ClassNamePattern
+  context-free syntax
+    NamePattern                   -> ClassNamePattern {cons("SimpleNamePattern")}
+    NamePattern TypeParamsPattern -> ClassNamePattern {cons("Generic")}
+
+    NamePattern "+"                   -> ClassNamePattern {cons("Subtype")}
+    NamePattern "+" TypeParamsPattern -> ClassNamePattern {cons("Subtype")}
+    NamePattern TypeParamsPattern "+" -> ClassNamePattern {cons("Subtype")}

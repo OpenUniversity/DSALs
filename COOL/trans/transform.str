@@ -114,12 +114,24 @@ strategies
 					   	 !LazyOr(<make-while-condition(|rest*)>, prefix)
      end
      
-  gen-class-head(|coordinator_type) =
+  gen-coordinator-head(|coordinator_type) =
   	name := <fetch_class_name>coordinator_type;
     fullTypeName := <fetch_full_class_name>coordinator_type;
-    annos := [Anno(TypeName(Id("COOLAspect")),[ElemValPair(Id("className"),Lit(String([Chars(fullTypeName)])))]),
-			  Public()];
-    !ClassDecHead(annos, Id(<concat-strings>[name, "Coord"]), None(), None(), None())
+    annos := [Public(), Privileged()];
+    perThis := Some(
+          PerThis(
+               Exec(
+              ConstrPattern(
+                AnnoPattern([])
+              , ModPattern([])
+              , ConstrName(RefTypePattern(NamePattern(fullTypeName)))
+              , [FormalWildcard()]
+              , None()
+              )
+            )
+          )
+        );
+    !AspectDecHead(annos, Id(<concat-strings>[name, "Coord"]), None(), None(), None(), perThis)
 
   make-requires-method(|requires_map, requires_methods, method2index) =
      ?MethodSignature(Id(name), types);
@@ -203,12 +215,14 @@ rules
   	CoordinatorDec(header, body) -> <\ CoordinatorDecHead(type) -> type \>header
 
   convert-coordinator-declaration(|coordinator_type):
-    CoordinatorDec(header, body) -> <add_externals(|classname)>ClassDec(<gen-class-head(|coordinator_type)>, <gen-coordinator-body(|classname)>body)
+    CoordinatorDec(header, body) -> <add_externals(|classname)>AspectDec(header', body')
     with
-		classname := <fetch_class_name>coordinator_type
+		classname := <fetch_class_name>coordinator_type;
+		header' := <gen-coordinator-head(|coordinator_type)>;
+		body' := <gen-coordinator-body(|classname)>body
 
   gen-coordinator-body(|coordname):
-    CoordinatorBody(declarations*) -> ClassBody(
+    CoordinatorBody(declarations*) -> AspectBody(
     				   <conc> (
 				   	  <add-condition-fields>condition,
 					  <add-coordinator-fields> declarations*,
