@@ -49,7 +49,29 @@ strategies
      !MethodDec(
         MethodDecHead([Private(), Static()], None(), Boolean(), Id("isRunByOthers"), [Param([], TypeName(Id("List")), Id("methState"))], None()),
 		Block(
-		   [Return(Some(Not(Invoke(Method(MethodName(AmbName(Id("methState")), Id("contains"))), [Invoke(Method(MethodName(AmbName(Id("Thread")), Id("currentThread"))), [])]))))]))
+            [Return(
+	          Some(
+	            LazyAnd(
+	              Not(
+	                Invoke(
+	                  Method(MethodName(AmbName(Id("methState")), Id("isEmpty")))
+	                , []
+	                )
+	              )
+	            , Not(
+	                Invoke(
+	                  Method(MethodName(AmbName(Id("methState")), Id("contains")))
+	                , [Invoke(
+	                     Method(MethodName(AmbName(Id("Thread")), Id("currentThread")))
+	                   , []
+	                   )]
+	                )
+	              )
+	            )
+	          )
+	        )]
+        )
+      )
 
   gen-method-state(|method2index) =
      ?MethodSignature(Id(name), _);
