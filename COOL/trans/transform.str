@@ -231,9 +231,7 @@ strategies
   	
   generate-imports(|original_imports, coordinator_type) =
   	<conc>(original_imports,
-  		   [TypeImportDec(coordinator_type)],
-  		   [TypeImportOnDemandDec(PackageName([Id("java"),Id("util")]))],
-  		   [TypeImportOnDemandDec(PackageName([Id("cool"),Id("runtime")]))])
+  		   [TypeImportOnDemandDec(PackageName([Id("java"),Id("util")]))])
 
   get-coordinator(|types) =
   	<getfirst(?CoordinatorDec(_, _))>types  	
