@@ -127,7 +127,7 @@ strategies
      	Private()
      	];
      newmethodname := <gen-requires-method-name(|method2index)>methodsig;
-     <hashtable-put(|methodsig, newmethodname)>requires_methods;
+     <hashtable-put(|<strip-annos>methodsig, newmethodname)>requires_methods;
      !MethodDec(MethodDecHead(annos, None(), Boolean(), Id(newmethodname), [], None()), Block([Return(Some(<hashtable-get(|methodsig)>requires_map))]))
 
   gen-selfex-signature-location-ann =
@@ -159,7 +159,7 @@ strategies
     methodsig := <id>;
     annos := [Anno(TypeName(Id("COOLOnEntry")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)])) \)><map(pp-type)>types))]), Private()];
     newmethodname := <gen-on-entry-method-name(|method2index)>methodsig;
-    <hashtable-put(|methodsig, newmethodname)>on_entry_methods;
+    <hashtable-put(|<strip-annos>methodsig, newmethodname)>on_entry_methods;
     !MethodDec(MethodDecHead(annos, None(), Void(), Id(newmethodname), [Param([], TypeName(Id(coordname)), Id("target"))], None()), <hashtable-get(|methodsig)>on_entry_map)
 
   make-on-exit-method(|on_exit_map, coordname, on_exit_methods, method2index) =
@@ -167,7 +167,7 @@ strategies
     methodsig := <id>;
     annos := [Anno(TypeName(Id("COOLOnExit")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)])) \)><map(pp-type)>types))]), Private()];
     newmethodname := <gen-on-exit-method-name(|method2index)>methodsig;
-    <hashtable-put(|methodsig, newmethodname)>on_exit_methods;
+    <hashtable-put(|<strip-annos>methodsig, newmethodname)>on_exit_methods;
     !MethodDec(MethodDecHead(annos, None(), Void(), Id(newmethodname), [Param([], TypeName(Id(coordname)), Id("target"))], None()), <hashtable-get(|methodsig)>on_exit_map)
 
   convert =
@@ -247,9 +247,11 @@ rules
 
    make-lock-and-unlock-methods(|coordname, on_exit_methods, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig):
      method -> [
-     	       	<make-lock-method(|coordname, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig)>method,
-    	       	<make-unlock-method(|coordname, on_exit_methods, method2index)>method
+     	       	<make-lock-method(|coordname, requires_methods, on_entry_methods, selfex_methods, mutex_methods, method2index, method2selfex_sig, method2mutex_sig, method2additions_sig)>methodsig,
+    	       	<make-unlock-method(|coordname, on_exit_methods, method2index)>methodsig
 	           ]
+	 with
+	 	methodsig := <strip-annos><id>
 
    make-unlock-method(|coordname, on_exit_methods, method2index):
      MethodSignature(Id(name), types) -> MethodDec(MethodDecHead(annos, None(), Void(), Id(<concat-strings>["unlock_", name]), [Param([], TypeName(Id(coordname)), Id("target"))], None()), Block(statements*))
