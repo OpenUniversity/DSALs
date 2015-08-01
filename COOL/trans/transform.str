@@ -313,7 +313,7 @@ rules
        	 source_locations := exclusivelocations
        end;
        statements* := <conc> ([<make-while-statement(|whileCondition, 
-			                                          [Try(Block([ExprStm(Invoke(Method(MethodName(Id("wait"))),[]))]),[Catch(Param([],ClassOrInterfaceType(TypeName(Id("InterruptedException")),None()),Id("e")),Block([Return(None())]))])])>],
+			                                          [Try(Block([ExprStm(Invoke(Method(MethodName(Id("wait"))),[]))]),[Catch(Param([],ClassOrInterfaceType(TypeName(Id("InterruptedException")),None()),Id("e")),Block([Throw(NewInstance(None(), ClassOrInterfaceType(TypeName(Id("RuntimeException")), None()), [], None()))]))])])>],
        		       	       [callOnEntryMethod],
 			       [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)),Id("add"))),[Invoke(Method(MethodName(AmbName(Id("Thread")),Id("currentThread"))),[])]))]);
 
