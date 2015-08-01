@@ -1,4 +1,4 @@
-package aspects.cool;
+package base;
 
 coordinator base.BoundedStack { 
 
@@ -9,8 +9,10 @@ coordinator base.BoundedStack {
   int top = 0; 
   
   push(java.lang.Object):
-      requires (!full);
-      on_entry {top = top + 2;} 
+      requires !full;
+      on_entry {
+      	top = top + 1;
+      } 
       on_exit  {
         empty = false;
         if (top == buffer.length) full = true; 
@@ -18,8 +20,10 @@ coordinator base.BoundedStack {
   
 
   pop(): 
-  	  requires (!empty); 
-      on_entry {top = top - 1;} 
+  	  requires !empty; 
+      on_entry {
+      	top = top - 1;
+      } 
       on_exit  {
         full = false; 
         if (top == 0) empty = true; 
