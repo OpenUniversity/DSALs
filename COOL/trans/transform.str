@@ -116,7 +116,13 @@ strategies
   gen-coordinator-head(|coordinator_type) =
   	name := <fetch_class_name>coordinator_type;
     fullTypeName := <fetch_full_class_name>coordinator_type;
-    annos := [Public(), Privileged()];
+    annos := [MarkerAnno(
+                  TypeName(
+                    PackageOrTypeName(PackageOrTypeName(Id("cool")), Id("runtime"))
+                  , Id("CoolAspect")
+                  )
+                ),
+               Public(), Privileged()];
     perThis := Some(
           PerThis(
                Exec(
