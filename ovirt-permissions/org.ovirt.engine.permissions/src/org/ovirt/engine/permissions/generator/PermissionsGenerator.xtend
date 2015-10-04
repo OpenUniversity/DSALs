@@ -4,8 +4,10 @@
 package org.ovirt.engine.permissions.generator
 
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IGenerator
+import org.ovirt.engine.permissions.permissions.Command
+import org.ovirt.engine.permissions.permissions.Permission
 
 /**
  * Generates code from your model files on save.
@@ -15,10 +17,50 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 class PermissionsGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
+		fsa.generateFile('org/ovirt/engine/core/bll/Permissions.aj',
+			'''
+				package org.ovirt.engine.core.bll;
+				
+				import java.util.*;
+				import org.ovirt.engine.core.bll.utils.PermissionSubject;
+				import org.ovirt.engine.core.common.VdcObjectType;
+				import org.ovirt.engine.core.common.businessentities.ActionGroup;
+				
+				public privileged aspect Permissions {
+					«FOR command:resource.allContents.filter(typeof(Command)).toIterable»
+						«command.compile»
+					«ENDFOR»
+				}
+			'''
+		)
 	}
+
+	def compile(Command command) '''
+		List<PermissionSubject> around(«command.type.qualifiedName» command): execution(* getPermissionCheckSubjects()) && this(command) {
+			List<PermissionSubject> permissions = new ArrayList<>(«IF !command.overrides»proceed(command)«ENDIF»);
+
+			«FOR permission:command.permissions»
+				«permission.compile»
+			«ENDFOR»
+			return permissions;
+		}
+
+	'''
+
+	def compile(Permission permission) '''
+		try {
+			«IF permission.conditional»
+				if (command.«permission.condition.simpleName»()) {
+			«ENDIF»	    
+					permissions.add(new PermissionSubject(«permission.objectId.simpleName»(),
+						VdcObjectType.«permission.objectType.simpleName»,
+						ActionGroup.«permission.actionGroup.simpleName»));
+			«IF permission.conditional»
+				}
+			«ENDIF»
+		} catch(Exception e) {
+			System.err.println("Could not add permission subject"); 
+		}
+
+	'''
 }
