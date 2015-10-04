@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.ovirt.engine.permissions/src-gen" editDirectory="/org.ovirt.engine.permissions.edit/src"
+    editorDirectory="/org.ovirt.engine.permissions.editor/src" modelPluginID="org.ovirt.engine.permissions"
+    forceOverwrite="true" modelName="Permissions" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.ovirt.engine.permissions.edit"
+    editorPluginID="org.ovirt.engine.permissions.editor" runtimeVersion="2.11">
+  <genPackages prefix="Permissions" basePackage="org.ovirt.engine.permissions" disposableProviderFactory="true"
+      fileExtensions="permissions" ecorePackage="Permissions.ecore#/">
+    <genClasses ecoreClass="Permissions.ecore#//Model">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Model/greetings"/>
+    </genClasses>
+    <genClasses ecoreClass="Permissions.ecore#//Greeting">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Greeting/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

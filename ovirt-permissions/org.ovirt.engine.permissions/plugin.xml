@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.ovirt.org/engine/permissions/Permissions" 
+       class = "org.ovirt.engine.permissions.permissions.PermissionsPackage"
+       genModel = "model/generated/Permissions.genmodel" /> 
+	
+  </extension>
+
+
+
+</plugin>
