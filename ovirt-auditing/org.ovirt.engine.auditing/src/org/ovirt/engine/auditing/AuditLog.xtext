@@ -1,0 +1,9 @@
+grammar org.ovirt.engine.auditing.AuditLog with org.eclipse.xtext.common.Terminals
+
+generate auditLog "http://www.ovirt.org/engine/auditing/AuditLog"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
