@@ -80,9 +80,14 @@ public class PermissionsAdapterFactory extends AdapterFactoryImpl
         return createModelAdapter();
       }
       @Override
-      public Adapter caseGreeting(Greeting object)
+      public Adapter caseCommand(Command object)
       {
-        return createGreetingAdapter();
+        return createCommandAdapter();
+      }
+      @Override
+      public Adapter casePermission(Permission object)
+      {
+        return createPermissionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -122,16 +127,31 @@ public class PermissionsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.ovirt.engine.permissions.permissions.Greeting <em>Greeting</em>}'.
+   * Creates a new adapter for an object of class '{@link org.ovirt.engine.permissions.permissions.Command <em>Command</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.ovirt.engine.permissions.permissions.Greeting
+   * @see org.ovirt.engine.permissions.permissions.Command
    * @generated
    */
-  public Adapter createGreetingAdapter()
+  public Adapter createCommandAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.ovirt.engine.permissions.permissions.Permission <em>Permission</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.ovirt.engine.permissions.permissions.Permission
+   * @generated
+   */
+  public Adapter createPermissionAdapter()
   {
     return null;
   }

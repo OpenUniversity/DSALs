@@ -37,9 +37,23 @@ public class PermissionsParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getGreetingAccess().getGroup(), "rule__Greeting__Group__0");
-					put(grammarAccess.getModelAccess().getGreetingsAssignment(), "rule__Model__GreetingsAssignment");
-					put(grammarAccess.getGreetingAccess().getNameAssignment_1(), "rule__Greeting__NameAssignment_1");
+					put(grammarAccess.getCommandAccess().getGroup(), "rule__Command__Group__0");
+					put(grammarAccess.getCommandAccess().getGroup_4(), "rule__Command__Group_4__0");
+					put(grammarAccess.getCommandAccess().getGroup_4_1(), "rule__Command__Group_4_1__0");
+					put(grammarAccess.getPermissionAccess().getGroup(), "rule__Permission__Group__0");
+					put(grammarAccess.getPermissionAccess().getGroup_6(), "rule__Permission__Group_6__0");
+					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
+					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
+					put(grammarAccess.getModelAccess().getCommandsAssignment(), "rule__Model__CommandsAssignment");
+					put(grammarAccess.getCommandAccess().getTypeAssignment_1(), "rule__Command__TypeAssignment_1");
+					put(grammarAccess.getCommandAccess().getOverridesAssignment_2(), "rule__Command__OverridesAssignment_2");
+					put(grammarAccess.getCommandAccess().getPermissionsAssignment_4_0(), "rule__Command__PermissionsAssignment_4_0");
+					put(grammarAccess.getCommandAccess().getPermissionsAssignment_4_1_1(), "rule__Command__PermissionsAssignment_4_1_1");
+					put(grammarAccess.getPermissionAccess().getObjectTypeAssignment_1(), "rule__Permission__ObjectTypeAssignment_1");
+					put(grammarAccess.getPermissionAccess().getObjectIdAssignment_3(), "rule__Permission__ObjectIdAssignment_3");
+					put(grammarAccess.getPermissionAccess().getActionGroupAssignment_5(), "rule__Permission__ActionGroupAssignment_5");
+					put(grammarAccess.getPermissionAccess().getConditionalAssignment_6_0(), "rule__Permission__ConditionalAssignment_6_0");
+					put(grammarAccess.getPermissionAccess().getConditionAssignment_6_1(), "rule__Permission__ConditionAssignment_6_1");
 				}
 			};
 		}

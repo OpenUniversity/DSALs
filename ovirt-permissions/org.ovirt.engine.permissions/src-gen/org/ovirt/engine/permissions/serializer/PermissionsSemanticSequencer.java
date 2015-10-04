@@ -7,17 +7,15 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
-import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
-import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
-import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
-import org.ovirt.engine.permissions.permissions.Greeting;
+import org.ovirt.engine.permissions.permissions.Command;
 import org.ovirt.engine.permissions.permissions.Model;
+import org.ovirt.engine.permissions.permissions.Permission;
 import org.ovirt.engine.permissions.permissions.PermissionsPackage;
 import org.ovirt.engine.permissions.services.PermissionsGrammarAccess;
 
@@ -30,11 +28,14 @@ public class PermissionsSemanticSequencer extends AbstractDelegatingSemanticSequ
 	@Override
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == PermissionsPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case PermissionsPackage.GREETING:
-				sequence_Greeting(context, (Greeting) semanticObject); 
+			case PermissionsPackage.COMMAND:
+				sequence_Command(context, (Command) semanticObject); 
 				return; 
 			case PermissionsPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case PermissionsPackage.PERMISSION:
+				sequence_Permission(context, (Permission) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -42,25 +43,32 @@ public class PermissionsSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Constraint:
-	 *     name=ID
+	 *     (type=[JvmDeclaredType|QualifiedName] overrides?='overrides'? (permissions+=Permission permissions+=Permission*)?)
 	 */
-	protected void sequence_Greeting(EObject context, Greeting semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, PermissionsPackage.Literals.GREETING__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, PermissionsPackage.Literals.GREETING__NAME));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getGreetingAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
-		feeder.finish();
+	protected void sequence_Command(EObject context, Command semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     greetings+=Greeting*
+	 *     commands+=Command*
 	 */
 	protected void sequence_Model(EObject context, Model semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         objectType=[JvmEnumerationLiteral|ID] 
+	 *         objectId=[JvmOperation|ID] 
+	 *         actionGroup=[JvmEnumerationLiteral|ID] 
+	 *         (conditional?='if' condition=[JvmOperation|ID])?
+	 *     )
+	 */
+	protected void sequence_Permission(EObject context, Permission semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

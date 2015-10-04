@@ -65,7 +65,8 @@ public class PermissionsFactoryImpl extends EFactoryImpl implements PermissionsF
     switch (eClass.getClassifierID())
     {
       case PermissionsPackage.MODEL: return createModel();
-      case PermissionsPackage.GREETING: return createGreeting();
+      case PermissionsPackage.COMMAND: return createCommand();
+      case PermissionsPackage.PERMISSION: return createPermission();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -87,10 +88,21 @@ public class PermissionsFactoryImpl extends EFactoryImpl implements PermissionsF
    * <!-- end-user-doc -->
    * @generated
    */
-  public Greeting createGreeting()
+  public Command createCommand()
   {
-    GreetingImpl greeting = new GreetingImpl();
-    return greeting;
+    CommandImpl command = new CommandImpl();
+    return command;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Permission createPermission()
+  {
+    PermissionImpl permission = new PermissionImpl();
+    return permission;
   }
 
   /**

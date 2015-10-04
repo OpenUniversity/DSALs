@@ -4,14 +4,23 @@
     editorDirectory="/org.ovirt.engine.permissions.editor/src" modelPluginID="org.ovirt.engine.permissions"
     forceOverwrite="true" modelName="Permissions" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="org.ovirt.engine.permissions.edit"
-    editorPluginID="org.ovirt.engine.permissions.editor" runtimeVersion="2.11">
+    editorPluginID="org.ovirt.engine.permissions.editor" runtimeVersion="2.11" usedGenPackages="platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel#//types">
   <genPackages prefix="Permissions" basePackage="org.ovirt.engine.permissions" disposableProviderFactory="true"
       fileExtensions="permissions" ecorePackage="Permissions.ecore#/">
     <genClasses ecoreClass="Permissions.ecore#//Model">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Model/greetings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Model/commands"/>
     </genClasses>
-    <genClasses ecoreClass="Permissions.ecore#//Greeting">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Greeting/name"/>
+    <genClasses ecoreClass="Permissions.ecore#//Command">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Command/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Command/overrides"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Command/permissions"/>
+    </genClasses>
+    <genClasses ecoreClass="Permissions.ecore#//Permission">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/objectType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/objectId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/actionGroup"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Permission/conditional"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/condition"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

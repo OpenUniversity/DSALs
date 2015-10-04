@@ -9,8 +9,11 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import org.ovirt.engine.permissions.permissions.Greeting;
+import org.eclipse.xtext.common.types.TypesPackage;
+
+import org.ovirt.engine.permissions.permissions.Command;
 import org.ovirt.engine.permissions.permissions.Model;
+import org.ovirt.engine.permissions.permissions.Permission;
 import org.ovirt.engine.permissions.permissions.PermissionsFactory;
 import org.ovirt.engine.permissions.permissions.PermissionsPackage;
 
@@ -34,7 +37,14 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass greetingEClass = null;
+  private EClass commandEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass permissionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -84,6 +94,9 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
 
     isInited = true;
 
+    // Initialize simple dependencies
+    TypesPackage.eINSTANCE.eClass();
+
     // Create package meta-data objects
     thePermissionsPackage.createPackageContents();
 
@@ -114,7 +127,7 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModel_Greetings()
+  public EReference getModel_Commands()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(0);
   }
@@ -124,9 +137,9 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getGreeting()
+  public EClass getCommand()
   {
-    return greetingEClass;
+    return commandEClass;
   }
 
   /**
@@ -134,9 +147,89 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getGreeting_Name()
+  public EReference getCommand_Type()
   {
-    return (EAttribute)greetingEClass.getEStructuralFeatures().get(0);
+    return (EReference)commandEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCommand_Overrides()
+  {
+    return (EAttribute)commandEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommand_Permissions()
+  {
+    return (EReference)commandEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPermission()
+  {
+    return permissionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPermission_ObjectType()
+  {
+    return (EReference)permissionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPermission_ObjectId()
+  {
+    return (EReference)permissionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPermission_ActionGroup()
+  {
+    return (EReference)permissionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPermission_Conditional()
+  {
+    return (EAttribute)permissionEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPermission_Condition()
+  {
+    return (EReference)permissionEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -170,10 +263,19 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
 
     // Create classes and their features
     modelEClass = createEClass(MODEL);
-    createEReference(modelEClass, MODEL__GREETINGS);
+    createEReference(modelEClass, MODEL__COMMANDS);
 
-    greetingEClass = createEClass(GREETING);
-    createEAttribute(greetingEClass, GREETING__NAME);
+    commandEClass = createEClass(COMMAND);
+    createEReference(commandEClass, COMMAND__TYPE);
+    createEAttribute(commandEClass, COMMAND__OVERRIDES);
+    createEReference(commandEClass, COMMAND__PERMISSIONS);
+
+    permissionEClass = createEClass(PERMISSION);
+    createEReference(permissionEClass, PERMISSION__OBJECT_TYPE);
+    createEReference(permissionEClass, PERMISSION__OBJECT_ID);
+    createEReference(permissionEClass, PERMISSION__ACTION_GROUP);
+    createEAttribute(permissionEClass, PERMISSION__CONDITIONAL);
+    createEReference(permissionEClass, PERMISSION__CONDITION);
   }
 
   /**
@@ -200,6 +302,9 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
+    // Obtain other dependent packages
+    TypesPackage theTypesPackage = (TypesPackage)EPackage.Registry.INSTANCE.getEPackage(TypesPackage.eNS_URI);
+
     // Create type parameters
 
     // Set bounds for type parameters
@@ -208,10 +313,19 @@ public class PermissionsPackageImpl extends EPackageImpl implements PermissionsP
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModel_Greetings(), this.getGreeting(), null, "greetings", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_Commands(), this.getCommand(), null, "commands", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(greetingEClass, Greeting.class, "Greeting", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGreeting_Name(), ecorePackage.getEString(), "name", null, 0, 1, Greeting.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(commandEClass, Command.class, "Command", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCommand_Type(), theTypesPackage.getJvmDeclaredType(), null, "type", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCommand_Overrides(), ecorePackage.getEBoolean(), "overrides", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommand_Permissions(), this.getPermission(), null, "permissions", null, 0, -1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(permissionEClass, Permission.class, "Permission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPermission_ObjectType(), theTypesPackage.getJvmEnumerationLiteral(), null, "objectType", null, 0, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPermission_ObjectId(), theTypesPackage.getJvmOperation(), null, "objectId", null, 0, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPermission_ActionGroup(), theTypesPackage.getJvmEnumerationLiteral(), null, "actionGroup", null, 0, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPermission_Conditional(), ecorePackage.getEBoolean(), "conditional", null, 0, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPermission_Condition(), theTypesPackage.getJvmOperation(), null, "condition", null, 0, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

@@ -20,51 +20,213 @@ public class PermissionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class ModelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Model");
-		private final Assignment cGreetingsAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cGreetingsGreetingParserRuleCall_0 = (RuleCall)cGreetingsAssignment.eContents().get(0);
+		private final Assignment cCommandsAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cCommandsCommandParserRuleCall_0 = (RuleCall)cCommandsAssignment.eContents().get(0);
 		
 		//Model:
-		//	greetings+=Greeting*;
+		//	commands+=Command*;
 		@Override public ParserRule getRule() { return rule; }
 
-		//greetings+=Greeting*
-		public Assignment getGreetingsAssignment() { return cGreetingsAssignment; }
+		//commands+=Command*
+		public Assignment getCommandsAssignment() { return cCommandsAssignment; }
 
-		//Greeting
-		public RuleCall getGreetingsGreetingParserRuleCall_0() { return cGreetingsGreetingParserRuleCall_0; }
+		//Command
+		public RuleCall getCommandsCommandParserRuleCall_0() { return cCommandsCommandParserRuleCall_0; }
 	}
 
-	public class GreetingElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Greeting");
+	public class CommandElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Command");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cHelloKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cExclamationMarkKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Keyword cPermissionsForKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cTypeJvmDeclaredTypeCrossReference_1_0 = (CrossReference)cTypeAssignment_1.eContents().get(0);
+		private final RuleCall cTypeJvmDeclaredTypeQualifiedNameParserRuleCall_1_0_1 = (RuleCall)cTypeJvmDeclaredTypeCrossReference_1_0.eContents().get(1);
+		private final Assignment cOverridesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cOverridesOverridesKeyword_2_0 = (Keyword)cOverridesAssignment_2.eContents().get(0);
+		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Assignment cPermissionsAssignment_4_0 = (Assignment)cGroup_4.eContents().get(0);
+		private final RuleCall cPermissionsPermissionParserRuleCall_4_0_0 = (RuleCall)cPermissionsAssignment_4_0.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cGroup_4.eContents().get(1);
+		private final Keyword cCommaKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
+		private final Assignment cPermissionsAssignment_4_1_1 = (Assignment)cGroup_4_1.eContents().get(1);
+		private final RuleCall cPermissionsPermissionParserRuleCall_4_1_1_0 = (RuleCall)cPermissionsAssignment_4_1_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//Greeting:
-		//	"Hello" name=ID "!";
+		//Command:
+		//	"permissions for" type=[types::JvmDeclaredType|QualifiedName] overrides?="overrides"? ":" (permissions+=Permission
+		//	("," permissions+=Permission)*)? ";";
 		@Override public ParserRule getRule() { return rule; }
 
-		//"Hello" name=ID "!"
+		//"permissions for" type=[types::JvmDeclaredType|QualifiedName] overrides?="overrides"? ":" (permissions+=Permission (","
+		//permissions+=Permission)*)? ";"
 		public Group getGroup() { return cGroup; }
 
-		//"Hello"
-		public Keyword getHelloKeyword_0() { return cHelloKeyword_0; }
+		//"permissions for"
+		public Keyword getPermissionsForKeyword_0() { return cPermissionsForKeyword_0; }
 
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//type=[types::JvmDeclaredType|QualifiedName]
+		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
+
+		//[types::JvmDeclaredType|QualifiedName]
+		public CrossReference getTypeJvmDeclaredTypeCrossReference_1_0() { return cTypeJvmDeclaredTypeCrossReference_1_0; }
+
+		//QualifiedName
+		public RuleCall getTypeJvmDeclaredTypeQualifiedNameParserRuleCall_1_0_1() { return cTypeJvmDeclaredTypeQualifiedNameParserRuleCall_1_0_1; }
+
+		//overrides?="overrides"?
+		public Assignment getOverridesAssignment_2() { return cOverridesAssignment_2; }
+
+		//"overrides"
+		public Keyword getOverridesOverridesKeyword_2_0() { return cOverridesOverridesKeyword_2_0; }
+
+		//":"
+		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
+
+		//(permissions+=Permission ("," permissions+=Permission)*)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//permissions+=Permission
+		public Assignment getPermissionsAssignment_4_0() { return cPermissionsAssignment_4_0; }
+
+		//Permission
+		public RuleCall getPermissionsPermissionParserRuleCall_4_0_0() { return cPermissionsPermissionParserRuleCall_4_0_0; }
+
+		//("," permissions+=Permission)*
+		public Group getGroup_4_1() { return cGroup_4_1; }
+
+		//","
+		public Keyword getCommaKeyword_4_1_0() { return cCommaKeyword_4_1_0; }
+
+		//permissions+=Permission
+		public Assignment getPermissionsAssignment_4_1_1() { return cPermissionsAssignment_4_1_1; }
+
+		//Permission
+		public RuleCall getPermissionsPermissionParserRuleCall_4_1_1_0() { return cPermissionsPermissionParserRuleCall_4_1_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
+	}
+
+	public class PermissionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Permission");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cObjectTypeKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cObjectTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cObjectTypeJvmEnumerationLiteralCrossReference_1_0 = (CrossReference)cObjectTypeAssignment_1.eContents().get(0);
+		private final RuleCall cObjectTypeJvmEnumerationLiteralIDTerminalRuleCall_1_0_1 = (RuleCall)cObjectTypeJvmEnumerationLiteralCrossReference_1_0.eContents().get(1);
+		private final Keyword cObjectIdKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cObjectIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cObjectIdJvmOperationCrossReference_3_0 = (CrossReference)cObjectIdAssignment_3.eContents().get(0);
+		private final RuleCall cObjectIdJvmOperationIDTerminalRuleCall_3_0_1 = (RuleCall)cObjectIdJvmOperationCrossReference_3_0.eContents().get(1);
+		private final Keyword cActionGroupKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cActionGroupAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final CrossReference cActionGroupJvmEnumerationLiteralCrossReference_5_0 = (CrossReference)cActionGroupAssignment_5.eContents().get(0);
+		private final RuleCall cActionGroupJvmEnumerationLiteralIDTerminalRuleCall_5_0_1 = (RuleCall)cActionGroupJvmEnumerationLiteralCrossReference_5_0.eContents().get(1);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Assignment cConditionalAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
+		private final Keyword cConditionalIfKeyword_6_0_0 = (Keyword)cConditionalAssignment_6_0.eContents().get(0);
+		private final Assignment cConditionAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final CrossReference cConditionJvmOperationCrossReference_6_1_0 = (CrossReference)cConditionAssignment_6_1.eContents().get(0);
+		private final RuleCall cConditionJvmOperationIDTerminalRuleCall_6_1_0_1 = (RuleCall)cConditionJvmOperationCrossReference_6_1_0.eContents().get(1);
+		
+		//Permission:
+		//	"object type = " objectType=[types::JvmEnumerationLiteral] "object id = " objectId=[types::JvmOperation]
+		//	"action group = " actionGroup=[types::JvmEnumerationLiteral] (conditional?="if" condition=[types::JvmOperation])?;
+		@Override public ParserRule getRule() { return rule; }
+
+		//"object type = " objectType=[types::JvmEnumerationLiteral] "object id = " objectId=[types::JvmOperation]
+		//"action group = " actionGroup=[types::JvmEnumerationLiteral] (conditional?="if" condition=[types::JvmOperation])?
+		public Group getGroup() { return cGroup; }
+
+		//"object type = "
+		public Keyword getObjectTypeKeyword_0() { return cObjectTypeKeyword_0; }
+
+		//objectType=[types::JvmEnumerationLiteral]
+		public Assignment getObjectTypeAssignment_1() { return cObjectTypeAssignment_1; }
+
+		//[types::JvmEnumerationLiteral]
+		public CrossReference getObjectTypeJvmEnumerationLiteralCrossReference_1_0() { return cObjectTypeJvmEnumerationLiteralCrossReference_1_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		public RuleCall getObjectTypeJvmEnumerationLiteralIDTerminalRuleCall_1_0_1() { return cObjectTypeJvmEnumerationLiteralIDTerminalRuleCall_1_0_1; }
 
-		//"!"
-		public Keyword getExclamationMarkKeyword_2() { return cExclamationMarkKeyword_2; }
+		//"object id = "
+		public Keyword getObjectIdKeyword_2() { return cObjectIdKeyword_2; }
+
+		//objectId=[types::JvmOperation]
+		public Assignment getObjectIdAssignment_3() { return cObjectIdAssignment_3; }
+
+		//[types::JvmOperation]
+		public CrossReference getObjectIdJvmOperationCrossReference_3_0() { return cObjectIdJvmOperationCrossReference_3_0; }
+
+		//ID
+		public RuleCall getObjectIdJvmOperationIDTerminalRuleCall_3_0_1() { return cObjectIdJvmOperationIDTerminalRuleCall_3_0_1; }
+
+		//"action group = "
+		public Keyword getActionGroupKeyword_4() { return cActionGroupKeyword_4; }
+
+		//actionGroup=[types::JvmEnumerationLiteral]
+		public Assignment getActionGroupAssignment_5() { return cActionGroupAssignment_5; }
+
+		//[types::JvmEnumerationLiteral]
+		public CrossReference getActionGroupJvmEnumerationLiteralCrossReference_5_0() { return cActionGroupJvmEnumerationLiteralCrossReference_5_0; }
+
+		//ID
+		public RuleCall getActionGroupJvmEnumerationLiteralIDTerminalRuleCall_5_0_1() { return cActionGroupJvmEnumerationLiteralIDTerminalRuleCall_5_0_1; }
+
+		//(conditional?="if" condition=[types::JvmOperation])?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//conditional?="if"
+		public Assignment getConditionalAssignment_6_0() { return cConditionalAssignment_6_0; }
+
+		//"if"
+		public Keyword getConditionalIfKeyword_6_0_0() { return cConditionalIfKeyword_6_0_0; }
+
+		//condition=[types::JvmOperation]
+		public Assignment getConditionAssignment_6_1() { return cConditionAssignment_6_1; }
+
+		//[types::JvmOperation]
+		public CrossReference getConditionJvmOperationCrossReference_6_1_0() { return cConditionJvmOperationCrossReference_6_1_0; }
+
+		//ID
+		public RuleCall getConditionJvmOperationIDTerminalRuleCall_6_1_0_1() { return cConditionJvmOperationIDTerminalRuleCall_6_1_0_1; }
+	}
+
+	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//QualifiedName:
+		//	ID ("." ID)*;
+		@Override public ParserRule getRule() { return rule; }
+
+		//ID ("." ID)*
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//("." ID)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
 	
 	
 	private final ModelElements pModel;
-	private final GreetingElements pGreeting;
+	private final CommandElements pCommand;
+	private final PermissionElements pPermission;
+	private final QualifiedNameElements pQualifiedName;
 	
 	private final Grammar grammar;
 
@@ -76,7 +238,9 @@ public class PermissionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pModel = new ModelElements();
-		this.pGreeting = new GreetingElements();
+		this.pCommand = new CommandElements();
+		this.pPermission = new PermissionElements();
+		this.pQualifiedName = new QualifiedNameElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -107,7 +271,7 @@ public class PermissionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Model:
-	//	greetings+=Greeting*;
+	//	commands+=Command*;
 	public ModelElements getModelAccess() {
 		return pModel;
 	}
@@ -116,14 +280,36 @@ public class PermissionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getModelAccess().getRule();
 	}
 
-	//Greeting:
-	//	"Hello" name=ID "!";
-	public GreetingElements getGreetingAccess() {
-		return pGreeting;
+	//Command:
+	//	"permissions for" type=[types::JvmDeclaredType|QualifiedName] overrides?="overrides"? ":" (permissions+=Permission
+	//	("," permissions+=Permission)*)? ";";
+	public CommandElements getCommandAccess() {
+		return pCommand;
 	}
 	
-	public ParserRule getGreetingRule() {
-		return getGreetingAccess().getRule();
+	public ParserRule getCommandRule() {
+		return getCommandAccess().getRule();
+	}
+
+	//Permission:
+	//	"object type = " objectType=[types::JvmEnumerationLiteral] "object id = " objectId=[types::JvmOperation]
+	//	"action group = " actionGroup=[types::JvmEnumerationLiteral] (conditional?="if" condition=[types::JvmOperation])?;
+	public PermissionElements getPermissionAccess() {
+		return pPermission;
+	}
+	
+	public ParserRule getPermissionRule() {
+		return getPermissionAccess().getRule();
+	}
+
+	//QualifiedName:
+	//	ID ("." ID)*;
+	public QualifiedNameElements getQualifiedNameAccess() {
+		return pQualifiedName;
+	}
+	
+	public ParserRule getQualifiedNameRule() {
+		return getQualifiedNameAccess().getRule();
 	}
 
 	//terminal ID:
