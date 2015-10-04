@@ -3,6 +3,17 @@
  */
 package org.ovirt.engine.permissions.scoping
 
+import com.google.inject.Inject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.common.types.JvmOperation
+import org.eclipse.xtext.common.types.util.TypeReferences
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+import org.ovirt.engine.permissions.SuppressingLinkingResource
+import org.ovirt.engine.permissions.permissions.Command
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,6 +21,33 @@ package org.ovirt.engine.permissions.scoping
  * on how and when to use it.
  *
  */
-class PermissionsScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
+class PermissionsScopeProvider extends AbstractDeclarativeScopeProvider {
+    @Inject
+	private TypeReferences typeReferences;
+	
+   def IScope scope_Permission_objectType(Command ctx, EReference r) {
+		return Scopes.scopeFor(SuppressingLinkingResource.objTypes.
+			declaredFields,[
+			f|QualifiedName.create(f.simpleName)
+		], IScope.NULLSCOPE )
+	}
 
+	def IScope scope_Permission_actionGroup(Command ctx, EReference r) {
+		return Scopes.scopeFor(SuppressingLinkingResource.actionGroups.
+			declaredFields,[
+			f|QualifiedName.create(f.simpleName)
+		], IScope.NULLSCOPE )
+	}
+
+    def IScope scope_Permission_condition(Command ctx, EReference r) {
+		return Scopes.scopeFor(ctx.type.declaredOperations.filter[JvmOperation op|typeReferences.is(op.returnType.type, boolean) && op.parameters.empty],
+			[f|QualifiedName.create(f.simpleName)],
+			IScope.NULLSCOPE)
+	}
+
+    def IScope scope_Permission_objectId(Command ctx, EReference r) {
+		return Scopes.scopeFor(ctx.type.declaredOperations,
+			[f|QualifiedName.create(f.simpleName)],
+			IScope.NULLSCOPE)
+	}
 }

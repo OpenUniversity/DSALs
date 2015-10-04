@@ -3,9 +3,15 @@
  */
 package org.ovirt.engine.permissions;
 
+import org.eclipse.xtext.resource.XtextResource;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class PermissionsRuntimeModule extends org.ovirt.engine.permissions.AbstractPermissionsRuntimeModule {
 
+	@Override
+	public Class<? extends XtextResource> bindXtextResource() {
+		return SuppressingLinkingResource.class;
+	}
 }
