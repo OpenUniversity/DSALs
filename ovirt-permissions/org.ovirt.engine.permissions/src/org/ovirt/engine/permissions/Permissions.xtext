@@ -1,0 +1,9 @@
+grammar org.ovirt.engine.permissions.Permissions with org.eclipse.xtext.common.Terminals
+
+generate permissions "http://www.ovirt.org/engine/permissions/Permissions"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
