@@ -2,8 +2,20 @@ grammar org.ovirt.engine.permissions.Permissions with org.eclipse.xtext.common.T
 
 generate permissions "http://www.ovirt.org/engine/permissions/Permissions"
 
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+
 Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID '!';
+	commands+=Command*
+;
+
+Command:
+	'permissions for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='overrides')? ':'
+	    (permissions+=Permission (',' permissions+=Permission)*)?
+	';'
+;
+
+Permission:
+	'object type = ' objectType=[types::JvmEnumerationLiteral] 'object id = ' objectId=[types::JvmOperation] 'action group = ' actionGroup=[types::JvmEnumerationLiteral] (conditional?='if' condition=[types::JvmOperation])?
+;
+
+QualifiedName: ID ("." ID)*;
