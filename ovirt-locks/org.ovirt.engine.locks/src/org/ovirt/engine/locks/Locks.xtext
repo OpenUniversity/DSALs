@@ -2,8 +2,28 @@ grammar org.ovirt.engine.locks.Locks with org.eclipse.xtext.common.Terminals
 
 generate locks "http://www.ovirt.org/engine/locks/Locks"
 
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+
 Model:
-	greetings+=Greeting*;
+	commands+=Command(',' commands+=Command)*
+;
 	
-Greeting:
-	'Hello' name=ID '!';
+Command:
+	'sync' type=[types::JvmDeclaredType|QualifiedName] scope=Scope (wait?='wait')? ':'
+		(locks+=Lock(',' locks+=Lock)*)?
+     ';'
+;
+
+enum Scope:
+	execution|command
+;
+
+Lock:
+	'lock' type=LockType 'group: ' group=[types::JvmEnumerationLiteral] 'id: ' id=[types::JvmOperation] 'with message: 'message=[types::JvmOperation] (conditional?='if' condition=[types::JvmOperation])?
+;
+
+enum LockType:
+	exclusively|inclusively
+;
+
+QualifiedName: ID ("." ID)*;

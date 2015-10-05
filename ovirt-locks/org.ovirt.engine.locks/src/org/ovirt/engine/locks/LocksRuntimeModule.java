@@ -3,9 +3,15 @@
  */
 package org.ovirt.engine.locks;
 
+import org.eclipse.xtext.resource.XtextResource;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class LocksRuntimeModule extends org.ovirt.engine.locks.AbstractLocksRuntimeModule {
 
+	@Override
+	public Class<? extends XtextResource> bindXtextResource() {
+		return SuppressingLinkingResource.class;
+	}
 }

@@ -3,6 +3,17 @@
  */
 package org.ovirt.engine.locks.scoping
 
+import com.google.inject.Inject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.common.types.JvmOperation
+import org.eclipse.xtext.common.types.util.TypeReferences
+import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
+import org.ovirt.engine.locks.SuppressingLinkingResource
+import org.ovirt.engine.locks.locks.Command
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,6 +21,31 @@ package org.ovirt.engine.locks.scoping
  * on how and when to use it.
  *
  */
-class LocksScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
+class LocksScopeProvider extends AbstractDeclarativeScopeProvider {
+    @Inject
+	private TypeReferences typeReferences;
+        
+	def IScope scope_Lock_id(Command ctx, EReference r) {
+        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)),[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
 
+	def IScope scope_Lock_message(Command ctx, EReference r) {
+        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)).filter[JvmOperation o|typeReferences.is(o.returnType, String)],[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
+
+	def IScope scope_Lock_condition(Command ctx, EReference r) {
+        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)).filter[JvmOperation o|typeReferences.is(o.returnType, boolean)],[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
+
+   	def IScope scope_Lock_group(Command ctx, EReference r) {
+        return Scopes.scopeFor(SuppressingLinkingResource.lockingGroups.declaredFields,[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
 }
