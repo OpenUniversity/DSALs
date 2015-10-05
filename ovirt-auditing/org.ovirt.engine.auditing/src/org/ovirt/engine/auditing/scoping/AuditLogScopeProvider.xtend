@@ -5,14 +5,14 @@ package org.ovirt.engine.auditing.scoping
 
 import com.google.inject.Inject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.common.types.JvmField
 import org.eclipse.xtext.common.types.util.TypeReferences
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
-import org.ovirt.engine.auditing.auditLog.Command
 import org.ovirt.engine.auditing.SuppressingLinkingResource
-import org.eclipse.xtext.common.types.JvmField
+import org.ovirt.engine.auditing.auditLog.Command
 
 /**
  * This class contains custom scoping description.
@@ -26,13 +26,19 @@ class AuditLogScopeProvider extends AbstractDeclarativeScopeProvider {
 	private TypeReferences typeReferences;
         
 	def IScope scope_Case_fields(Command ctx, EReference r) {
-        return Scopes.scopeFor(ctx.type.declaredFields.filter[JvmField f|typeReferences.is(f.type, boolean)],[
+        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmField)).filter[JvmField f|typeReferences.is(f.type, boolean)],[
                 f|QualifiedName.create(f.simpleName)
         ], IScope.NULLSCOPE )
 	}
 
    	def IScope scope_Case_msg(Command ctx, EReference r) {
         return Scopes.scopeFor(SuppressingLinkingResource.auditLogTypes.declaredFields,[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
+
+	def IScope scope_Case_actionState(Command ctx, EReference r) {
+        return Scopes.scopeFor(SuppressingLinkingResource.commandActionStates.declaredFields,[
                 f|QualifiedName.create(f.simpleName)
         ], IScope.NULLSCOPE )
 	}
