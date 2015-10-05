@@ -1,0 +1,9 @@
+grammar org.ovirt.engine.locks.Locks with org.eclipse.xtext.common.Terminals
+
+generate locks "http://www.ovirt.org/engine/locks/Locks"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
