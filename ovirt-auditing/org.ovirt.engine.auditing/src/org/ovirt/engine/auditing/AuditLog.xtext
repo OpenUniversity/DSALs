@@ -2,8 +2,23 @@ grammar org.ovirt.engine.auditing.AuditLog with org.eclipse.xtext.common.Termina
 
 generate auditLog "http://www.ovirt.org/engine/auditing/AuditLog"
 
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+
 Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID '!';
+        commands+=Command(',' commands+=Command)*;
+        
+Command:
+        type=[types::JvmDeclaredType|QualifiedName] (overrides?='overrides')? ':'
+            (cases+=Case(',' cases+=Case)*)?
+        ';'
+;
+
+Case:
+      'case' actionState=[types::JvmEnumerationLiteral]('&' clause=Clause)?('&' internal?='internal')?('&' (fields+=[types::JvmField]))* 'log' msg=[types::JvmEnumerationLiteral]
+;
+
+enum Clause:
+        sucess|failure
+;
+
+QualifiedName: ID ("." ID)*;
