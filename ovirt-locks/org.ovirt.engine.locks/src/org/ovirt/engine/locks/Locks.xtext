@@ -5,12 +5,13 @@ generate locks "http://www.ovirt.org/engine/locks/Locks"
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
 Model:
-	commands+=Command(',' commands+=Command)*
+	(commands+=Command)*
 ;
 	
 Command:
 	'sync' type=[types::JvmDeclaredType|QualifiedName] scope=Scope (wait?='wait')? ':'
-		(locks+=Lock(',' locks+=Lock)*)?
+		(exclusiveLocks=Exclusive)?
+		(sharedLocks=Inclusive)? 
      ';'
 ;
 
@@ -19,11 +20,21 @@ enum Scope:
 ;
 
 Lock:
-	'lock' type=LockType 'group: ' group=[types::JvmEnumerationLiteral] 'id: ' id=[types::JvmOperation] 'with message: 'message=[types::JvmOperation] (conditional?='if' condition=[types::JvmOperation])?
+	'type: ' group=[types::JvmEnumerationLiteral] 'id: ' id=[types::JvmOperation] 'with message: 'message=[types::JvmOperation] (conditional?='if' condition=[types::JvmOperation])?
 ;
 
-enum LockType:
-	exclusively|inclusively
+Exclusive:
+	{Exclusive}
+	'lock exclusively' '{'
+	    (locks+=Lock(',' locks+=Lock)*)?
+	'}'
+;
+
+Inclusive:
+	{Inclusive}
+	'lock inclusively' '{'
+	    (locks+=Lock(',' locks+=Lock)*)?
+	'}'
 ;
 
 QualifiedName: ID ("." ID)*;
