@@ -11,6 +11,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.ovirt.engine.locks.locks.Command
 import org.ovirt.engine.locks.locks.Lock
 import org.ovirt.engine.locks.locks.Scope
+import java.io.File
 
 /**
  * Generates code from your model files on save.
@@ -21,24 +22,27 @@ class LocksGenerator implements IGenerator {
 	private Resource resource;
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		this.resource = resource
-		fsa.generateFile("org/ovirt/engine/core/bll/Locks.aj",
-			'''
-				package org.ovirt.engine.core.bll;
-				
-				import java.util.*;
-				import org.openu.awesome.platform.SourcePosition;
-				import org.ovirt.engine.core.common.action.LockProperties;
-				import org.ovirt.engine.core.common.action.LockProperties.Scope;
-				import org.ovirt.engine.core.common.locks.LockingGroup;
+		var path = 'org.ovirt.engine.core.bll.'.replaceAll('\\.', File.separator) + 'Locks.aj'
+		fsa.generateFile(path, resource.compile)
+	}
 
-				public privileged aspect Locks {
-					«FOR command:resource.allContents.filter(typeof(Command)).toIterable»
-						«command.compile»
-					«ENDFOR»
-				}
-			'''
-		)
+	def compile(Resource resource) {
+		this.resource = resource
+	'''
+		package org.ovirt.engine.core.bll;
+
+		import java.util.*;
+		import org.openu.awesome.platform.SourcePosition;
+		import org.ovirt.engine.core.common.action.LockProperties;
+		import org.ovirt.engine.core.common.action.LockProperties.Scope;
+		import org.ovirt.engine.core.common.locks.LockingGroup;
+
+		public privileged aspect Locks {
+			«FOR command:resource.allContents.filter(typeof(Command)).toIterable»
+				«command.compile»
+			«ENDFOR»
+		}
+	'''
 	}
 
 	def compile(Command command) '''
@@ -48,29 +52,29 @@ class LocksGenerator implements IGenerator {
 		}
 
 		«IF NodeModelUtils.getNode(command.exclusiveLocks) != null»
-			«NodeModelUtils.getNode(command.exclusiveLocks).toSourcePosition»
-			Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getExclusiveLocks()) && target(command) {
-		        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
+		«NodeModelUtils.getNode(command.exclusiveLocks).toSourcePosition»
+		Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getExclusiveLocks()) && target(command) {
+	        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
 
-		        «FOR lock:command.exclusiveLocks.locks»
-					«lock.compile»
-		        «ENDFOR»
+	        «FOR lock:command.exclusiveLocks.locks»
+				«lock.compile»
+	        «ENDFOR»
 
-				return locks;
-		    }
+			return locks;
+	    }
 	    «ENDIF»
 	
 		«IF NodeModelUtils.getNode(command.sharedLocks) != null»
-			«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
-		    Map<String, Pair<String, String>> around(«command.type.qualifiedName» command)): execution(* getSharedLocks()) && target(command) {
-		        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
+		«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
+	    Map<String, Pair<String, String>> around(«command.type.qualifiedName» command)): execution(* getSharedLocks()) && target(command) {
+	        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
 
-		        «FOR lock:command.sharedLocks.locks»
-					«lock.compile»
-		        «ENDFOR»
+	        «FOR lock:command.sharedLocks.locks»
+				«lock.compile»
+	        «ENDFOR»
 
-		        return locks;
-		    }
+	        return locks;
+	    }
 	    «ENDIF»
 
 	'''
