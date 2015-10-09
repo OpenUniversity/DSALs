@@ -47,28 +47,32 @@ class LocksGenerator implements IGenerator {
 			return lockProperties«command.scope.compile»«command.isWait.compile»;
 		}
 
-		«NodeModelUtils.getNode(command.exclusiveLocks).toSourcePosition»
-		Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getExclusiveLocks()) && target(command) {
-	        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
+		«IF NodeModelUtils.getNode(command.exclusiveLocks) != null»
+			«NodeModelUtils.getNode(command.exclusiveLocks).toSourcePosition»
+			Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getExclusiveLocks()) && target(command) {
+		        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
 
-	        «FOR lock:command.exclusiveLocks.locks»
-	        	«lock.compile»
-	        «ENDFOR»
+		        «FOR lock:command.exclusiveLocks.locks»
+					«lock.compile»
+		        «ENDFOR»
 
-			return locks;
-	    }
+				return locks;
+		    }
+	    «ENDIF»
 	
-		«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
-	    Map<String, Pair<String, String>> around(«command.type.qualifiedName» command)): execution(* getSharedLocks()) && target(command) {
-	        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
+		«IF NodeModelUtils.getNode(command.sharedLocks) != null»
+			«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
+		    Map<String, Pair<String, String>> around(«command.type.qualifiedName» command)): execution(* getSharedLocks()) && target(command) {
+		        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
 
-	        «FOR lock:command.sharedLocks.locks»
-	        	«lock.compile»
-	        «ENDFOR»
+		        «FOR lock:command.sharedLocks.locks»
+					«lock.compile»
+		        «ENDFOR»
 
-	        return locks;
-	    }
-    	
+		        return locks;
+		    }
+	    «ENDIF»
+
 	'''
 	
 	def compile(Lock lock) '''
