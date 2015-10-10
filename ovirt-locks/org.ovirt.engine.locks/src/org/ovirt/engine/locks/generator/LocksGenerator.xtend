@@ -66,7 +66,7 @@ class LocksGenerator implements IGenerator {
 	
 		«IF NodeModelUtils.getNode(command.sharedLocks) != null»
 		«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
-	    Map<String, Pair<String, String>> around(«command.type.qualifiedName» command)): execution(* getSharedLocks()) && target(command) {
+	    Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getSharedLocks()) && target(command) {
 	        MapMap<String, Pair<String, String>> locks = new HashMapMap<String, Pair<String, String>>();
 
 	        «FOR lock:command.sharedLocks.locks»
@@ -91,6 +91,6 @@ class LocksGenerator implements IGenerator {
 	'''.withWait(«IF wait»true«ELSE»false«ENDIF»)'''
 
 	def toSourcePosition(ICompositeNode node) '''
-		@SourcePosition(startLine=«node.startLine», endList=«node.endLine», offset=«node.offset», endOffset=«node.endOffset», file=«resource.URI.path»)
+		@SourcePosition(startLine=«node.startLine», endLine=«node.endLine», offset=«node.offset», endOffset=«node.endOffset», file="«resource.URI.path»")
 	'''
 }
