@@ -47,7 +47,7 @@ class LocksGenerator implements IGenerator {
 
 	def compile(Command command) '''
 		«NodeModelUtils.getNode(command).toSourcePosition»
-		LockProperties around(LockProperties lockProperties): execution(* applyLockProperties(lockProperties)) {
+		LockProperties around(LockProperties lockProperties, «command.type.qualifiedName» command): execution(* applyLockProperties(lockProperties)) && target(command) {
 			return lockProperties«command.scope.compile»«command.isWait.compile»;
 		}
 
