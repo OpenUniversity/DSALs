@@ -4,37 +4,36 @@ generate locks "http://www.ovirt.org/engine/locks/Locks"
 
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
-Model:
-	(commands+=Command)*
-;
+Model: (commands+=Command)*;
 	
 Command:
-	'sync' type=[types::JvmDeclaredType|QualifiedName] scope=Scope (wait?='wait')? ':'
+	'locks for' type=[types::JvmDeclaredType|QualifiedName] '(' scope=Scope (wait?=('& wait'))? ')' ':'
 		(exclusiveLocks=Exclusive)?
-		(sharedLocks=Inclusive)? 
-     ';'
+		(sharedLocks=Inclusive)?
+		(message=Message)?
+    ';'
 ;
 
-enum Scope:
-	execution|command
-;
-
-Lock:
-	'type: ' group=[types::JvmEnumerationLiteral] 'id: ' id=[types::JvmOperation] 'with message: 'message=[types::JvmOperation] (conditional?='if' condition=[types::JvmOperation])?
-;
+enum Scope: sync|async;
 
 Exclusive:
 	{Exclusive}
-	'lock exclusively' '{'
+	'exclusively' (override?='(overrides)')? '{'
 	    (locks+=Lock(',' locks+=Lock)*)?
 	'}'
 ;
 
 Inclusive:
 	{Inclusive}
-	'lock inclusively' '{'
+	'inclusively' (override?='(overrides)')? '{'
 	    (locks+=Lock(',' locks+=Lock)*)?
 	'}'
 ;
+
+Lock: 'group: ' group=[types::JvmEnumerationLiteral] 'instance: ' id=[types::JvmOperation]  (conditional?='if' condition=[types::JvmOperation])?;
+
+Message: 'message: ' type=[types::JvmEnumerationLiteral] (vars+=Var)*;
+
+Var: '<' key=STRING ',' value=[types::JvmOperation] '>';
 
 QualifiedName: ID ("." ID)*;

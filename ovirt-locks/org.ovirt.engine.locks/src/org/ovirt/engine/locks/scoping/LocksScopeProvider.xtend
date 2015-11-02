@@ -48,4 +48,16 @@ class LocksScopeProvider extends AbstractDeclarativeScopeProvider {
                 f|QualifiedName.create(f.simpleName)
         ], IScope.NULLSCOPE )
 	}
+
+    def IScope scope_Var_value(Command ctx, EReference r) {
+        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)).filter[JvmOperation o|typeReferences.is(o.returnType, String)],[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
+
+	def IScope scope_Message_type(Command ctx, EReference r) {
+        return Scopes.scopeFor(SuppressingLinkingResource.errors.declaredFields,[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
 }
