@@ -4,21 +4,20 @@ generate auditLog "http://www.ovirt.org/engine/auditing/AuditLog"
 
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 
-Model:
-        commands+=Command(',' commands+=Command)*;
+Model: commands+=Command(',' commands+=Command)*;
         
 Command:
-        type=[types::JvmDeclaredType|QualifiedName] (overrides?='overrides')? ':'
-            (cases+=Case(',' cases+=Case)*)?
-        ';'
+	'logs for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
+        (cases+=Case(',' cases+=Case)*)?
+    ';'
 ;
 
 Case:
-      'case' actionState=[types::JvmEnumerationLiteral]('&' clause=Clause)?('&' internal?='internal')?('&' (fields+=[types::JvmField]))* 'log' msg=[types::JvmEnumerationLiteral]
+	'case' actionState=[types::JvmEnumerationLiteral]('&' clause=Clause)?('&' internal?='internal')?('&' (fields+=[types::JvmField]))* 'log' msg=[types::JvmEnumerationLiteral]
 ;
 
 enum Clause:
-        sucess|failure
+	sucess|failure
 ;
 
 QualifiedName: ID ("." ID)*;
