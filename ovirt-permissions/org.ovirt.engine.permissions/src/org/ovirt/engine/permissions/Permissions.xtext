@@ -9,7 +9,7 @@ Model:
 ;
 
 Command:
-	'permissions for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='overrides')? ':'
+	'permissions for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
 	    (permissions+=Permission (',' permissions+=Permission)*)?
 	';'
 ;
