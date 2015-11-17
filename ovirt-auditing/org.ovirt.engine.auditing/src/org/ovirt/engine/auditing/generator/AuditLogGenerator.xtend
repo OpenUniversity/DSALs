@@ -47,7 +47,7 @@ class AuditLogGenerator implements IGenerator {
 	'''
 
 	def compile(Case acase) '''
-		if (CommandActionState.«acase.actionState.simpleName»«acase.clause.compile»«IF acase.internal» && command.isInternalExecution()«ENDIF»«FOR f:acase.fields»«f.compile»«ENDFOR»)
+		if (command.getActionState() == CommandActionState.«acase.actionState.simpleName»«acase.clause.compile»«IF acase.internal» && command.isInternalExecution()«ENDIF»«FOR f:acase.fields»«f.compile»«ENDFOR»)
 			return AuditLogType.«acase.msg.simpleName»;
 	'''
 
@@ -58,6 +58,5 @@ class AuditLogGenerator implements IGenerator {
     	}
     }
 
-    def compile(JvmField field) '''
-    	&& command.«field.simpleName»'''
+    def compile(JvmField field) ''' && command.«field.simpleName»'''
 }
