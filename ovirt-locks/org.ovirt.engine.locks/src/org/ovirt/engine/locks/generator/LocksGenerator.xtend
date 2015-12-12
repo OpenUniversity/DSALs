@@ -28,12 +28,12 @@ class LocksGenerator implements IGenerator {
 
 	def compile(Resource resource) {
 		this.resource = resource
-//		import org.openu.awesome.platform.SourcePosition;
 	'''
 		package org.ovirt.engine.core.bll;
 
 		import java.util.*;
-		
+
+		import org.aspectj.lang.BridgedSourceLocation;
 		import org.ovirt.engine.core.common.action.LockProperties;
 		import org.ovirt.engine.core.common.action.LockProperties.Scope;
 		import org.ovirt.engine.core.common.locks.LockingGroup;
@@ -196,14 +196,14 @@ class LocksGenerator implements IGenerator {
 	}
 
 	def compile(Command command) '''
-«««		«NodeModelUtils.getNode(command).toSourcePosition»
+		«NodeModelUtils.getNode(command).toSourcePosition»
 	LockProperties around(LockProperties lockProperties, «command.type.qualifiedName» command): execution(* applyLockProperties(..)) && args(lockProperties) && target(command) {
 		return lockProperties«command.scope.compile»;
 «««			«command.isWait.compile»;
 	}
 
 	«IF NodeModelUtils.getNode(command.exclusiveLocks) != null»
-«««		«NodeModelUtils.getNode(command.exclusiveLocks).toSourcePosition»
+		«NodeModelUtils.getNode(command.exclusiveLocks).toSourcePosition»
 	Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getExclusiveLocks()) && target(command) {
 		Map<String, Pair<String, String>> locks = new HashMap<String, Pair<String, String>>();
 
@@ -216,7 +216,7 @@ class LocksGenerator implements IGenerator {
 	«ENDIF»
 	
 	«IF NodeModelUtils.getNode(command.sharedLocks) != null»
-«««		«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
+		«NodeModelUtils.getNode(command.sharedLocks).toSourcePosition»
 	Map<String, Pair<String, String>> around(«command.type.qualifiedName» command): execution(* getSharedLocks()) && target(command) {
 		Map<String, Pair<String, String>> locks = new HashMap<String, Pair<String, String>>();
 
@@ -243,6 +243,6 @@ class LocksGenerator implements IGenerator {
 	'''.withWait(«IF wait»true«ELSE»false«ENDIF»)'''
 
 	def toSourcePosition(ICompositeNode node) '''
-		@SourcePosition(startLine=«node.startLine», endLine=«node.endLine», offset=«node.offset», endOffset=«node.endOffset», file="«resource.URI.path»")
+		@BridgedSourcePosition(line=«node.startLine», file="«resource.URI.path»", module="Engine.locks")
 	'''
 }
