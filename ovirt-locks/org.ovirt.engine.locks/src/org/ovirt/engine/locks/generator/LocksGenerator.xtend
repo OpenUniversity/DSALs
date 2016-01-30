@@ -12,6 +12,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import org.ovirt.engine.locks.locks.Command
 import org.ovirt.engine.locks.locks.Lock
 import org.ovirt.engine.locks.locks.Scope
+import org.ovirt.engine.locks.locks.Message
 
 /**
  * Generates code from your model files on save.
@@ -217,7 +218,7 @@ class LocksGenerator implements IGenerator {
             Map<String, Pair<String, String>> locks = new HashMap<String, Pair<String, String>>();
 
             «FOR lock:command.exclusiveLocks.locks»
-                «lock.compile»
+                «lock.compile(command)»
             «ENDFOR»
 
             return locks;
@@ -230,7 +231,7 @@ class LocksGenerator implements IGenerator {
             Map<String, Pair<String, String>> locks = new HashMap<String, Pair<String, String>>();
 
             «FOR lock:command.sharedLocks.locks»
-               «lock.compile»
+               «lock.compile(command)»
             «ENDFOR»
 
             return locks;
@@ -239,11 +240,11 @@ class LocksGenerator implements IGenerator {
 
 	'''
 
-	def compile(Lock lock)
+	def compile(Lock lock, Command command)
 	'''
        locks.put(command.«lock.id.simpleName»().toString(),
-           LockMessagesMatchUtil.makeLockingPair(LockingGroup.«lock.group.simpleName», EngineMessage.ACTION_TYPE_FAILED_OBJECT_LOCKED));
-«««			command.«lock.message.simpleName»()));
+           LockMessagesMatchUtil.makeLockingPair(LockingGroup.«lock.group.simpleName»,
+            «IF command.message != null»«command.message.compile»«ELSE»EngineMessage.ACTION_TYPE_FAILED_OBJECT_LOCKED«ENDIF»));
 	'''
 
 	def compile(Scope scope)
@@ -251,6 +252,9 @@ class LocksGenerator implements IGenerator {
 
 	def compile(boolean wait)
 	'''.withWait(«IF wait»true«ELSE»false«ENDIF»)'''
+
+    def compile(Message message)
+    '''"«message.type.simpleName»"«FOR v:message.vars»+"$«v.key» "+command.«v.value.simpleName»()«ENDFOR»'''
 
 	def toSourcePosition(ICompositeNode node) ''' '''
 //		@BridgedSourcePosition(line=«node.startLine», file="«resource.URI.path»", module="Engine.locks")
