@@ -4,12 +4,14 @@
 package org.ovirt.engine.auditing.generator
 
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IGenerator
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.ovirt.engine.auditing.auditLog.Command
-import org.ovirt.engine.auditing.auditLog.Case
-import org.ovirt.engine.auditing.auditLog.Clause
 import org.eclipse.xtext.common.types.JvmField
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IGenerator
+import org.ovirt.engine.auditing.auditLog.Case
+import org.ovirt.engine.auditing.auditLog.Command
+import org.ovirt.engine.auditing.auditLog.Result
+import org.eclipse.xtext.common.types.JvmEnumerationLiteral
+import org.eclipse.xtext.common.types.JvmOperation
 
 /**
  * Generates code from your model files on save.
@@ -41,22 +43,29 @@ class AuditLogGenerator implements IGenerator {
 			«FOR acase:command.cases»
 				«acase.compile»
 			«ENDFOR»
-			return «IF command.overrides»AuditLogType.UNASSIGNED«ELSE»proceed(command)«ENDIF»;
+			return «IF command.^default != null»AuditLogType.«command.^default.simpleName»«ELSEIF command.overrides»AuditLogType.UNASSIGNED«ELSE»proceed(command)«ENDIF»;
 		}
 
 	'''
 
 	def compile(Case acase) '''
-		if (command.getActionState() == CommandActionState.«acase.actionState.simpleName»«acase.clause.compile»«IF acase.internal» && command.isInternalExecution()«ENDIF»«FOR f:acase.fields»«f.compile»«ENDFOR»)
+		if («acase.result.compile»«IF acase.actionState!=null»«acase.actionState.compile»«ENDIF»«acase.internal.compile»
+		«FOR f:acase.fields»«f.compile»«ENDFOR»«FOR m:acase.methods»«m.compile»«ENDFOR»)
 			return AuditLogType.«acase.msg.simpleName»;
 	'''
 
-    def compile(Clause clause) {
+    def compile(Result clause) {
     	switch clause {
-    	case SUCESS: ' && command.getSucceeded()'
-    	case FAILURE: ' && !command.getSucceeded()'
+    	case SUCCESS: 'command.getSucceeded()'
+    	case FAILURE: '!command.getSucceeded()'
     	}
     }
 
+    def compile(boolean internal) '''«IF internal» && command.isInternalExecution()«ENDIF»'''
+    
+    def compile(JvmEnumerationLiteral actionState) ''' && command.getActionState() == CommandActionState.«actionState.simpleName»'''
+
     def compile(JvmField field) ''' && command.«field.simpleName»'''
+
+    def compile(JvmOperation method) ''' && command.«method.simpleName»()'''
 }

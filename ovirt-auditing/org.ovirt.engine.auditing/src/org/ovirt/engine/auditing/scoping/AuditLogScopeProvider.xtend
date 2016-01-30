@@ -13,6 +13,7 @@ import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.ovirt.engine.auditing.SuppressingLinkingResource
 import org.ovirt.engine.auditing.auditLog.Command
+import org.eclipse.xtext.common.types.JvmOperation
 
 /**
  * This class contains custom scoping description.
@@ -24,9 +25,21 @@ import org.ovirt.engine.auditing.auditLog.Command
 class AuditLogScopeProvider extends AbstractDeclarativeScopeProvider {
 	@Inject
 	private TypeReferences typeReferences;
-        
+
+	def IScope scope_Command_default(Command ctx, EReference r) {
+        return Scopes.scopeFor(SuppressingLinkingResource.auditLogTypes.declaredFields,[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
+
 	def IScope scope_Case_fields(Command ctx, EReference r) {
         return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmField)).filter[JvmField f|typeReferences.is(f.type, boolean)],[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+	}
+
+	def IScope scope_Case_methods(Command ctx, EReference r) {
+        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)).filter[JvmOperation m|typeReferences.is(m.returnType, boolean)],[
                 f|QualifiedName.create(f.simpleName)
         ], IScope.NULLSCOPE )
 	}
