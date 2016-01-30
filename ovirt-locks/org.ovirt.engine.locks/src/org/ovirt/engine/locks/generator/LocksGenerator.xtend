@@ -242,6 +242,7 @@ class LocksGenerator implements IGenerator {
 
 	def compile(Lock lock, Command command)
 	'''
+	   «IF lock.isConditional»if (command.«lock.condition.simpleName»())«ENDIF»
        locks.put(command.«lock.id.simpleName»().toString(),
            LockMessagesMatchUtil.makeLockingPair(LockingGroup.«lock.group.simpleName»,
             «IF command.message != null»«command.message.compile»«ELSE»EngineMessage.ACTION_TYPE_FAILED_OBJECT_LOCKED«ENDIF»));
