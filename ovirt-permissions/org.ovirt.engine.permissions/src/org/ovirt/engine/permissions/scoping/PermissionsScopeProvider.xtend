@@ -39,7 +39,7 @@ class PermissionsScopeProvider extends AbstractDeclarativeScopeProvider {
 		], IScope.NULLSCOPE )
 	}
 
-    def IScope scope_Permission_condition(Command ctx, EReference r) {
+    def IScope scope_Condition_operation(Command ctx, EReference r) {
 		return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)).filter[JvmOperation o|typeReferences.is(o.returnType.type, boolean) && o.parameters.empty],
 			[f|QualifiedName.create(f.simpleName)],
 			IScope.NULLSCOPE)

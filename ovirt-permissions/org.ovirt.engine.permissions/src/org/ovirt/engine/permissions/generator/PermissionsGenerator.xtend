@@ -8,6 +8,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
 import org.ovirt.engine.permissions.permissions.Command
 import org.ovirt.engine.permissions.permissions.Permission
+import org.ovirt.engine.permissions.permissions.Condition
 
 /**
  * Generates code from your model files on save.
@@ -37,20 +38,20 @@ class PermissionsGenerator implements IGenerator {
 
 	def compile(Command command) '''
 		List<PermissionSubject> around(«command.type.qualifiedName» command): execution(* getPermissionCheckSubjects()) && this(command) {
-			List<PermissionSubject> permissions = new ArrayList<>(«IF !command.overrides»proceed(command)«ENDIF»);
+			List<PermissionSubject> permissions = «IF command.overrides»new ArrayList<>()«ELSE»super.getPermissionCheckSubjects()«ENDIF»;
 
 			«FOR permission:command.permissions»
 				«permission.compile»
 			«ENDFOR»
+
 			return permissions;
 		}
 
 	'''
 
 	def compile(Permission permission) '''
-		try {
 			«IF permission.conditional»
-				if (command.«permission.condition.simpleName»()) {
+				if («FOR condition:permission.conditions SEPARATOR ' && ' »«condition.compile»«ENDFOR») {
 			«ENDIF»	    
 					permissions.add(new PermissionSubject(«permission.objectId.simpleName»(),
 						VdcObjectType.«permission.objectType.simpleName»,
@@ -58,9 +59,8 @@ class PermissionsGenerator implements IGenerator {
 			«IF permission.conditional»
 				}
 			«ENDIF»
-		} catch(Exception e) {
-			System.err.println("Could not add permission subject"); 
-		}
 
 	'''
+
+    def compile(Condition condition) '''«IF condition.not»!«ENDIF»command.«condition.operation.simpleName»()'''
 }

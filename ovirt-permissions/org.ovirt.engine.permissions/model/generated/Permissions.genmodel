@@ -20,7 +20,11 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/objectId"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/actionGroup"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Permission/conditional"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/conditions"/>
+    </genClasses>
+    <genClasses ecoreClass="Permissions.ecore#//Condition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Condition/not"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Condition/operation"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -15,7 +15,11 @@ Command:
 ;
 
 Permission:
-	'object type = ' objectType=[types::JvmEnumerationLiteral] 'object id = ' objectId=[types::JvmOperation] 'action group = ' actionGroup=[types::JvmEnumerationLiteral] (conditional?='if' condition=[types::JvmOperation])?
+	'object type = ' objectType=[types::JvmEnumerationLiteral] 'object id = ' objectId=[types::JvmOperation] 'action group = ' actionGroup=[types::JvmEnumerationLiteral] (conditional?='if' conditions+=Condition ('and' conditions+=Condition)*)?
+;
+
+Condition:
+	(not?='not')? operation=[types::JvmOperation]
 ;
 
 QualifiedName: ID ("." ID)*;
