@@ -9,9 +9,13 @@ Model:
 ;
 
 Command:
-	'permissions for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
+	'permissions for' type=[types::JvmDeclaredType|QualifiedName] (extends=Extends)? ':'
 	    (permissions+=Permission (',' permissions+=Permission)*)?
 	';'
+;
+
+Extends:
+	{Extends} '(extends)' | '(extends if' cond=Condition ')'
 ;
 
 Permission:

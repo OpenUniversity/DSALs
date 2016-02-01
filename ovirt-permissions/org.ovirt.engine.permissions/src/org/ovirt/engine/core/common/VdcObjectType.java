@@ -16,7 +16,7 @@ public enum VdcObjectType {
     AdElements(6, "AdElements"),
     Tags(7, "Tag"),
     Bookmarks(8, "Bookmark"),
-    VdsGroups(9, "Cluster"),
+    Cluster(9, "Cluster"),
     MultiLevelAdministration(10, "MultiLevelAdministration"),
     Storage(11, "Storage"),
     EventNotification(12, "EventNotification"),
@@ -42,7 +42,7 @@ public enum VdcObjectType {
 
     private int value;
     private String vdcObjectTranslationVal;
-    private static final Map<Integer, VdcObjectType> map = new HashMap<Integer, VdcObjectType>(values().length);
+    private static final Map<Integer, VdcObjectType> map = new HashMap<>(values().length);
 
     static {
         for (VdcObjectType type : values()) {

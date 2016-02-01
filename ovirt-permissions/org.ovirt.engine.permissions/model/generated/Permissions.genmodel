@@ -12,8 +12,11 @@
     </genClasses>
     <genClasses ecoreClass="Permissions.ecore#//Command">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Command/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Permissions.ecore#//Command/overrides"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Command/extends"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Command/permissions"/>
+    </genClasses>
+    <genClasses ecoreClass="Permissions.ecore#//Extends">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Permissions.ecore#//Extends/cond"/>
     </genClasses>
     <genClasses ecoreClass="Permissions.ecore#//Permission">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Permissions.ecore#//Permission/objectType"/>

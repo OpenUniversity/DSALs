@@ -7,8 +7,8 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
 import org.ovirt.engine.permissions.permissions.Command
-import org.ovirt.engine.permissions.permissions.Permission
 import org.ovirt.engine.permissions.permissions.Condition
+import org.ovirt.engine.permissions.permissions.Permission
 
 /**
  * Generates code from your model files on save.
@@ -26,8 +26,12 @@ class PermissionsGenerator implements IGenerator {
 				import org.ovirt.engine.core.bll.utils.PermissionSubject;
 				import org.ovirt.engine.core.common.VdcObjectType;
 				import org.ovirt.engine.core.common.businessentities.ActionGroup;
-				
+
+				import org.slf4j.Logger;
+				import org.slf4j.LoggerFactory;
+
 				public privileged aspect Permissions {
+					protected Logger log = LoggerFactory.getLogger(getClass());
 					«FOR command:resource.allContents.filter(typeof(Command)).toIterable»
 						«command.compile»
 					«ENDFOR»
@@ -38,7 +42,11 @@ class PermissionsGenerator implements IGenerator {
 
 	def compile(Command command) '''
 		List<PermissionSubject> around(«command.type.qualifiedName» command): execution(* getPermissionCheckSubjects()) && this(command) {
-			List<PermissionSubject> permissions = «IF command.overrides»new ArrayList<>()«ELSE»super.getPermissionCheckSubjects()«ENDIF»;
+			List<PermissionSubject> permissions = new ArrayList<>();
+			«IF command.extends!=null»
+			    «IF command.extends.cond!=null»if («IF command.extends.cond.not»!«ENDIF»command.«command.extends.cond.operation.simpleName»())«ENDIF»
+			    permissions.addAll(proceed(command));
+			«ENDIF»
 
 			«FOR permission:command.permissions»
 				«permission.compile»
@@ -50,15 +58,19 @@ class PermissionsGenerator implements IGenerator {
 	'''
 
 	def compile(Permission permission) '''
-			«IF permission.conditional»
-				if («FOR condition:permission.conditions SEPARATOR ' && ' »«condition.compile»«ENDFOR») {
-			«ENDIF»	    
-					permissions.add(new PermissionSubject(«permission.objectId.simpleName»(),
-						VdcObjectType.«permission.objectType.simpleName»,
-						ActionGroup.«permission.actionGroup.simpleName»));
-			«IF permission.conditional»
-				}
-			«ENDIF»
+	try {
+		«IF permission.conditional»
+			if («FOR condition:permission.conditions SEPARATOR ' && ' »«condition.compile»«ENDFOR») {
+		«ENDIF»	    
+				permissions.add(new PermissionSubject(command.«permission.objectId.simpleName»(),
+					VdcObjectType.«permission.objectType.simpleName»,
+					ActionGroup.«permission.actionGroup.simpleName»));
+		«IF permission.conditional»
+			}
+		«ENDIF»
+	} catch (Exception e) {
+		log.error("Could not add permission subject for: VdcObjectType.«permission.objectType.simpleName» ActionGroup.«permission.actionGroup.simpleName»");
+	}
 
 	'''
 
