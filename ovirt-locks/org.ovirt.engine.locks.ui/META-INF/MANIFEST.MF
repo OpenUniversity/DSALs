@@ -21,5 +21,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.ovirt.engine.locks.ui.quickfix,
  org.ovirt.engine.locks.ui.contentassist,
  org.ovirt.engine.locks.ui.internal,
- org.ovirt.engine.locks.ui.contentassist.antlr
+ org.ovirt.engine.locks.ui.contentassist.antlr,
+ org.ovirt.engine.locks.ui.contentassist.antlr.internal
 Bundle-Activator: org.ovirt.engine.locks.ui.internal.LocksActivator

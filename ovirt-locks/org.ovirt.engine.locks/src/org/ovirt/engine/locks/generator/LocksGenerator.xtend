@@ -34,7 +34,7 @@ class LocksGenerator implements IGenerator {
 
         import java.util.*;
 
-«««        import org.aspectj.lang.BridgedSourceLocation;
+        import org.aspectj.lang.annotation.BridgedSourceLocation;
         import org.ovirt.engine.core.common.action.LockProperties;
         import org.ovirt.engine.core.common.action.LockProperties.Scope;
         import org.ovirt.engine.core.common.locks.LockingGroup;
@@ -257,6 +257,6 @@ class LocksGenerator implements IGenerator {
     def compile(Message message)
     '''"«message.type.simpleName»"«FOR v:message.vars»+"$«v.key» "+command.«v.value.simpleName»()«ENDFOR»'''
 
-	def toSourcePosition(ICompositeNode node) ''' '''
-//		@BridgedSourcePosition(line=«node.startLine», file="«resource.URI.path»", module="Engine.locks")
+	def toSourcePosition(ICompositeNode node)
+	'''@BridgedSourceLocation(line=«node.startLine», file="«resource.URI.toPlatformString(true)»", module="ovirt.locks")'''
 }
