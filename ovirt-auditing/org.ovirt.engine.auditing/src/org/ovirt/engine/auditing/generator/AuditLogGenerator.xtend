@@ -13,6 +13,8 @@ import org.ovirt.engine.auditing.auditLog.Result
 import org.eclipse.xtext.common.types.JvmEnumerationLiteral
 import org.eclipse.xtext.common.types.JvmOperation
 import java.io.File
+import org.eclipse.xtext.nodemodel.ICompositeNode
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 /**
  * Generates code from your model files on save.
@@ -20,16 +22,20 @@ import java.io.File
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class AuditLogGenerator implements IGenerator {
-	
+	private Resource resource;
+
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
 		var path = 'org.ovirt.engine.core.bll.'.replaceAll('\\.', File.separator) + 'Logs.aj'
 		fsa.generateFile(path, resource.compile)
 	}
 
-	def compile(Resource resource) '''
+	def compile(Resource resource) {
+	    this.resource = resource
+	 '''
 		package org.ovirt.engine.core.bll;
 
 		import java.util.*;
+		import org.aspectj.lang.annotation.BridgedSourceLocation;
 		import org.ovirt.engine.core.common.AuditLogType;
 		import org.ovirt.engine.core.bll.CommandActionState;
 
@@ -39,8 +45,10 @@ class AuditLogGenerator implements IGenerator {
 			«ENDFOR»
 		}
 	'''
+	}
 
 	def compile(Command command) '''
+		«NodeModelUtils.getNode(command).toSourcePosition»
 		AuditLogType around(«command.type.qualifiedName» command): execution(* getAuditLogTypeValue()) && this(command) {
 			«FOR acase:command.cases»
 				«acase.compile»
@@ -69,4 +77,7 @@ class AuditLogGenerator implements IGenerator {
     def compile(JvmField field) ''' && command.«field.simpleName»'''
 
     def compile(JvmOperation method) ''' && command.«method.simpleName»()'''
+
+    def toSourcePosition(ICompositeNode node)
+	'''@BridgedSourceLocation(line=«node.startLine», file="«resource.URI.toPlatformString(true)»", module="ovirt.audit")'''
 }
