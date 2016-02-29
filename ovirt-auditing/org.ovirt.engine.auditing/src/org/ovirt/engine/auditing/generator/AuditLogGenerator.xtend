@@ -12,6 +12,7 @@ import org.ovirt.engine.auditing.auditLog.Command
 import org.ovirt.engine.auditing.auditLog.Result
 import org.eclipse.xtext.common.types.JvmEnumerationLiteral
 import org.eclipse.xtext.common.types.JvmOperation
+import java.io.File
 
 /**
  * Generates code from your model files on save.
@@ -21,22 +22,23 @@ import org.eclipse.xtext.common.types.JvmOperation
 class AuditLogGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		fsa.generateFile("org/ovirt/engine/core/bll/AuditLogs.aj",
-			'''
-				package org.ovirt.engine.core.bll;
-				
-				import java.util.*;
-				import org.ovirt.engine.core.common.AuditLogType;
-				import org.ovirt.engine.core.bll.CommandActionState;
-
-				public privileged aspect AuditLogs {
-					«FOR command:resource.allContents.filter(typeof(Command)).toIterable»
-						«command.compile»
-					«ENDFOR»
-				}
-			'''
-		)
+		var path = 'org.ovirt.engine.core.bll.'.replaceAll('\\.', File.separator) + 'Logs.aj'
+		fsa.generateFile(path, resource.compile)
 	}
+
+	def compile(Resource resource) '''
+		package org.ovirt.engine.core.bll;
+
+		import java.util.*;
+		import org.ovirt.engine.core.common.AuditLogType;
+		import org.ovirt.engine.core.bll.CommandActionState;
+
+		public privileged aspect Logs {
+			«FOR command:resource.allContents.filter(typeof(Command)).toIterable»
+				«command.compile»
+			«ENDFOR»
+		}
+	'''
 
 	def compile(Command command) '''
 		AuditLogType around(«command.type.qualifiedName» command): execution(* getAuditLogTypeValue()) && this(command) {
@@ -49,8 +51,7 @@ class AuditLogGenerator implements IGenerator {
 	'''
 
 	def compile(Case acase) '''
-		if («acase.result.compile»«IF acase.actionState!=null»«acase.actionState.compile»«ENDIF»«acase.internal.compile»
-		«FOR f:acase.fields»«f.compile»«ENDFOR»«FOR m:acase.methods»«m.compile»«ENDFOR»)
+		if («acase.result.compile»«IF acase.actionState!=null»«acase.actionState.compile»«ENDIF»«acase.internal.compile»«FOR f:acase.fields»«f.compile»«ENDFOR»«FOR m:acase.methods»«m.compile»«ENDFOR»)
 			return AuditLogType.«acase.msg.simpleName»;
 	'''
 
