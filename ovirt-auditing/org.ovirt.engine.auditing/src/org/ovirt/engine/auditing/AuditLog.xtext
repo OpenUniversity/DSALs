@@ -8,7 +8,7 @@ Model: (commands+=Command)*;
         
 Command:
 	'logs for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
-        (cases+=Case(',' cases+=Case)* (',' 'otherwise' default=[types::JvmEnumerationLiteral])?)?
+        (cases+=Case(',' cases+=Case)* (',' 'otherwise' 'log' default=[types::JvmEnumerationLiteral])?)?
     ';'
 ;
 
