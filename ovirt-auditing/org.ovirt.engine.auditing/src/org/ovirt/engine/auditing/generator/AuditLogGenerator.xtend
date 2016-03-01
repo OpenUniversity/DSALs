@@ -34,7 +34,6 @@ class AuditLogGenerator implements IGenerator {
 	 '''
 		package org.ovirt.engine.core.bll;
 
-		import java.util.*;
 		import org.aspectj.lang.annotation.BridgedSourceLocation;
 		import org.ovirt.engine.core.common.AuditLogType;
 		import org.ovirt.engine.core.bll.CommandActionState;
@@ -63,21 +62,25 @@ class AuditLogGenerator implements IGenerator {
 			return AuditLogType.«acase.msg.simpleName»;
 	'''
 
-    def compile(Result clause) {
-    	switch clause {
-    	case SUCCESS: 'command.getSucceeded()'
-    	case FAILURE: '!command.getSucceeded()'
-    	}
-    }
+ def compile(Result clause) {
+ 	switch clause {
+ 	case SUCCESS: 'command.getSucceeded()'
+ 	case FAILURE: '!command.getSucceeded()'
+ 	}
+ }
 
-    def compile(boolean internal) '''«IF internal» && command.isInternalExecution()«ENDIF»'''
-    
-    def compile(JvmEnumerationLiteral actionState) ''' && command.getActionState() == CommandActionState.«actionState.simpleName»'''
+ def compile(boolean internal)
+ '''«IF internal» && command.isInternalExecution()«ENDIF»'''
 
-    def compile(JvmField field) ''' && command.«field.simpleName»'''
+ def compile(JvmEnumerationLiteral actionState)
+ ''' && command.getActionState() == CommandActionState.«actionState.simpleName»'''
 
-    def compile(JvmOperation method) ''' && command.«method.simpleName»()'''
+ def compile(JvmField field)
+ ''' && command.«field.simpleName»'''
 
-    def toSourcePosition(ICompositeNode node)
+ def compile(JvmOperation method)
+ ''' && command.«method.simpleName»()'''
+
+ def toSourcePosition(ICompositeNode node)
 	'''@BridgedSourceLocation(line=«node.startLine», file="«resource.URI.toPlatformString(true)»", module="ovirt.audit")'''
 }
