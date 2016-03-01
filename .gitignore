@@ -10,4 +10,5 @@ result.java
 *.aterm
 .ant-targets-build.xml
 **/*.generated.pp
+src-gen
 
