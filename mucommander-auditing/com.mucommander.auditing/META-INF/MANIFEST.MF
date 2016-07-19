@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.mucommander.auditing
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: com.mucommander.auditing; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: com.mucommander.auditing.auditLog,
+ com.mucommander.auditing.serializer,
+ com.mucommander.auditing.generator,
+ com.mucommander.auditing.services,
+ com.mucommander.auditing.auditLog.util,
+ com.mucommander.auditing.parser.antlr.internal,
+ com.mucommander.auditing,
+ com.mucommander.auditing.scoping,
+ com.mucommander.auditing.parser.antlr,
+ com.mucommander.auditing.validation,
+ com.mucommander.auditing.auditLog.impl
+Import-Package: org.apache.log4j

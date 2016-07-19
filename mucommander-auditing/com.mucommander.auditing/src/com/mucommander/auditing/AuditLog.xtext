@@ -1,0 +1,23 @@
+grammar com.mucommander.auditing.AuditLog with org.eclipse.xtext.common.Terminals
+
+generate auditLog "http://www.mucommander.com/auditing/AuditLog"
+
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+
+Model: (commands+=Command)*;
+        
+Command:
+	'logs for2' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
+        (cases+=Case(',' cases+=Case)* (',' 'otherwise' 'log' default=[types::JvmEnumerationLiteral])?)?
+    ';'
+;
+
+Case:
+	'case' (actionState=[types::JvmEnumerationLiteral] '&')?result=Result('&' internal?='internal')?('&' 'state='(fields+=[types::JvmField]))*('&' (methods+=[types::JvmOperation]))* 'log' msg=[types::JvmEnumerationLiteral]
+;
+
+enum Result:
+	success|failure
+;
+
+QualifiedName: ID ("." ID)*;
