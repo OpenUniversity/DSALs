@@ -8,12 +8,19 @@ Model: (commands+=Command)*;
         
 Command:
 	'logs for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
-        (cases+=Case(',' cases+=Case)* (',' 'otherwise' 'log' default=[types::JvmEnumerationLiteral])?)?
+        (
+        	cases+=Case(',' cases+=Case)*
+        	(',' 'otherwise' 'log' default=[types::JvmEnumerationLiteral])?
+        )?
     ';'
 ;
 
 Case:
-	'case' (state=[types::JvmEnumerationLiteral])('&' (fields+=[types::JvmField]))* 'log' msg=[types::JvmEnumerationLiteral]
+	'case' state=State
+	       ('&' (fields+=[types::JvmField]))*
+	       'log' msg=[types::JvmEnumerationLiteral]
 ;
+
+enum State: start|finish|interrupt|pause|resume;
 
 QualifiedName: ID ("." ID)*;
