@@ -32,6 +32,13 @@ Workflow {
 			validator = {
 				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 			}
+			fragment = types.TypesGeneratorFragment2 {
+			}
+			fragment = exporting.SimpleNamesFragment2 {}
+			fragment = xbase.XtypeGeneratorFragment2{}
+//			fragment = scoping.ImportNamespacesScopingFragment2 {}
+//			fragment = exporting.QualifiedNamesFragment2 {}
+//			fragment = builder.BuilderIntegrationFragment2 {}
 		}
 	}
 }

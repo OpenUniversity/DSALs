@@ -3,16 +3,18 @@
  */
 package com.mucommander.auditing.scoping
 
+import com.google.inject.Inject
 import com.mucommander.auditing.SuppressingLinkingResource
+import com.mucommander.auditing.auditLog.AuditLogPackage
 import com.mucommander.auditing.auditLog.Command
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.common.types.JvmField
-import org.eclipse.xtext.common.types.JvmOperation
 import org.eclipse.xtext.common.types.util.TypeReferences
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import com.google.inject.Inject
+import org.eclipse.xtext.scoping.impl.FilteringScope
 
 /**
  * This class contains custom scoping description.
@@ -22,38 +24,39 @@ import com.google.inject.Inject
  */
 class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
 
-//	@Inject
-//	private TypeReferences typeReferences;
-//
-//def IScope scope_Command_default(Command ctx, EReference r) {
-//        return Scopes.scopeFor(SuppressingLinkingResource.auditLogTypes.declaredFields,[
-//                f|QualifiedName.create(f.simpleName)
-//        ], IScope.NULLSCOPE )
-//	}
-//
-//	def IScope scope_Case_fields(Command ctx, EReference r) {
-//        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmField)).filter[JvmField f|typeReferences.is(f.type, boolean)],[
-//                f|QualifiedName.create(f.simpleName)
-//        ], IScope.NULLSCOPE )
-//	}
-//
-//	def IScope scope_Case_methods(Command ctx, EReference r) {
-//        return Scopes.scopeFor(ctx.type.allFeatures.filter(typeof(JvmOperation)).filter[JvmOperation m|typeReferences.is(m.returnType, boolean)],[
-//                f|QualifiedName.create(f.simpleName)
-//        ], IScope.NULLSCOPE )
-//	}
-//
-//   	def IScope scope_Case_msg(Command ctx, EReference r) {
-//        return Scopes.scopeFor(SuppressingLinkingResource.auditLogTypes.declaredFields,[
-//                f|QualifiedName.create(f.simpleName)
-//        ], IScope.NULLSCOPE )
-//	}
-//
-//	def IScope scope_Case_actionState(Command ctx, EReference r) {
-//        return Scopes.scopeFor(SuppressingLinkingResource.commandActionStates.declaredFields,[
-//                f|QualifiedName.create(f.simpleName)
-//        ], IScope.NULLSCOPE )
-//	}
+	@Inject
+	private TypeReferences typeReferences;
+
+	override getScope(EObject context, EReference reference) {
+	 switch context {
+	 	case reference == AuditLogPackage.Literals.COMMAND__TYPE:
+	 	{
+	 		var a = super.getScope(context, reference)
+	 		new FilteringScope(a, [i|i.name.toString.startsWith("com.mucommander.job.impl")])
+	 	}
+
+	 	case reference == AuditLogPackage.Literals.CASE__STATE:
+				return Scopes.scopeFor(SuppressingLinkingResource.commandActionStates.declaredFields,[
+ 	               f|QualifiedName.create(f.simpleName)
+  	      ], IScope.NULLSCOPE )
+
+  	case reference == AuditLogPackage.Literals.CASE__MSG ||
+  	     reference == AuditLogPackage.Literals.COMMAND__DEFAULT:
+				return Scopes.scopeFor(SuppressingLinkingResource.auditLogMessages.declaredFields,[
+    	            f|QualifiedName.create(f.simpleName)
+     	   ], IScope.NULLSCOPE )
+
+   case reference == AuditLogPackage.Literals.CASE__FIELDS:
+   {
+    var command = context.eContainer as Command
+   	return Scopes.scopeFor(command.type.allFeatures.filter(typeof(JvmField)).filter[JvmField f|typeReferences.is(f.type, boolean)],[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+   }
+
+			default: super.getScope(context, reference)
+		}
+	}
 }
 
  

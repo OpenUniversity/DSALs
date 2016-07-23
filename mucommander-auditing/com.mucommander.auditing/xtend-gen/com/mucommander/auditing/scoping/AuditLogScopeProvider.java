@@ -3,7 +3,29 @@
  */
 package com.mucommander.auditing.scoping;
 
+import com.google.common.base.Function;
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
+import com.mucommander.auditing.SuppressingLinkingResource;
+import com.mucommander.auditing.auditLog.AuditLogPackage;
+import com.mucommander.auditing.auditLog.Command;
 import com.mucommander.auditing.scoping.AbstractAuditLogScopeProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.common.types.JvmDeclaredType;
+import org.eclipse.xtext.common.types.JvmFeature;
+import org.eclipse.xtext.common.types.JvmField;
+import org.eclipse.xtext.common.types.JvmTypeReference;
+import org.eclipse.xtext.common.types.util.TypeReferences;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
+import org.eclipse.xtext.scoping.impl.FilteringScope;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 /**
  * This class contains custom scoping description.
@@ -13,4 +35,85 @@ import com.mucommander.auditing.scoping.AbstractAuditLogScopeProvider;
  */
 @SuppressWarnings("all")
 public class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
+  @Inject
+  private TypeReferences typeReferences;
+  
+  @Override
+  public IScope getScope(final EObject context, final EReference reference) {
+    IScope _switchResult = null;
+    boolean _matched = false;
+    if (!_matched) {
+      boolean _equals = Objects.equal(reference, AuditLogPackage.Literals.COMMAND__TYPE);
+      if (_equals) {
+        _matched=true;
+        FilteringScope _xblockexpression = null;
+        {
+          IScope a = super.getScope(context, reference);
+          final Predicate<IEObjectDescription> _function = (IEObjectDescription i) -> {
+            QualifiedName _name = i.getName();
+            String _string = _name.toString();
+            return _string.startsWith("com.mucommander.job.impl");
+          };
+          _xblockexpression = new FilteringScope(a, _function);
+        }
+        _switchResult = _xblockexpression;
+      }
+    }
+    if (!_matched) {
+      boolean _equals_1 = Objects.equal(reference, AuditLogPackage.Literals.CASE__STATE);
+      if (_equals_1) {
+        _matched=true;
+        Iterable<JvmField> _declaredFields = SuppressingLinkingResource.commandActionStates.getDeclaredFields();
+        final Function<JvmField, QualifiedName> _function = (JvmField f) -> {
+          String _simpleName = f.getSimpleName();
+          return QualifiedName.create(_simpleName);
+        };
+        return Scopes.<JvmField>scopeFor(_declaredFields, _function, IScope.NULLSCOPE);
+      }
+    }
+    if (!_matched) {
+      boolean _or = false;
+      boolean _equals_2 = Objects.equal(reference, AuditLogPackage.Literals.CASE__MSG);
+      if (_equals_2) {
+        _or = true;
+      } else {
+        boolean _equals_3 = Objects.equal(reference, AuditLogPackage.Literals.COMMAND__DEFAULT);
+        _or = _equals_3;
+      }
+      if (_or) {
+        _matched=true;
+        Iterable<JvmField> _declaredFields_1 = SuppressingLinkingResource.auditLogMessages.getDeclaredFields();
+        final Function<JvmField, QualifiedName> _function_1 = (JvmField f) -> {
+          String _simpleName = f.getSimpleName();
+          return QualifiedName.create(_simpleName);
+        };
+        return Scopes.<JvmField>scopeFor(_declaredFields_1, _function_1, IScope.NULLSCOPE);
+      }
+    }
+    if (!_matched) {
+      boolean _equals_4 = Objects.equal(reference, AuditLogPackage.Literals.CASE__FIELDS);
+      if (_equals_4) {
+        _matched=true;
+        EObject _eContainer = context.eContainer();
+        Command command = ((Command) _eContainer);
+        JvmDeclaredType _type = command.getType();
+        Iterable<JvmFeature> _allFeatures = _type.getAllFeatures();
+        Iterable<JvmField> _filter = Iterables.<JvmField>filter(_allFeatures, JvmField.class);
+        final Function1<JvmField, Boolean> _function_2 = (JvmField f) -> {
+          JvmTypeReference _type_1 = f.getType();
+          return Boolean.valueOf(this.typeReferences.is(_type_1, boolean.class));
+        };
+        Iterable<JvmField> _filter_1 = IterableExtensions.<JvmField>filter(_filter, _function_2);
+        final Function<JvmField, QualifiedName> _function_3 = (JvmField f) -> {
+          String _simpleName = f.getSimpleName();
+          return QualifiedName.create(_simpleName);
+        };
+        return Scopes.<JvmField>scopeFor(_filter_1, _function_3, IScope.NULLSCOPE);
+      }
+    }
+    if (!_matched) {
+      _switchResult = super.getScope(context, reference);
+    }
+    return _switchResult;
+  }
 }

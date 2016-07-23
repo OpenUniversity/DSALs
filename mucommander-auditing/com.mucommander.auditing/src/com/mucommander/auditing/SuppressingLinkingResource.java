@@ -13,18 +13,18 @@ public class SuppressingLinkingResource extends LazyLinkingResource {
 
 	@Inject
 	private ReflectionTypeFactory typeProviderFactory;
-//
-	public static JvmEnumerationType auditLogTypes;
+
+	public static JvmEnumerationType auditLogMessages;
 	public static JvmEnumerationType commandActionStates;
-//	
-//	@Override
+	
+	@Override
 	protected void updateInternalState(IParseResult newParseResult) {
-		if (auditLogTypes == null) {
-			auditLogTypes = (JvmEnumerationType) typeProviderFactory.createType(Audit.class);
+		if (auditLogMessages == null) {
+			auditLogMessages = (JvmEnumerationType) typeProviderFactory.createType(Audit.class);
 			commandActionStates = (JvmEnumerationType) typeProviderFactory.createType(FileJobState.class);
 		}
 		super.updateInternalState(newParseResult);
-		getContents().add(auditLogTypes);
+		getContents().add(auditLogMessages);
 		getContents().add(commandActionStates);
 	}
 }

@@ -7,17 +7,13 @@ import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 Model: (commands+=Command)*;
         
 Command:
-	'logs for2' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
+	'logs for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
         (cases+=Case(',' cases+=Case)* (',' 'otherwise' 'log' default=[types::JvmEnumerationLiteral])?)?
     ';'
 ;
 
 Case:
-	'case' (actionState=[types::JvmEnumerationLiteral] '&')?result=Result('&' internal?='internal')?('&' 'state='(fields+=[types::JvmField]))*('&' (methods+=[types::JvmOperation]))* 'log' msg=[types::JvmEnumerationLiteral]
-;
-
-enum Result:
-	success|failure
+	'case' (state=[types::JvmEnumerationLiteral])('&' (fields+=[types::JvmField]))* 'log' msg=[types::JvmEnumerationLiteral]
 ;
 
 QualifiedName: ID ("." ID)*;
