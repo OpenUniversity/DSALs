@@ -36,6 +36,9 @@ Workflow {
 			}
 			fragment = exporting.SimpleNamesFragment2 {}
 			fragment = xbase.XtypeGeneratorFragment2{}
+			fragment = generator.GeneratorFragment2 {
+				generateJavaMain = true
+			}
 //			fragment = scoping.ImportNamespacesScopingFragment2 {}
 //			fragment = exporting.QualifiedNamesFragment2 {}
 //			fragment = builder.BuilderIntegrationFragment2 {}
