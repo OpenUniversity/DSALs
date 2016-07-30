@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtend.lib,
  org.eclipse.emf.common,
  org.eclipse.xtext.common.types,
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.aspectj.runtime;bundle-version="1.8.9"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: com.mucommander.auditing.auditLog,
  com.mucommander.auditing.serializer,
@@ -29,3 +30,9 @@ Export-Package: com.mucommander.auditing.auditLog,
  com.mucommander.auditing.validation,
  com.mucommander.auditing.auditLog.impl
 Import-Package: org.apache.log4j
+Bundle-ClassPath: .,
+ com.google.inject_3.0.0.v201312141243.jar,
+ javax.inject_1.0.0.v20091030.jar,
+ com.google.guava_15.0.0.v201403281430.jar,
+ org.antlr.runtime_3.2.0.v201101311130.jar,
+ org.apache.log4j_1.2.15.v201012070815.jar
