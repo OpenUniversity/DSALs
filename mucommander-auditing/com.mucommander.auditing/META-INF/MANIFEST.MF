@@ -35,4 +35,10 @@ Bundle-ClassPath: .,
  javax.inject_1.0.0.v20091030.jar,
  com.google.guava_15.0.0.v201403281430.jar,
  org.antlr.runtime_3.2.0.v201101311130.jar,
- org.apache.log4j_1.2.15.v201012070815.jar
+ org.apache.log4j_1.2.15.v201012070815.jar,
+ org.eclipse.emf.common_2.11.0.v20150805-0538.jar,
+ org.eclipse.emf.ecore_2.11.1.v20150805-0538.jar,
+ org.eclipse.emf.ecore.xmi_2.11.1.v20150805-0538.jar,
+ org.eclipse.xtext_2.9.0.v201512010527.jar,
+ org.eclipse.xtext.common.types_2.9.0.v201512010527.jar,
+ org.eclipse.xtext.util_2.9.0.v201512010527.jar
