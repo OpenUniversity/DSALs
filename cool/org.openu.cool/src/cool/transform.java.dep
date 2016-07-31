@@ -1,0 +1,23 @@
+COOL/dist/transform.java: \
+	COOL/trans/aspectj/pp/pointcut/Expression.str \
+	COOL/trans/Stratego-Box.tbl \
+	COOL/trans/aspectj/pp/pointcut/Declaration.str \
+	COOL/trans/aspectj/pp/pattern/Type.str \
+	COOL/trans/aspectj/pp/pattern/Name.str \
+	COOL/trans/aspectj/pp/pattern/FormalParameter.str \
+	COOL/trans/aspectj/pp/pattern/ClassName.str \
+	COOL/trans/aspectj/pp/pattern/ClassMember.str \
+	COOL/trans/aspectj/pp/pattern/Annotation.str \
+	COOL/trans/aspectj/pp/common/BooleanComposition.str \
+	COOL/trans/aspectj/pp/aspect/IntertypeMemberDeclaration.str \
+	COOL/trans/aspectj/pp/aspect/AdviceDeclaration.str \
+	COOL/trans/aspectj/pp/aspect/DeclareDeclaration.str \
+	COOL/trans/aspectj/pp/aspect/Declaration.str \
+	COOL/trans/aspectj/pp/JavaExtension.str \
+	COOL/trans/aspectj/signature.str \
+	COOL/trans/aspectj/pp/Main.str \
+	COOL/trans/aspectj/pretty-print.str \
+	 \
+	COOL/trans/tools.str \
+	COOL/include/cool.str \
+	./COOL/trans/transform.str
