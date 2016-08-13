@@ -1,14 +1,14 @@
-package base;
+package org.openu.demo;
 
-coordinator base.BoundedStack { 
+coordinator org.openu.demo.BoundedBuffer { 
 
-  selfex {push(java.lang.Object), pop()}; 
-  mutex {push(java.lang.Object), pop()};
+  selfex {add(java.lang.Object), remove()}; 
+  mutex {add(java.lang.Object), remove()};
 
   condition full = false, empty = true; 
   int top = 0; 
   
-  push(java.lang.Object):
+  add(java.lang.Object):
       requires !full;
       on_entry {
       	top = top + 1;
@@ -19,7 +19,7 @@ coordinator base.BoundedStack {
       }
   
 
-  pop(): 
+  remove(): 
   	  requires !empty; 
       on_entry {
       	top = top - 1;
