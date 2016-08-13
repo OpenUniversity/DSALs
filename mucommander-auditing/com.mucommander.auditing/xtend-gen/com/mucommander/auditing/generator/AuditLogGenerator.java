@@ -3,10 +3,32 @@
  */
 package com.mucommander.auditing.generator;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterators;
+import com.mucommander.auditing.auditLog.Case;
+import com.mucommander.auditing.auditLog.Command;
+import com.mucommander.auditing.auditLog.State;
+import com.mucommander.job.AuditLogMessage;
+import java.io.File;
+import java.util.Iterator;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.common.types.JvmDeclaredType;
+import org.eclipse.xtext.common.types.JvmEnumerationLiteral;
+import org.eclipse.xtext.common.types.JvmFeature;
+import org.eclipse.xtext.common.types.JvmField;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 
 /**
  * Generates code from your model files on save.
@@ -15,7 +37,323 @@ import org.eclipse.xtext.generator.IGeneratorContext;
  */
 @SuppressWarnings("all")
 public class AuditLogGenerator extends AbstractGenerator {
+  private Resource resource;
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
+    String _replaceAll = "com.mucommander.job.".replaceAll("\\.", File.separator);
+    String path = (_replaceAll + "Logs.aj");
+    CharSequence _compile = this.compile(resource);
+    fsa.generateFile(path, _compile);
+  }
+  
+  public CharSequence compile(final Resource resource) {
+    CharSequence _xblockexpression = null;
+    {
+      this.resource = resource;
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("package com.mucommander.job;");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("import org.aspectj.lang.annotation.BridgedSourceLocation;");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("public privileged aspect Logs {");
+      _builder.newLine();
+      {
+        TreeIterator<EObject> _allContents = resource.getAllContents();
+        Iterator<Command> _filter = Iterators.<Command>filter(_allContents, Command.class);
+        Iterable<Command> _iterable = IteratorExtensions.<Command>toIterable(_filter);
+        for(final Command command : _iterable) {
+          _builder.append("  ");
+          CharSequence _compile = this.compile(command);
+          _builder.append(_compile, "  ");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      _builder.append("  ");
+      _builder.newLine();
+      _builder.append("  ");
+      _builder.append("private void audit(String msg, Object... args) {");
+      _builder.newLine();
+      _builder.append("  \t\t");
+      _builder.append("System.out.println(java.text.MessageFormat.format(msg, args));");
+      _builder.newLine();
+      _builder.append("  ");
+      _builder.append("}");
+      _builder.newLine();
+      _builder.append("}");
+      _builder.newLine();
+      _builder.newLine();
+      _xblockexpression = _builder;
+    }
+    return _xblockexpression;
+  }
+  
+  public CharSequence compile(final Command command) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.newLine();
+    {
+      EList<Case> _cases = command.getCases();
+      final Function1<Case, Boolean> _function = (Case c) -> {
+        State _state = c.getState();
+        return Boolean.valueOf(Objects.equal(_state, State.START));
+      };
+      boolean _exists = IterableExtensions.<Case>exists(_cases, _function);
+      if (_exists) {
+        _builder.append("     ");
+        ICompositeNode _node = NodeModelUtils.getNode(command);
+        CharSequence _sourcePosition = this.toSourcePosition(_node);
+        _builder.append(_sourcePosition, "     ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("     ");
+        _builder.append("after(");
+        JvmDeclaredType _type = command.getType();
+        String _qualifiedName = _type.getQualifiedName();
+        _builder.append(_qualifiedName, "     ");
+        _builder.append(" job): execution(void start()) && this(job) {");
+        _builder.newLineIfNotEmpty();
+        {
+          EList<Case> _cases_1 = command.getCases();
+          final Function1<Case, Boolean> _function_1 = (Case c) -> {
+            State _state = c.getState();
+            return Boolean.valueOf(Objects.equal(_state, State.START));
+          };
+          Iterable<Case> _filter = IterableExtensions.<Case>filter(_cases_1, _function_1);
+          for(final Case start : _filter) {
+            _builder.append("     ");
+            _builder.append("  ");
+            CharSequence _compile = this.compile(start);
+            _builder.append(_compile, "       ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("     ");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    {
+      EList<Case> _cases_2 = command.getCases();
+      final Function1<Case, Boolean> _function_2 = (Case c) -> {
+        boolean _or = false;
+        State _state = c.getState();
+        boolean _equals = Objects.equal(_state, State.FINISH);
+        if (_equals) {
+          _or = true;
+        } else {
+          State _state_1 = c.getState();
+          boolean _equals_1 = Objects.equal(_state_1, State.INTERRUPT);
+          _or = _equals_1;
+        }
+        return Boolean.valueOf(_or);
+      };
+      boolean _exists_1 = IterableExtensions.<Case>exists(_cases_2, _function_2);
+      if (_exists_1) {
+        _builder.append("     ");
+        ICompositeNode _node_1 = NodeModelUtils.getNode(command);
+        CharSequence _sourcePosition_1 = this.toSourcePosition(_node_1);
+        _builder.append(_sourcePosition_1, "     ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("     ");
+        _builder.append("after(");
+        JvmDeclaredType _type_1 = command.getType();
+        String _qualifiedName_1 = _type_1.getQualifiedName();
+        _builder.append(_qualifiedName_1, "     ");
+        _builder.append(" job): execution(void run()) && this(job) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("     ");
+        _builder.append("  ");
+        _builder.append("if (job.getState() == FileJobState.INTERRUPTED) {");
+        _builder.newLine();
+        {
+          EList<Case> _cases_3 = command.getCases();
+          final Function1<Case, Boolean> _function_3 = (Case c) -> {
+            State _state = c.getState();
+            return Boolean.valueOf(Objects.equal(_state, State.INTERRUPT));
+          };
+          Iterable<Case> _filter_1 = IterableExtensions.<Case>filter(_cases_3, _function_3);
+          for(final Case interrupt : _filter_1) {
+            _builder.append("     ");
+            _builder.append("    ");
+            CharSequence _compile_1 = this.compile(interrupt);
+            _builder.append(_compile_1, "         ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("     ");
+        _builder.append("  ");
+        _builder.append("} else {");
+        _builder.newLine();
+        {
+          EList<Case> _cases_4 = command.getCases();
+          final Function1<Case, Boolean> _function_4 = (Case c) -> {
+            State _state = c.getState();
+            return Boolean.valueOf(Objects.equal(_state, State.FINISH));
+          };
+          Iterable<Case> _filter_2 = IterableExtensions.<Case>filter(_cases_4, _function_4);
+          for(final Case finish : _filter_2) {
+            _builder.append("     ");
+            _builder.append("    ");
+            CharSequence _compile_2 = this.compile(finish);
+            _builder.append(_compile_2, "         ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("     ");
+        _builder.append("  ");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("     ");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    {
+      EList<Case> _cases_5 = command.getCases();
+      final Function1<Case, Boolean> _function_5 = (Case c) -> {
+        boolean _or = false;
+        State _state = c.getState();
+        boolean _equals = Objects.equal(_state, State.PAUSE);
+        if (_equals) {
+          _or = true;
+        } else {
+          State _state_1 = c.getState();
+          boolean _equals_1 = Objects.equal(_state_1, State.RESUME);
+          _or = _equals_1;
+        }
+        return Boolean.valueOf(_or);
+      };
+      boolean _exists_2 = IterableExtensions.<Case>exists(_cases_5, _function_5);
+      if (_exists_2) {
+        _builder.append("     ");
+        ICompositeNode _node_2 = NodeModelUtils.getNode(command);
+        CharSequence _sourcePosition_2 = this.toSourcePosition(_node_2);
+        _builder.append(_sourcePosition_2, "     ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("     ");
+        _builder.append("after(");
+        JvmDeclaredType _type_2 = command.getType();
+        String _qualifiedName_2 = _type_2.getQualifiedName();
+        _builder.append(_qualifiedName_2, "     ");
+        _builder.append(" job): execution(void setPaused(boolean)) && this(job) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("     ");
+        _builder.append("\t ");
+        _builder.append("if (job.getState() == FileJobState.PAUSED) {");
+        _builder.newLine();
+        {
+          EList<Case> _cases_6 = command.getCases();
+          final Function1<Case, Boolean> _function_6 = (Case c) -> {
+            State _state = c.getState();
+            return Boolean.valueOf(Objects.equal(_state, State.PAUSE));
+          };
+          Iterable<Case> _filter_3 = IterableExtensions.<Case>filter(_cases_6, _function_6);
+          for(final Case pause : _filter_3) {
+            _builder.append("     ");
+            _builder.append("\t   ");
+            CharSequence _compile_3 = this.compile(pause);
+            _builder.append(_compile_3, "     \t   ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("     ");
+        _builder.append("  ");
+        _builder.append("} else {");
+        _builder.newLine();
+        {
+          EList<Case> _cases_7 = command.getCases();
+          final Function1<Case, Boolean> _function_7 = (Case c) -> {
+            State _state = c.getState();
+            return Boolean.valueOf(Objects.equal(_state, State.RESUME));
+          };
+          Iterable<Case> _filter_4 = IterableExtensions.<Case>filter(_cases_7, _function_7);
+          for(final Case resume : _filter_4) {
+            _builder.append("     ");
+            _builder.append("    ");
+            CharSequence _compile_4 = this.compile(resume);
+            _builder.append(_compile_4, "         ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("     ");
+        _builder.append("  ");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("     ");
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t\t   ");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compile(final Case acase) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("if (true");
+    {
+      EList<JvmField> _fields = acase.getFields();
+      for(final JvmField field : _fields) {
+        CharSequence _compile = this.compile(field);
+        _builder.append(_compile, "");
+      }
+    }
+    _builder.append(") {");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("audit(\"");
+    JvmEnumerationLiteral _msg = acase.getMsg();
+    String _simpleName = _msg.getSimpleName();
+    AuditLogMessage _valueOf = AuditLogMessage.valueOf(_simpleName);
+    String _string = _valueOf.toString();
+    _builder.append(_string, "  ");
+    _builder.append("\"");
+    {
+      EList<JvmField> _vars = acase.getVars();
+      for(final JvmField variable : _vars) {
+        CharSequence _compileVar = this.compileVar(variable);
+        _builder.append(_compileVar, "  ");
+      }
+    }
+    _builder.append(");");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("return;");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence compile(final JvmField field) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(" ");
+    _builder.append("&& job.");
+    String _simpleName = field.getSimpleName();
+    _builder.append(_simpleName, " ");
+    return _builder;
+  }
+  
+  public CharSequence compileVar(final JvmFeature field) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(", job.");
+    String _simpleName = field.getSimpleName();
+    _builder.append(_simpleName, "");
+    return _builder;
+  }
+  
+  public CharSequence toSourcePosition(final ICompositeNode node) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("@BridgedSourceLocation(line=");
+    int _startLine = node.getStartLine();
+    _builder.append(_startLine, "");
+    _builder.append(", file=\"");
+    URI _uRI = this.resource.getURI();
+    String _platformString = _uRI.toPlatformString(true);
+    _builder.append(_platformString, "");
+    _builder.append("\", module=\"jobs.audit\")");
+    return _builder;
   }
 }

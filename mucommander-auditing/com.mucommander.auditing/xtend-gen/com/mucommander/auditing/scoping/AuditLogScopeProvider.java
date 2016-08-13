@@ -60,10 +60,17 @@ public class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
       }
     }
     if (!_matched) {
-      boolean _equals_1 = Objects.equal(reference, AuditLogPackage.Literals.CASE__STATE);
+      boolean _or = false;
+      boolean _equals_1 = Objects.equal(reference, AuditLogPackage.Literals.CASE__MSG);
       if (_equals_1) {
+        _or = true;
+      } else {
+        boolean _equals_2 = Objects.equal(reference, AuditLogPackage.Literals.COMMAND__DEFAULT);
+        _or = _equals_2;
+      }
+      if (_or) {
         _matched=true;
-        Iterable<JvmField> _declaredFields = SuppressingLinkingResource.commandActionStates.getDeclaredFields();
+        Iterable<JvmField> _declaredFields = SuppressingLinkingResource.auditLogMessages.getDeclaredFields();
         final Function<JvmField, QualifiedName> _function = (JvmField f) -> {
           String _simpleName = f.getSimpleName();
           return QualifiedName.create(_simpleName);
@@ -72,43 +79,40 @@ public class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
       }
     }
     if (!_matched) {
-      boolean _or = false;
-      boolean _equals_2 = Objects.equal(reference, AuditLogPackage.Literals.CASE__MSG);
-      if (_equals_2) {
-        _or = true;
-      } else {
-        boolean _equals_3 = Objects.equal(reference, AuditLogPackage.Literals.COMMAND__DEFAULT);
-        _or = _equals_3;
-      }
-      if (_or) {
-        _matched=true;
-        Iterable<JvmField> _declaredFields_1 = SuppressingLinkingResource.auditLogMessages.getDeclaredFields();
-        final Function<JvmField, QualifiedName> _function_1 = (JvmField f) -> {
-          String _simpleName = f.getSimpleName();
-          return QualifiedName.create(_simpleName);
-        };
-        return Scopes.<JvmField>scopeFor(_declaredFields_1, _function_1, IScope.NULLSCOPE);
-      }
-    }
-    if (!_matched) {
-      boolean _equals_4 = Objects.equal(reference, AuditLogPackage.Literals.CASE__FIELDS);
-      if (_equals_4) {
+      boolean _equals_3 = Objects.equal(reference, AuditLogPackage.Literals.CASE__FIELDS);
+      if (_equals_3) {
         _matched=true;
         EObject _eContainer = context.eContainer();
         Command command = ((Command) _eContainer);
         JvmDeclaredType _type = command.getType();
         Iterable<JvmFeature> _allFeatures = _type.getAllFeatures();
         Iterable<JvmField> _filter = Iterables.<JvmField>filter(_allFeatures, JvmField.class);
-        final Function1<JvmField, Boolean> _function_2 = (JvmField f) -> {
+        final Function1<JvmField, Boolean> _function_1 = (JvmField f) -> {
           JvmTypeReference _type_1 = f.getType();
           return Boolean.valueOf(this.typeReferences.is(_type_1, boolean.class));
         };
-        Iterable<JvmField> _filter_1 = IterableExtensions.<JvmField>filter(_filter, _function_2);
+        Iterable<JvmField> _filter_1 = IterableExtensions.<JvmField>filter(_filter, _function_1);
+        final Function<JvmField, QualifiedName> _function_2 = (JvmField f) -> {
+          String _simpleName = f.getSimpleName();
+          return QualifiedName.create(_simpleName);
+        };
+        return Scopes.<JvmField>scopeFor(_filter_1, _function_2, IScope.NULLSCOPE);
+      }
+    }
+    if (!_matched) {
+      boolean _equals_4 = Objects.equal(reference, AuditLogPackage.Literals.CASE__VARS);
+      if (_equals_4) {
+        _matched=true;
+        EObject _eContainer_1 = context.eContainer();
+        Command command_1 = ((Command) _eContainer_1);
+        JvmDeclaredType _type_1 = command_1.getType();
+        Iterable<JvmFeature> _allFeatures_1 = _type_1.getAllFeatures();
+        Iterable<JvmField> _filter_2 = Iterables.<JvmField>filter(_allFeatures_1, JvmField.class);
         final Function<JvmField, QualifiedName> _function_3 = (JvmField f) -> {
           String _simpleName = f.getSimpleName();
           return QualifiedName.create(_simpleName);
         };
-        return Scopes.<JvmField>scopeFor(_filter_1, _function_3, IScope.NULLSCOPE);
+        return Scopes.<JvmField>scopeFor(_filter_2, _function_3, IScope.NULLSCOPE);
       }
     }
     if (!_matched) {

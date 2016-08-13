@@ -6,7 +6,7 @@ import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.parser.IParseResult;
 
 import com.google.inject.Inject;
-import com.mucommander.job.Audit;
+import com.mucommander.job.AuditLogMessage;
 
 public class SuppressingLinkingResource extends LazyLinkingResource {
 
@@ -18,7 +18,7 @@ public class SuppressingLinkingResource extends LazyLinkingResource {
 	@Override
 	protected void updateInternalState(IParseResult newParseResult) {
 		if (auditLogMessages == null) {
-			auditLogMessages = (JvmEnumerationType) typeProviderFactory.createType(Audit.class);
+			auditLogMessages = (JvmEnumerationType) typeProviderFactory.createType(AuditLogMessage.class);
 		}
 		super.updateInternalState(newParseResult);
 		getContents().add(auditLogMessages);

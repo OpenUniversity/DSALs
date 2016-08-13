@@ -18,7 +18,7 @@ Command:
 Case:
 	'case' state=State
 	       ('&' (fields+=[types::JvmField]))*
-	       'log' msg=[types::JvmEnumerationLiteral]
+	       'log' msg=[types::JvmEnumerationLiteral] (vars+=[types::JvmField])*
 ;
 
 enum State: start|finish|interrupt|pause|resume;

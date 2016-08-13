@@ -49,6 +49,14 @@ class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
         ], IScope.NULLSCOPE )
    }
 
+   case reference == AuditLogPackage.Literals.CASE__VARS:
+   {
+    var command = context.eContainer as Command
+   	return Scopes.scopeFor(command.type.allFeatures.filter(typeof(JvmField)),[
+                f|QualifiedName.create(f.simpleName)
+        ], IScope.NULLSCOPE )
+   }
+
 			default: super.getScope(context, reference)
 		}
 	}

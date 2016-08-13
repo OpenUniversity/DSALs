@@ -6,6 +6,13 @@
     complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.11" usedGenPackages="platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel#//types">
   <genPackages prefix="AuditLog" basePackage="com.mucommander.auditing" disposableProviderFactory="true"
       fileExtensions="audit" ecorePackage="AuditLog.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="AuditLog.ecore#//State">
+      <genEnumLiterals ecoreEnumLiteral="AuditLog.ecore#//State/start"/>
+      <genEnumLiterals ecoreEnumLiteral="AuditLog.ecore#//State/finish"/>
+      <genEnumLiterals ecoreEnumLiteral="AuditLog.ecore#//State/interrupt"/>
+      <genEnumLiterals ecoreEnumLiteral="AuditLog.ecore#//State/pause"/>
+      <genEnumLiterals ecoreEnumLiteral="AuditLog.ecore#//State/resume"/>
+    </genEnums>
     <genClasses ecoreClass="AuditLog.ecore#//Model">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Model/commands"/>
     </genClasses>
@@ -16,9 +23,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Command/default"/>
     </genClasses>
     <genClasses ecoreClass="AuditLog.ecore#//Case">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Case/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AuditLog.ecore#//Case/state"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Case/fields"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Case/msg"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Case/vars"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

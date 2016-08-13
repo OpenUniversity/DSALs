@@ -3,18 +3,19 @@
  */
 package com.mucommander.auditing.generator
 
+import com.mucommander.auditing.auditLog.Case
+import com.mucommander.auditing.auditLog.Command
+import com.mucommander.auditing.auditLog.State
+import com.mucommander.job.AuditLogMessage
 import java.io.File
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.common.types.JvmFeature
+import org.eclipse.xtext.common.types.JvmField
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import com.mucommander.auditing.auditLog.Command
 import org.eclipse.xtext.nodemodel.ICompositeNode
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import com.mucommander.auditing.auditLog.Case
-import com.mucommander.job.FileJobState
-import com.mucommander.auditing.auditLog.State
-import org.eclipse.xtext.common.types.JvmField
 
 /**
  * Generates code from your model files on save.
@@ -41,8 +42,8 @@ class AuditLogGenerator extends AbstractGenerator {
 		        «command.compile»
 		      «ENDFOR»
 		      
-		      private void audit(AuditLogMessage msg) {
-		      		System.out.println(msg);
+		      private void audit(String msg, Object... args) {
+		      		System.out.println(java.text.MessageFormat.format(msg, args));
 		      }
 		    }
 
@@ -51,7 +52,6 @@ class AuditLogGenerator extends AbstractGenerator {
 
 	def compile(Command command) '''
 	
-	     «FOR acase:command.cases»
 	     «IF command.cases.exists[c|c.state == State.START]»
 	     «NodeModelUtils.getNode(command).toSourcePosition»
 	     after(«command.type.qualifiedName» job): execution(void start()) && this(job) {
@@ -74,7 +74,7 @@ class AuditLogGenerator extends AbstractGenerator {
 	       }
 	     }
 	     «ENDIF»
-      «IF command.cases.exists[c|c.state == State.PAUSE || c.state == State.RESUME]»
+	     «IF command.cases.exists[c|c.state == State.PAUSE || c.state == State.RESUME]»
 	     «NodeModelUtils.getNode(command).toSourcePosition»
 	     after(«command.type.qualifiedName» job): execution(void setPaused(boolean)) && this(job) {
 	     	 if (job.getState() == FileJobState.PAUSED) {
@@ -88,19 +88,21 @@ class AuditLogGenerator extends AbstractGenerator {
 	       }
 	     }
 	     «ENDIF»
-	     «ENDFOR»
 			   
 	'''
 
  def compile(Case acase) '''
 	         if (true«FOR field:acase.fields»«field.compile»«ENDFOR») {
-	           audit(AuditLogMessage.«acase.msg.simpleName»);
+	           audit("«AuditLogMessage.valueOf(acase.msg.simpleName).toString»"«FOR variable:acase.vars»«variable.compileVar»«ENDFOR»);
 	           return;
 	         }
  '''
 
  def compile(JvmField field)
- ''' && command.«field.simpleName»'''
+ ''' && job.«field.simpleName»'''
+
+ def compileVar(JvmFeature field)
+ ''', job.«field.simpleName»'''
 
 	def toSourcePosition(ICompositeNode node)
 	'''@BridgedSourceLocation(line=«node.startLine», file="«resource.URI.toPlatformString(true)»", module="jobs.audit")'''
