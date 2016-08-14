@@ -77,7 +77,13 @@ public class AuditLogGenerator extends AbstractGenerator {
       _builder.append("private void audit(String msg, Object... args) {");
       _builder.newLine();
       _builder.append("  \t\t");
-      _builder.append("System.out.println(java.text.MessageFormat.format(msg, args));");
+      _builder.append("System.out.println(");
+      _builder.newLine();
+      _builder.append("  \t\t");
+      _builder.append("new java.text.SimpleDateFormat(\"yyyy/MM/dd HH:mm:ss \").format(new java.util.Date()) +");
+      _builder.newLine();
+      _builder.append("  \t\t");
+      _builder.append("java.text.MessageFormat.format(msg, args));");
       _builder.newLine();
       _builder.append("  ");
       _builder.append("}");
