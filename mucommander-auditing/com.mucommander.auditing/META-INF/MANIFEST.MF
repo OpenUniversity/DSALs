@@ -41,4 +41,5 @@ Bundle-ClassPath: .,
  org.eclipse.emf.ecore.xmi_2.11.1.v20150805-0538.jar,
  org.eclipse.xtext_2.9.0.v201512010527.jar,
  org.eclipse.xtext.common.types_2.9.0.v201512010527.jar,
- org.eclipse.xtext.util_2.9.0.v201512010527.jar
+ org.eclipse.xtext.util_2.9.0.v201512010527.jar,
+ org.eclipse.xtext.xbase.lib_2.9.0.v201512010527.jar
