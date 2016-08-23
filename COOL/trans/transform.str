@@ -279,7 +279,7 @@ rules
 		pointcut := <concat-strings>["execution(* ", name ,"(..)) && this(obj)"];
         annos := [
            MarkerAnno(Id("HideMethod")),
-           SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("After")), Lit(String([Chars(pointcut)]))),
+           SingleElemAnno(TypeName(Id("After")), Lit(String([Chars(pointcut)]))),
            Public(),
            Synchronized()];
         if <elem>(methodsig ,<hashtable-keys>on_exit_methods)
@@ -342,7 +342,7 @@ rules
        annos :=
          	[MarkerAnno(Id("HideMethod")),
          	 <gen-source-location-ann>coordinator_type,
-          	 SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("Before")), Lit(String([Chars(pointcut)]))),
+          	 SingleElemAnno(TypeName(Id("Before")), Lit(String([Chars(pointcut)]))),
           	 Public(),
              Synchronized()]
 
