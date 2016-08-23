@@ -48,7 +48,7 @@ strategies
 
   gen-isRunByOthers-method = 
      !MethodDec(
-        MethodDecHead([Private(), Static()], None(), Boolean(), Id("isRunByOthers"), [Param([], TypeName(Id("List")), Id("methState"))], None()),
+        MethodDecHead([MarkerAnno(Id("HideMethod")), Private(), Static()], None(), Boolean(), Id("isRunByOthers"), [Param([], TypeName(Id("List")), Id("methState"))], None()),
 		Block(
             [Return(
 	          Some(
@@ -77,7 +77,7 @@ strategies
   gen-method-state(|method2index) =
      ?MethodSignature(Id(name), _);
      methodsig := <id>;
-     !FieldDec( [Private()], 
+     !FieldDec( [MarkerAnno(Id("HideField")), Private()], 
      		ClassOrInterfaceType(TypeName(Id("List")), None()), 
 		[VarDec(Id(<gen-method-state-name(|method2index)>methodsig),
 		       Invoke(Method(MethodName(AmbName(Id("Collections")),Id("synchronizedList"))), [NewInstance(None(), ClassOrInterfaceType(TypeName(Id("Vector")), None()), [], None())]))] )
@@ -116,7 +116,7 @@ strategies
   gen-coordinator-head(|coordinator_type) =
   	name := <fetch_class_name>coordinator_type;
     fullTypeName := <fetch_full_class_name>coordinator_type;
-    annos := [Public(), Privileged()];
+    annos := [MarkerAnno(Id("HideType")), Public(), Privileged()];
     perThis := Some(
           PerThis(
                Exec(
@@ -139,7 +139,7 @@ strategies
      <hashtable-put(|<strip-annos>methodsig, newmethodname)>requires_methods;
      !IntertypeMethodDec(
             IntertypeMethodDecHead(
-              [Public()]
+              [MarkerAnno(Id("HideMethod")), Public()]
             , None()
             , Boolean()
             , coordinator_type
@@ -182,7 +182,7 @@ strategies
     <hashtable-put(|<strip-annos>methodsig, newmethodname)>on_entry_methods;
     !IntertypeMethodDec(
             IntertypeMethodDecHead(
-              [Public()]
+              [MarkerAnno(Id("HideMethod")), Public()]
             , None()
             , Void()
             , coordinator_type
@@ -201,7 +201,7 @@ strategies
     <hashtable-put(|<strip-annos>methodsig, newmethodname)>on_exit_methods;
     !IntertypeMethodDec(
             IntertypeMethodDecHead(
-              [Public()]
+              [MarkerAnno(Id("HideMethod")), Public()]
             , None()
             , Void()
             , coordinator_type
@@ -231,7 +231,8 @@ strategies
   	
   generate-imports(|original_imports, coordinator_type) =
   	<conc>(original_imports,
-  		   [TypeImportOnDemandDec(PackageName([Id("java"),Id("util")]))])
+  		   [TypeImportOnDemandDec(PackageName([Id("java"),Id("util")])),
+  		    TypeImportOnDemandDec(PackageName([Id("org"),Id("aspectj"),Id("lang"),Id("annotation")]))])
 
   get-coordinator(|types) =
   	<getfirst(?CoordinatorDec(_, _))>types  	
@@ -301,6 +302,7 @@ rules
 		methodsig := <id>;
 		pointcut := <concat-strings>["execution(* ", name ,"(..)) && this(obj)"];
         annos := [
+           MarkerAnno(Id("HideMethod")),
            SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("After")), Lit(String([Chars(pointcut)]))),
            Public(),
            Synchronized()];
@@ -363,7 +365,8 @@ rules
 	   pointcut := <concat-strings>["execution(* ", name ,"(..)) && this(obj)"];
        annos :=
          //<conc>(
-         [SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("Before")), Lit(String([Chars(pointcut)]))),
+         [MarkerAnno(Id("HideMethod")),
+          SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("Before")), Lit(String([Chars(pointcut)]))),
           Public(),
           Synchronized()]
           //, source_locations)
@@ -388,7 +391,7 @@ rules
      ConditionDec(assignments*) -> declarations*
      with
      	declarations* := <map(\ Assign(ExprName(name),expr) ->
-     	 IntertypeFieldDec([Private()], Boolean(), coordinator_type, None(), VarDec(name, expr)) \)>assignments*
+     	 IntertypeFieldDec([MarkerAnno(Id("HideField")), Private()], Boolean(), coordinator_type, None(), VarDec(name, expr)) \)>assignments*
 
    add-coordinator-fields(|coordinator_type):
      declarations* -> <map(\ FieldDec(anno*, type, var_decs*) ->
@@ -397,7 +400,7 @@ rules
 	 	declarations'* := <topdown(strip-annos)><retain-all(?FieldDec(_,_,_))>declarations*
 
    add-coordinator-fields2(|coordinator_type, type, anno*) =
-     <map(\x -> IntertypeFieldDec([Private() | anno*], type, coordinator_type, None(), x) \)><id>
+    <get-p<map(\x -> IntertypeFieldDec(<conc>([MarkerAnno(Id("HideField")), Private()], anno*), type, coordinator_type, None(), x) \)><id>
 
    get-methods-list:
      Selfex(methodsignatures*) -> methodsignatures*
