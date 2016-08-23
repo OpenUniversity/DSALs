@@ -151,30 +151,6 @@ strategies
           , Block([Return(Some(<hashtable-get(|methodsig)>requires_map))])
           )
 
-  gen-selfex-signature-location-ann =
-  	<gen-source-location-ann(|"COOLSelfexLocation")><id>
-  
-  gen-mutex-signature-location-ann =
-  	<gen-source-location-ann(|"COOLMutexLocation")><id>
-
-  gen-additions-signature-location-ann =
-  	<gen-source-location-ann(|"COOLAdditionsLocation")><id>
-
-  gen-source-location-ann(|name):
-  	x -> Anno(TypeName(Id(name)),[
-  		ElemValPair(Id("file"),Lit(String([Chars(<get-file>x)]))),
-  		ElemValPair(Id("startLine"),Lit(Deci(<int-to-string><get-start-line><get-location>x))),
-  		ElemValPair(Id("endLine"),Lit(Deci(<int-to-string><get-end-line><get-location>x))),
-  		ElemValPair(Id("column"),Lit(Deci(<int-to-string><get-column><get-location>x))),
-  		ElemValPair(Id("offset"),Lit(Deci(<int-to-string><get-offset><get-location>x)))])
-
-  get-location: t{[a|b]} -> a
-  get-file: t{[a|[b]]} -> b
-  get-start-line = \ (x, _, _, _) -> x \
-  get-end-line = \ (_, _, x, _) -> x \
-  get-column = \ (_, x, _, _) -> x \
-  get-offset = \ (_, _, _, x) -> x \
-
   make-on-entry-method(|coordinator_type, on_entry_map, on_entry_methods, method2index) =
     ?MethodSignature(Id(name), types);
     methodsig := <id>;
@@ -324,7 +300,7 @@ rules
        if <elem>(methodsig, mutex_methods)
        then
          mutexMethods* := <remove-all(equal(|methodsig))>mutex_methods;
-         mutex_location := [<gen-mutex-signature-location-ann><hashtable-get(|methodsig)>method2mutex_sig]
+         mutex_location := [<gen-source-location-ann><hashtable-get(|methodsig)>method2mutex_sig]
        else
          mutexMethods* := [];
          mutex_location := []
@@ -332,7 +308,7 @@ rules
        if <elem>(methodsig, selfex_methods)
        then
          exclusiveMethods* := <conc> ([methodsig], mutexMethods*);
-         exclusivelocations := <conc> ([<gen-selfex-signature-location-ann><hashtable-get(|methodsig)>method2selfex_sig], mutex_location)
+         exclusivelocations := <conc> ([<gen-source-location-ann><hashtable-get(|methodsig)>method2selfex_sig], mutex_location)
        else
          exclusiveMethods* := mutexMethods*;
          exclusivelocations := mutex_location
@@ -354,9 +330,9 @@ rules
        end;
        if <elem>(methodsig, <hashtable-keys>method2additions_sig)
        then
-       	 source_locations := <conc> ([<gen-additions-signature-location-ann><hashtable-get(|methodsig)>method2additions_sig], exclusivelocations)
+       	 source_location := <conc> ([<gen-source-location-ann><hashtable-get(|methodsig)>method2additions_sig], exclusivelocations)
        else
-       	 source_locations := exclusivelocations
+       	 source_location := exclusivelocations
        end;
        statements* := <conc> ([<make-while-statement(|whileCondition, 
 			                                          [Try(Block([ExprStm(Invoke(Method(MethodName(Id("wait"))),[]))]),[Catch(Param([],ClassOrInterfaceType(TypeName(Id("InterruptedException")),None()),Id("e")),Block([Throw(NewInstance(None(), ClassOrInterfaceType(TypeName(Id("RuntimeException")), None()), [], None()))]))])])>],
@@ -364,12 +340,11 @@ rules
 			       [ExprStm(Invoke(Method(MethodName(AmbName(Id(<gen-method-state-name(|method2index)>methodsig)),Id("add"))),[Invoke(Method(MethodName(AmbName(Id("Thread")),Id("currentThread"))),[])]))]);
 	   pointcut := <concat-strings>["execution(* ", name ,"(..)) && this(obj)"];
        annos :=
-         //<conc>(
-         [MarkerAnno(Id("HideMethod")),
-          SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("Before")), Lit(String([Chars(pointcut)]))),
-          Public(),
-          Synchronized()]
-          //, source_locations)
+         	[MarkerAnno(Id("HideMethod")),
+         	 <gen-source-location-ann>coordinator_type,
+          	 SingleElemAnno(TypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(PackageOrTypeName(Id("org")), Id("aspectj")), Id("lang")), Id("annotation")), Id("Before")), Lit(String([Chars(pointcut)]))),
+          	 Public(),
+             Synchronized()]
 
    fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index):
      MethodAdditions(methodsig, requires, on_entry, on_exit) -> None()
@@ -400,7 +375,7 @@ rules
 	 	declarations'* := <topdown(strip-annos)><retain-all(?FieldDec(_,_,_))>declarations*
 
    add-coordinator-fields2(|coordinator_type, type, anno*) =
-    <get-p<map(\x -> IntertypeFieldDec(<conc>([MarkerAnno(Id("HideField")), Private()], anno*), type, coordinator_type, None(), x) \)><id>
+    <map(\x -> IntertypeFieldDec(<conc>([MarkerAnno(Id("HideField")), Private()], anno*), type, coordinator_type, None(), x) \)><id>
 
    get-methods-list:
      Selfex(methodsignatures*) -> methodsignatures*
@@ -410,3 +385,13 @@ rules
 
    get-methods-list:
      None() -> []
+
+   gen-source-location-ann:
+               x -> Anno(TypeName(Id("BridgedSourceLocation")),[
+                 ElemValPair(Id("file"),Lit(String([Chars(<get-file>x)]))),
+                 ElemValPair(Id("line"),Lit(Deci(<int-to-string><inc><get-line><get-location>x))),
+                 ElemValPair(Id("module"),Lit(String([Chars("BoundedStack.cool")])))])
+
+   get-location: t{[a|b]} -> a
+   get-file: t{[a|[b]]} -> b
+   get-line = \ (x, _, _, _) -> x \
