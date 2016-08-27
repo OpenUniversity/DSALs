@@ -35,8 +35,7 @@ class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
 	 		new FilteringScope(a, [i|i.name.toString.startsWith("com.mucommander.job.impl")])
 	 	}
 
-  	case reference == AuditLogPackage.Literals.CASE__MSG ||
-  	     reference == AuditLogPackage.Literals.COMMAND__DEFAULT:
+  	case reference == AuditLogPackage.Literals.CASE__MSG:
 				return Scopes.scopeFor(SuppressingLinkingResource.auditLogMessages.declaredFields,[
     	            f|QualifiedName.create(f.simpleName)
      	   ], IScope.NULLSCOPE )

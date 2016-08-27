@@ -7,20 +7,14 @@ import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
 Model: (commands+=Command)*;
         
 Command:
-	'logs for' type=[types::JvmDeclaredType|QualifiedName] (overrides?='(overrides)')? ':'
-        (
-        	cases+=Case(',' cases+=Case)*
-        	(',' 'otherwise' 'log' default=[types::JvmEnumerationLiteral])?
-        )?
-    ';'
+	'logs for' type=[types::JvmDeclaredType|QualifiedName] ':' (cases+=Case)* ';'
 ;
 
 Case:
-	'case' state=State
-	       ('&' (fields+=[types::JvmField]))*
-	       'log' msg=[types::JvmEnumerationLiteral] ('with' vars+=[types::JvmField] (vars+=[types::JvmField])*)?
+	'case' state=State ('&' (fields+=[types::JvmField]))*
+	'log' msg=[types::JvmEnumerationLiteral] ('with' (vars+=[types::JvmField])+)?
 ;
 
-enum State: start|finish|interrupt|pause|resume;
+enum State: start | finish | interrupt | pause | resume;
 
 QualifiedName: ID ("." ID)*;

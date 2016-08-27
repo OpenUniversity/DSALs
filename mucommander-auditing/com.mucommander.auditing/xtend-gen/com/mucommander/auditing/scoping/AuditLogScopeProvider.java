@@ -60,15 +60,8 @@ public class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
       }
     }
     if (!_matched) {
-      boolean _or = false;
       boolean _equals_1 = Objects.equal(reference, AuditLogPackage.Literals.CASE__MSG);
       if (_equals_1) {
-        _or = true;
-      } else {
-        boolean _equals_2 = Objects.equal(reference, AuditLogPackage.Literals.COMMAND__DEFAULT);
-        _or = _equals_2;
-      }
-      if (_or) {
         _matched=true;
         Iterable<JvmField> _declaredFields = SuppressingLinkingResource.auditLogMessages.getDeclaredFields();
         final Function<JvmField, QualifiedName> _function = (JvmField f) -> {
@@ -79,8 +72,8 @@ public class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
       }
     }
     if (!_matched) {
-      boolean _equals_3 = Objects.equal(reference, AuditLogPackage.Literals.CASE__FIELDS);
-      if (_equals_3) {
+      boolean _equals_2 = Objects.equal(reference, AuditLogPackage.Literals.CASE__FIELDS);
+      if (_equals_2) {
         _matched=true;
         EObject _eContainer = context.eContainer();
         Command command = ((Command) _eContainer);
@@ -100,8 +93,8 @@ public class AuditLogScopeProvider extends AbstractAuditLogScopeProvider {
       }
     }
     if (!_matched) {
-      boolean _equals_4 = Objects.equal(reference, AuditLogPackage.Literals.CASE__VARS);
-      if (_equals_4) {
+      boolean _equals_3 = Objects.equal(reference, AuditLogPackage.Literals.CASE__VARS);
+      if (_equals_3) {
         _matched=true;
         EObject _eContainer_1 = context.eContainer();
         Command command_1 = ((Command) _eContainer_1);

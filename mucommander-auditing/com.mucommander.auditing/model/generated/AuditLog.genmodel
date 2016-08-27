@@ -18,9 +18,7 @@
     </genClasses>
     <genClasses ecoreClass="AuditLog.ecore#//Command">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Command/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AuditLog.ecore#//Command/overrides"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Command/cases"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference AuditLog.ecore#//Command/default"/>
     </genClasses>
     <genClasses ecoreClass="AuditLog.ecore#//Case">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute AuditLog.ecore#//Case/state"/>
