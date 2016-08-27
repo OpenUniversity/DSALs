@@ -35,13 +35,15 @@ class AuditLogGenerator extends AbstractGenerator {
 		'''
 		    package com.mucommander.job;
 
-		    import org.aspectj.lang.annotation.BridgedSourceLocation;
+		    import org.aspectj.lang.annotation.*;
 
+      @HideType
 		    public privileged aspect Logs {
 		      «FOR command:resource.allContents.filter(typeof(Command)).toIterable»
 		        «command.compile»
 		      «ENDFOR»
-		      
+
+        @HideMethod
 		      private void audit(String msg, Object... args) {
 		      		System.out.println(
 		      		new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss ").format(new java.util.Date()) +
