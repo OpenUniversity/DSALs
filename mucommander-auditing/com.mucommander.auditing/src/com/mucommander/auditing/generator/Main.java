@@ -72,12 +72,8 @@ public class Main implements Transformation {
 
 	@Override
 	public File convert2java(File input) throws Exception {
-		System.out.println("input: " + input.getAbsolutePath());
-//		System.out.println("input: " + FileUtils.readFileToString(input));
 		Main.main(new String[] { input.getPath() });
-		File output = new File("src-gen/com/mucommander/job/Logs.aj");
-//		System.out.println("output: " + FileUtils.readFileToString(output));
-		return output;
+		return new File("src-gen/com/mucommander/job/Logs.aj");
 	}
 
 	@Override
