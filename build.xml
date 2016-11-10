@@ -1,6 +1,6 @@
 <project>
 	<target name="clean">
-		<delete dir="cool/dist"/>
+		<delete dir="COOL/dist"/>
 		<delete dir="EJP/dist"/>
 		<delete dir="CJP/dist"/>
 	</target>
