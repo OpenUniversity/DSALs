@@ -12,6 +12,8 @@ public class Main extends transform implements Transformation {
 
 	@Override
 	public File convert2java(File input) throws Exception {
+		String path = input.getPath();
+		System.out.println("input path: " + path);
 		Context context = transform.init();
 	    context.setStandAlone(true);
 	    IStrategoTerm result = null;
@@ -24,9 +26,6 @@ public class Main extends transform implements Transformation {
 	    	context.setStandAlone(false);
 	    	context.getIOAgent().closeAllFiles();
 	    }
-
-		String path = input.getPath();
-		System.out.println("input path: " + path);
 		String outputPath = path.replaceFirst("resources", "java").replaceFirst("src", "generated").replaceFirst(".cool", ".java");
 		System.out.println("output path: " + outputPath);
 		File output = new File(outputPath);
