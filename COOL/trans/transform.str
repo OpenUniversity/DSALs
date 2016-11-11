@@ -3,7 +3,6 @@ imports
   libstratego-lib
   libjava-front
   include/cool
-  tools
   libstratego-gpp
   libstratego-sglr
   aspectj/pretty-print
@@ -373,3 +372,11 @@ rules
    get-location: t{[a|b]} -> a
    get-file: t{[a|[b]]} -> b
    get-line = \ (x, _, _, _) -> x \
+
+   fetch_class_name: TypeName(_, Id(name)) -> name
+   fetch_class_name: TypeName(Id(name)) -> name
+
+   fetch_full_class_name: TypeName(packageOrTypeName, Id(name)) -> <concat-strings>[<fetch_full_class_name>packageOrTypeName, ".", name]
+   fetch_full_class_name: TypeName(Id(name)) -> name
+   fetch_full_class_name: PackageOrTypeName(Id(name)) ->name
+   fetch_full_class_name: PackageOrTypeName(packageOrTypeName, Id(name)) -> <concat-strings>[<fetch_full_class_name>packageOrTypeName, ".", name]
