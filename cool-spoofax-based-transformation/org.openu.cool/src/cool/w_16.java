@@ -11,22 +11,22 @@ import org.spoofax.interpreter.library.AbstractPrimitive;
 import java.util.ArrayList;
 import java.lang.ref.WeakReference;
 
-@SuppressWarnings("all") final class g_17 extends Strategy 
+@SuppressWarnings("all") final class w_16 extends Strategy 
 { 
-  public static final g_17 instance = new g_17();
+  public static final w_16 instance = new w_16();
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail207:
+    Fail209:
     { 
       IStrategoTerm term101 = term;
       Success132:
       { 
-        Fail208:
+        Fail210:
         { 
           term = $Not$Comp_1_0.instance.invoke(context, term, _Id.instance);
           if(term == null)
-            break Fail208;
+            break Fail210;
           if(true)
             break Success132;
         }
@@ -34,17 +34,17 @@ import java.lang.ref.WeakReference;
         IStrategoTerm term102 = term;
         Success133:
         { 
-          Fail209:
+          Fail211:
           { 
             term = $And$Comp_2_0.instance.invoke(context, term, this, _Id.instance);
             if(term == null)
-              break Fail209;
+              break Fail211;
             if(true)
               break Success133;
           }
           term = $Or$Comp_2_0.instance.invoke(context, term102, this, _Id.instance);
           if(term == null)
-            break Fail207;
+            break Fail209;
         }
       }
       if(true)

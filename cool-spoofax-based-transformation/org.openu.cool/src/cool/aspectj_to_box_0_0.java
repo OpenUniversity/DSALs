@@ -29,9 +29,9 @@ import java.lang.ref.WeakReference;
         { 
           Fail105:
           { 
-            IStrategoTerm f_17 = null;
-            f_17 = term.getSubterm(0);
-            term = termFactory.makeAppl(transform._consH_2, new IStrategoTerm[]{cool.constCons0, (IStrategoTerm)termFactory.makeListCons(cool.constFBOX46, termFactory.makeListCons(cool.constS1, termFactory.makeListCons(f_17, (IStrategoList)cool.constCons1)))});
+            IStrategoTerm v_16 = null;
+            v_16 = term.getSubterm(0);
+            term = termFactory.makeAppl(transform._consH_2, new IStrategoTerm[]{cool.constCons0, (IStrategoTerm)termFactory.makeListCons(cool.constFBOX46, termFactory.makeListCons(cool.constS1, termFactory.makeListCons(v_16, (IStrategoList)cool.constCons1)))});
             if(true)
               break Success99;
           }
@@ -43,9 +43,9 @@ import java.lang.ref.WeakReference;
           { 
             Fail106:
             { 
-              IStrategoTerm e_17 = null;
-              e_17 = term.getSubterm(0);
-              term = termFactory.makeAppl(transform._consH_2, new IStrategoTerm[]{cool.constCons0, (IStrategoTerm)termFactory.makeListCons(cool.constFBOX47, termFactory.makeListCons(cool.constS1, termFactory.makeListCons(e_17, (IStrategoList)cool.constCons1)))});
+              IStrategoTerm u_16 = null;
+              u_16 = term.getSubterm(0);
+              term = termFactory.makeAppl(transform._consH_2, new IStrategoTerm[]{cool.constCons0, (IStrategoTerm)termFactory.makeListCons(cool.constFBOX47, termFactory.makeListCons(cool.constS1, termFactory.makeListCons(u_16, (IStrategoList)cool.constCons1)))});
               if(true)
                 break Success100;
             }

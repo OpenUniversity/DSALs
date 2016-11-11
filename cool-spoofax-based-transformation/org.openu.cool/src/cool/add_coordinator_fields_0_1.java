@@ -15,48 +15,48 @@ import java.lang.ref.WeakReference;
 { 
   public static add_coordinator_fields_0_1 instance = new add_coordinator_fields_0_1();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm ref_u_34)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm ref_q_32)
   { 
-    TermReference u_34 = new TermReference(ref_u_34);
+    TermReference q_32 = new TermReference(ref_q_32);
     context.push("add_coordinator_fields_0_1");
-    Fail167:
+    Fail168:
     { 
-      IStrategoTerm x_34 = null;
-      IStrategoTerm y_34 = null;
-      IStrategoTerm c_35 = null;
-      x_34 = term;
-      c_35 = term;
+      IStrategoTerm t_32 = null;
+      IStrategoTerm u_32 = null;
+      IStrategoTerm y_32 = null;
+      t_32 = term;
+      y_32 = term;
       IStrategoTerm term131 = term;
       Success128:
       { 
-        Fail168:
+        Fail169:
         { 
-          term = retain_all_1_0.instance.invoke(context, x_34, lifted27.instance);
+          term = retain_all_1_0.instance.invoke(context, t_32, lifted27.instance);
           if(term == null)
-            break Fail168;
+            break Fail169;
           term = topdown_1_0.instance.invoke(context, term, strip_annos_0_0.instance);
           if(term == null)
-            break Fail168;
-          y_34 = term;
+            break Fail169;
+          u_32 = term;
           if(true)
             break Success128;
         }
         term = term131;
-        IStrategoTerm e_35 = null;
-        e_35 = term;
-        term = report_with_failure_0_1.instance.invoke(context, e_35, cool.const118);
+        IStrategoTerm a_33 = null;
+        a_33 = term;
+        term = report_with_failure_0_1.instance.invoke(context, a_33, cool.const116);
         if(term == null)
-          break Fail167;
+          break Fail168;
       }
-      term = c_35;
-      if(y_34 == null)
-        break Fail167;
-      term = y_34;
+      term = y_32;
+      if(u_32 == null)
+        break Fail168;
+      term = u_32;
       lifted29 lifted290 = new lifted29();
-      lifted290.u_34 = u_34;
+      lifted290.q_32 = q_32;
       term = map_1_0.instance.invoke(context, term, lifted290);
       if(term == null)
-        break Fail167;
+        break Fail168;
       context.popOnSuccess();
       if(true)
         return term;

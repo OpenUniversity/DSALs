@@ -19,19 +19,19 @@ import java.lang.ref.WeakReference;
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("gen_source_location_0_0");
-    Fail119:
+    Fail120:
     { 
-      IStrategoTerm k_20 = null;
-      IStrategoTerm l_20 = null;
-      k_20 = term;
-      term = origin_location_0_0.instance.invoke(context, k_20);
+      IStrategoTerm g_18 = null;
+      IStrategoTerm h_18 = null;
+      g_18 = term;
+      term = origin_location_0_0.instance.invoke(context, g_18);
       if(term == null)
-        break Fail119;
-      l_20 = term;
-      term = origin_file_0_0.instance.invoke(context, k_20);
+        break Fail120;
+      h_18 = term;
+      term = origin_file_0_0.instance.invoke(context, g_18);
       if(term == null)
-        break Fail119;
-      term = (IStrategoTerm)termFactory.makeListCons(l_20, termFactory.makeListCons(term, (IStrategoList)cool.constNil0));
+        break Fail120;
+      term = (IStrategoTerm)termFactory.makeListCons(h_18, termFactory.makeListCons(term, (IStrategoList)cool.constNil0));
       context.popOnSuccess();
       if(true)
         return term;

@@ -15,45 +15,45 @@ import java.lang.ref.WeakReference;
 { 
   public static add_condition_fields_0_1 instance = new add_condition_fields_0_1();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm ref_k_34)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm ref_g_32)
   { 
-    TermReference k_34 = new TermReference(ref_k_34);
+    TermReference g_32 = new TermReference(ref_g_32);
     context.push("add_condition_fields_0_1");
-    Fail165:
+    Fail166:
     { 
-      IStrategoTerm l_34 = null;
-      IStrategoTerm m_34 = null;
-      IStrategoTerm p_34 = null;
+      IStrategoTerm h_32 = null;
+      IStrategoTerm i_32 = null;
+      IStrategoTerm l_32 = null;
       if(term.getTermType() != IStrategoTerm.APPL || transform._consConditionDec_1 != ((IStrategoAppl)term).getConstructor())
-        break Fail165;
-      l_34 = term.getSubterm(0);
-      p_34 = term;
+        break Fail166;
+      h_32 = term.getSubterm(0);
+      l_32 = term;
       IStrategoTerm term130 = term;
       Success127:
       { 
-        Fail166:
+        Fail167:
         { 
-          term = l_34;
+          term = h_32;
           lifted26 lifted260 = new lifted26();
-          lifted260.k_34 = k_34;
+          lifted260.g_32 = g_32;
           term = map_1_0.instance.invoke(context, term, lifted260);
           if(term == null)
-            break Fail166;
-          m_34 = term;
+            break Fail167;
+          i_32 = term;
           if(true)
             break Success127;
         }
         term = term130;
-        IStrategoTerm r_34 = null;
-        r_34 = term;
-        term = report_with_failure_0_1.instance.invoke(context, r_34, cool.const117);
+        IStrategoTerm n_32 = null;
+        n_32 = term;
+        term = report_with_failure_0_1.instance.invoke(context, n_32, cool.const115);
         if(term == null)
-          break Fail165;
+          break Fail166;
       }
-      term = p_34;
-      if(m_34 == null)
-        break Fail165;
-      term = m_34;
+      term = l_32;
+      if(i_32 == null)
+        break Fail166;
+      term = i_32;
       context.popOnSuccess();
       if(true)
         return term;

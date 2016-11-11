@@ -15,21 +15,21 @@ import java.lang.ref.WeakReference;
 { 
   public static add_coordinator_fields2_0_3 instance = new add_coordinator_fields2_0_3();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm ref_j_35, IStrategoTerm ref_k_35, IStrategoTerm ref_l_35)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm ref_f_33, IStrategoTerm ref_g_33, IStrategoTerm ref_h_33)
   { 
-    TermReference j_35 = new TermReference(ref_j_35);
-    TermReference k_35 = new TermReference(ref_k_35);
-    TermReference l_35 = new TermReference(ref_l_35);
+    TermReference f_33 = new TermReference(ref_f_33);
+    TermReference g_33 = new TermReference(ref_g_33);
+    TermReference h_33 = new TermReference(ref_h_33);
     context.push("add_coordinator_fields2_0_3");
-    Fail169:
+    Fail170:
     { 
       lifted32 lifted320 = new lifted32();
-      lifted320.l_35 = l_35;
-      lifted320.k_35 = k_35;
-      lifted320.j_35 = j_35;
+      lifted320.h_33 = h_33;
+      lifted320.g_33 = g_33;
+      lifted320.f_33 = f_33;
       term = map_1_0.instance.invoke(context, term, lifted320);
       if(term == null)
-        break Fail169;
+        break Fail170;
       context.popOnSuccess();
       if(true)
         return term;

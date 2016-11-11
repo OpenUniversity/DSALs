@@ -17,20 +17,20 @@ import java.lang.ref.WeakReference;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail174:
+    Fail175:
     { 
-      IStrategoTerm a_36 = null;
+      IStrategoTerm w_33 = null;
       IStrategoList annos0 = term.getAnnotations();
       if(annos0.getTermType() != IStrategoTerm.LIST || ((IStrategoList)annos0).isEmpty())
-        break Fail174;
+        break Fail175;
       IStrategoTerm arg55 = ((IStrategoList)annos0).head();
       if(arg55.getTermType() != IStrategoTerm.LIST || ((IStrategoList)arg55).isEmpty())
-        break Fail174;
-      a_36 = ((IStrategoList)arg55).head();
+        break Fail175;
+      w_33 = ((IStrategoList)arg55).head();
       IStrategoTerm arg56 = ((IStrategoList)annos0).tail();
       if(arg56.getTermType() != IStrategoTerm.LIST || !((IStrategoList)arg56).isEmpty())
-        break Fail174;
-      term = a_36;
+        break Fail175;
+      term = w_33;
       if(true)
         return term;
     }

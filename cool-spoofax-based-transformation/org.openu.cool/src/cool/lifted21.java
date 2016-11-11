@@ -13,21 +13,21 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted21 extends Strategy 
 { 
-  TermReference c_26;
+  TermReference y_23;
 
-  TermReference t_26;
+  TermReference p_24;
 
-  TermReference f_26;
+  TermReference b_24;
 
-  TermReference u_26;
+  TermReference q_24;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail188:
+    Fail190:
     { 
-      term = make_on_entry_method_0_4.instance.invoke(context, term, c_26.value, t_26.value, f_26.value, u_26.value);
+      term = make_on_entry_method_0_4.instance.invoke(context, term, y_23.value, p_24.value, b_24.value, q_24.value);
       if(term == null)
-        break Fail188;
+        break Fail190;
       if(true)
         return term;
     }

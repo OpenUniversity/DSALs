@@ -19,28 +19,28 @@ import java.lang.ref.WeakReference;
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("gen_source_location_ann_0_0");
-    Fail173:
+    Fail174:
     { 
-      IStrategoTerm t_35 = null;
-      IStrategoTerm u_35 = null;
-      t_35 = term;
-      term = get_file_0_0.instance.invoke(context, t_35);
+      IStrategoTerm p_33 = null;
+      IStrategoTerm q_33 = null;
+      p_33 = term;
+      term = get_file_0_0.instance.invoke(context, p_33);
       if(term == null)
-        break Fail173;
-      u_35 = term;
-      term = get_location_0_0.instance.invoke(context, t_35);
+        break Fail174;
+      q_33 = term;
+      term = get_location_0_0.instance.invoke(context, p_33);
       if(term == null)
-        break Fail173;
+        break Fail174;
       term = get_line_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail173;
+        break Fail174;
       term = inc_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail173;
+        break Fail174;
       term = int_to_string_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail173;
-      term = termFactory.makeAppl(transform._consAnno_2, new IStrategoTerm[]{cool.constTypeName6, (IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consElemValPair_2, new IStrategoTerm[]{cool.constId32, termFactory.makeAppl(transform._consLit_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consString_1, new IStrategoTerm[]{(IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consChars_1, new IStrategoTerm[]{u_35}), (IStrategoList)cool.constNil0)})})}), termFactory.makeListCons(termFactory.makeAppl(transform._consElemValPair_2, new IStrategoTerm[]{cool.constId31, termFactory.makeAppl(transform._consLit_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consDeci_1, new IStrategoTerm[]{term})})}), (IStrategoList)cool.constCons52))});
+        break Fail174;
+      term = termFactory.makeAppl(transform._consAnno_2, new IStrategoTerm[]{cool.constTypeName6, (IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consElemValPair_2, new IStrategoTerm[]{cool.constId32, termFactory.makeAppl(transform._consLit_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consString_1, new IStrategoTerm[]{(IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consChars_1, new IStrategoTerm[]{q_33}), (IStrategoList)cool.constNil0)})})}), termFactory.makeListCons(termFactory.makeAppl(transform._consElemValPair_2, new IStrategoTerm[]{cool.constId31, termFactory.makeAppl(transform._consLit_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consDeci_1, new IStrategoTerm[]{term})})}), (IStrategoList)cool.constCons52))});
       context.popOnSuccess();
       if(true)
         return term;

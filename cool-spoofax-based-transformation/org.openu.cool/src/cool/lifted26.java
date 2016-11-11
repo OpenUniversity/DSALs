@@ -13,25 +13,25 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted26 extends Strategy 
 { 
-  TermReference k_34;
+  TermReference g_32;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
     ITermFactory termFactory = context.getFactory();
-    Fail183:
+    Fail185:
     { 
-      IStrategoTerm n_34 = null;
-      IStrategoTerm o_34 = null;
+      IStrategoTerm j_32 = null;
+      IStrategoTerm k_32 = null;
       if(term.getTermType() != IStrategoTerm.APPL || transform._consAssign_2 != ((IStrategoAppl)term).getConstructor())
-        break Fail183;
+        break Fail185;
       IStrategoTerm arg51 = term.getSubterm(0);
       if(arg51.getTermType() != IStrategoTerm.APPL || transform._consExprName_1 != ((IStrategoAppl)arg51).getConstructor())
-        break Fail183;
-      n_34 = arg51.getSubterm(0);
-      o_34 = term.getSubterm(1);
-      if(k_34.value == null)
-        break Fail183;
-      term = termFactory.makeAppl(transform._consIntertypeFieldDec_5, new IStrategoTerm[]{cool.constCons26, cool.constBoolean0, k_34.value, cool.constNone0, termFactory.makeAppl(transform._consVarDec_2, new IStrategoTerm[]{n_34, o_34})});
+        break Fail185;
+      j_32 = arg51.getSubterm(0);
+      k_32 = term.getSubterm(1);
+      if(g_32.value == null)
+        break Fail185;
+      term = termFactory.makeAppl(transform._consIntertypeFieldDec_5, new IStrategoTerm[]{cool.constCons25, cool.constBoolean0, g_32.value, cool.constNone0, termFactory.makeAppl(transform._consVarDec_2, new IStrategoTerm[]{j_32, k_32})});
       if(true)
         return term;
     }

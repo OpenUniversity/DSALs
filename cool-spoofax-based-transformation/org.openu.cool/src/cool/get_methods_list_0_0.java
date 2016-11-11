@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail170:
+    Fail171:
     { 
       IStrategoTerm term132 = term;
       IStrategoConstructor cons9 = term.getTermType() == IStrategoTerm.APPL ? ((IStrategoAppl)term).getConstructor() : null;
@@ -25,11 +25,11 @@ import java.lang.ref.WeakReference;
       { 
         if(cons9 == transform._consSelfex_1)
         { 
-          Fail171:
+          Fail172:
           { 
-            IStrategoTerm s_35 = null;
-            s_35 = term.getSubterm(0);
-            term = s_35;
+            IStrategoTerm o_33 = null;
+            o_33 = term.getSubterm(0);
+            term = o_33;
             if(true)
               break Success129;
           }
@@ -39,11 +39,11 @@ import java.lang.ref.WeakReference;
         { 
           if(cons9 == transform._consMutex_1)
           { 
-            Fail172:
+            Fail173:
             { 
-              IStrategoTerm r_35 = null;
-              r_35 = term.getSubterm(0);
-              term = r_35;
+              IStrategoTerm n_33 = null;
+              n_33 = term.getSubterm(0);
+              term = n_33;
               if(true)
                 break Success130;
             }
@@ -55,7 +55,7 @@ import java.lang.ref.WeakReference;
           }
           else
           { 
-            break Fail170;
+            break Fail171;
           }
         }
       }

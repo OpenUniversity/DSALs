@@ -15,23 +15,23 @@ import java.lang.ref.WeakReference;
 { 
   public static gen_method_state_0_1 instance = new gen_method_state_0_1();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm x_20)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm t_18)
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("gen_method_state_0_1");
-    Fail123:
+    Fail124:
     { 
-      IStrategoTerm z_20 = null;
+      IStrategoTerm v_18 = null;
       if(term.getTermType() != IStrategoTerm.APPL || transform._consMethodSignature_2 != ((IStrategoAppl)term).getConstructor())
-        break Fail123;
-      IStrategoTerm arg15 = term.getSubterm(0);
-      if(arg15.getTermType() != IStrategoTerm.APPL || transform._consId_1 != ((IStrategoAppl)arg15).getConstructor())
-        break Fail123;
-      z_20 = term;
-      term = gen_method_state_name_0_1.instance.invoke(context, z_20, x_20);
+        break Fail124;
+      IStrategoTerm arg18 = term.getSubterm(0);
+      if(arg18.getTermType() != IStrategoTerm.APPL || transform._consId_1 != ((IStrategoAppl)arg18).getConstructor())
+        break Fail124;
+      v_18 = term;
+      term = gen_method_state_name_0_1.instance.invoke(context, v_18, t_18);
       if(term == null)
-        break Fail123;
-      term = termFactory.makeAppl(transform._consFieldDec_3, new IStrategoTerm[]{cool.constCons26, cool.constClassOrInterfaceType0, (IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consVarDec_2, new IStrategoTerm[]{termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{term}), cool.constInvoke3}), (IStrategoList)cool.constNil0)});
+        break Fail124;
+      term = termFactory.makeAppl(transform._consFieldDec_3, new IStrategoTerm[]{cool.constCons25, cool.constClassOrInterfaceType0, (IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consVarDec_2, new IStrategoTerm[]{termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{term}), cool.constInvoke3}), (IStrategoList)cool.constNil0)});
       context.popOnSuccess();
       if(true)
         return term;

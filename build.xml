@@ -10,6 +10,7 @@
 		<java fork="true" jar="libs/strategoxt.jar">
 			<jvmarg value="-Xmx1024m"/>
                         <jvmarg value="-Xss8m"/>
+                        <arg line="-m transform"/>
                         <arg line="-p cool"/>
                         <arg line="-I COOL"/>
                         <arg line="-I COOL/include"/>

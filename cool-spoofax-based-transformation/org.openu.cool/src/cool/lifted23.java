@@ -13,33 +13,33 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted23 extends Strategy 
 { 
-  TermReference c_26;
+  TermReference y_23;
 
-  TermReference e_26;
+  TermReference a_24;
 
-  TermReference d_26;
+  TermReference z_23;
 
-  TermReference f_26;
+  TermReference b_24;
 
-  TermReference l_26;
+  TermReference h_24;
 
-  TermReference m_26;
+  TermReference i_24;
 
-  TermReference u_26;
+  TermReference q_24;
 
-  TermReference h_26;
+  TermReference d_24;
 
-  TermReference i_26;
+  TermReference e_24;
 
-  TermReference p_26;
+  TermReference l_24;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail186:
+    Fail188:
     { 
-      term = make_lock_and_unlock_methods_0_10.instance.invokeDynamic(context, term, NO_STRATEGIES, new IStrategoTerm[]{c_26.value, e_26.value, d_26.value, f_26.value, l_26.value, m_26.value, u_26.value, h_26.value, i_26.value, p_26.value});
+      term = make_lock_and_unlock_methods_0_10.instance.invokeDynamic(context, term, NO_STRATEGIES, new IStrategoTerm[]{y_23.value, a_24.value, z_23.value, b_24.value, h_24.value, i_24.value, q_24.value, d_24.value, e_24.value, l_24.value});
       if(term == null)
-        break Fail186;
+        break Fail188;
       if(true)
         return term;
     }

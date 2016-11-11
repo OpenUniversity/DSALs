@@ -9,27 +9,6 @@ imports
   aspectj/pretty-print
 
 strategies
-  // main = io-wrap(transform)
-  main = handle-io	
-
-  handle-io =
-  	?[ program | args ];
-  	<debug>"arguments:";<debug>args;
-  	input_file_path := < \ [input|rest] -> input\ >args;
-  	ReadFromFile;
-  	ast := <id>;
-  	output_file_path := < \ [output|rest] -> output\ >< \ [input|rest] -> rest\ >args;
-  	result := <transform>ast;
-  	input_file_dir := <dirname>input_file_path;
-  	input_file_name := <base-filename>input_file_path;
-  	input_file_name_without_extension := <remove-extension>input_file_name;
-  	modified_input_file_name_without_extension := <concat-strings>[input_file_name_without_extension, "Coord"];
-  	modified_input_file_name := <add-extension>(modified_input_file_name_without_extension, "java");
-  	//output_file_path := <concat-strings>[input_file_dir, "/", modified_input_file_name];
-  	handle := <fopen> (output_file_path, "w");
-	<fputs> (result, handle);
- 	fclose 	
-
   transform =
         path := <id>;
         ast := <parse-file(|<import-term(cool.tbl)>)>path;
@@ -201,8 +180,7 @@ strategies
     					 <generate-imports(|imports, coordinator_type)>,
     					 <conc>([converted_coordinator], other_types))
   	else
-  		// or maybe raise an error?
-  		<id>compilation_unit
+  		<id>compilation_unit // or maybe raise an error?
   	end
   	
   generate-imports(|original_imports, coordinator_type) =

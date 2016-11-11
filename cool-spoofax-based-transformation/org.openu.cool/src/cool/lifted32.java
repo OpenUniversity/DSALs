@@ -13,33 +13,33 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted32 extends Strategy 
 { 
-  TermReference l_35;
+  TermReference h_33;
 
-  TermReference k_35;
+  TermReference g_33;
 
-  TermReference j_35;
+  TermReference f_33;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
     ITermFactory termFactory = context.getFactory();
-    Fail180:
+    Fail182:
     { 
-      IStrategoTerm m_35 = null;
-      IStrategoTerm p_35 = null;
-      IStrategoTerm q_35 = null;
-      m_35 = term;
-      q_35 = term;
-      if(l_35.value == null)
-        break Fail180;
-      term = termFactory.makeTuple(cool.constCons26, l_35.value);
+      IStrategoTerm i_33 = null;
+      IStrategoTerm l_33 = null;
+      IStrategoTerm m_33 = null;
+      i_33 = term;
+      m_33 = term;
+      if(h_33.value == null)
+        break Fail182;
+      term = termFactory.makeTuple(cool.constCons25, h_33.value);
       term = conc_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail180;
-      p_35 = term;
-      term = q_35;
-      if(k_35.value == null || j_35.value == null)
-        break Fail180;
-      term = termFactory.makeAppl(transform._consIntertypeFieldDec_5, new IStrategoTerm[]{p_35, k_35.value, j_35.value, cool.constNone0, m_35});
+        break Fail182;
+      l_33 = term;
+      term = m_33;
+      if(g_33.value == null || f_33.value == null)
+        break Fail182;
+      term = termFactory.makeAppl(transform._consIntertypeFieldDec_5, new IStrategoTerm[]{l_33, g_33.value, f_33.value, cool.constNone0, i_33});
       if(true)
         return term;
     }

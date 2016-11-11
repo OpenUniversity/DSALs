@@ -15,34 +15,34 @@ import java.lang.ref.WeakReference;
 { 
   public static gen_on_entry_method_name_0_1 instance = new gen_on_entry_method_name_0_1();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm s_21)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, IStrategoTerm o_19)
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("gen_on_entry_method_name_0_1");
-    Fail126:
+    Fail127:
     { 
-      IStrategoTerm t_21 = null;
-      IStrategoTerm u_21 = null;
+      IStrategoTerm p_19 = null;
+      IStrategoTerm q_19 = null;
       if(term.getTermType() != IStrategoTerm.APPL || transform._consMethodSignature_2 != ((IStrategoAppl)term).getConstructor())
-        break Fail126;
-      IStrategoTerm arg21 = term.getSubterm(0);
-      if(arg21.getTermType() != IStrategoTerm.APPL || transform._consId_1 != ((IStrategoAppl)arg21).getConstructor())
-        break Fail126;
-      t_21 = arg21.getSubterm(0);
+        break Fail127;
+      IStrategoTerm arg24 = term.getSubterm(0);
+      if(arg24.getTermType() != IStrategoTerm.APPL || transform._consId_1 != ((IStrategoAppl)arg24).getConstructor())
+        break Fail127;
+      p_19 = arg24.getSubterm(0);
       term = strip_annos_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail126;
-      u_21 = term;
-      term = hashtable_get_0_1.instance.invoke(context, s_21, u_21);
+        break Fail127;
+      q_19 = term;
+      term = hashtable_get_0_1.instance.invoke(context, o_19, q_19);
       if(term == null)
-        break Fail126;
+        break Fail127;
       term = int_to_string_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail126;
-      term = (IStrategoTerm)termFactory.makeListCons(cool.const87, termFactory.makeListCons(t_21, termFactory.makeListCons(term, (IStrategoList)cool.constNil0)));
+        break Fail127;
+      term = (IStrategoTerm)termFactory.makeListCons(cool.const83, termFactory.makeListCons(p_19, termFactory.makeListCons(term, (IStrategoList)cool.constNil0)));
       term = concat_strings_0_0.instance.invoke(context, term);
       if(term == null)
-        break Fail126;
+        break Fail127;
       context.popOnSuccess();
       if(true)
         return term;

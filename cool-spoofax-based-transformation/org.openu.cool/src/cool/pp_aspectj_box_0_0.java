@@ -11,23 +11,22 @@ import org.spoofax.interpreter.library.AbstractPrimitive;
 import java.util.ArrayList;
 import java.lang.ref.WeakReference;
 
-@SuppressWarnings("all") public class get_start_line_0_0 extends Strategy 
+@SuppressWarnings("all") public class pp_aspectj_box_0_0 extends Strategy 
 { 
-  public static get_start_line_0_0 instance = new get_start_line_0_0();
+  public static pp_aspectj_box_0_0 instance = new pp_aspectj_box_0_0();
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail137:
+    context.push("pp_aspectj_box_0_0");
+    Fail108:
     { 
-      IStrategoTerm v_24 = null;
-      if(term.getTermType() != IStrategoTerm.TUPLE || term.getSubtermCount() != 4)
-        break Fail137;
-      v_24 = term.getSubterm(0);
-      term = v_24;
+      term = pp_java5_to_abox_1_0.instance.invoke(context, term, lifted3.instance);
+      if(term == null)
+        break Fail108;
+      context.popOnSuccess();
       if(true)
         return term;
     }
-    context.push("get_start_line_0_0");
     context.popOnFailure();
     return null;
   }

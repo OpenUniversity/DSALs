@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail122:
+    Fail123:
     { 
       term = cool.constMethodDec0;
       if(true)

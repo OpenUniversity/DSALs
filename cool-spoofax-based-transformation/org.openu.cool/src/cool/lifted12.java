@@ -13,24 +13,24 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted12 extends Strategy 
 { 
-  TermReference i_26;
+  TermReference e_24;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail196:
+    Fail198:
     { 
-      IStrategoTerm w_26 = null;
-      IStrategoTerm z_27 = null;
-      w_26 = term;
-      if(i_26.value == null)
-        break Fail196;
-      z_27 = i_26.value;
-      term = strip_annos_0_0.instance.invoke(context, w_26);
+      IStrategoTerm s_24 = null;
+      IStrategoTerm v_25 = null;
+      s_24 = term;
+      if(e_24.value == null)
+        break Fail198;
+      v_25 = e_24.value;
+      term = strip_annos_0_0.instance.invoke(context, s_24);
       if(term == null)
-        break Fail196;
-      term = hashtable_put_0_2.instance.invoke(context, z_27, term, w_26);
+        break Fail198;
+      term = hashtable_put_0_2.instance.invoke(context, v_25, term, s_24);
       if(term == null)
-        break Fail196;
+        break Fail198;
       if(true)
         return term;
     }
