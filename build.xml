@@ -1,11 +1,12 @@
 <project>
 	<target name="clean">
 		<delete dir="COOL/dist"/>
+		<delete dir="COOL.old/dist"/>
 		<delete dir="EJP/dist"/>
 		<delete dir="CJP/dist"/>
 	</target>
 
-	<target name="cool">
+        <target name="cool">
 		<mkdir dir="COOL/dist"/>
 		<java fork="true" jar="libs/strategoxt.jar">
 			<jvmarg value="-Xmx1024m"/>
@@ -16,6 +17,23 @@
                         <arg line="-I COOL/include"/>
                         <arg line="-i COOL/trans/transform.str"/>
                         <arg line="-o COOL/dist/transform.java"/>
+                        <arg line="-la java-front"/>
+                        <arg line="-la stratego-gpp"/>
+                        <arg line="-la stratego-sglr"/>
+		</java>
+	</target>
+
+	<target name="cool-awesome">
+		<mkdir dir="COOL.old/dist"/>
+		<java fork="true" jar="libs/strategoxt.jar">
+			<jvmarg value="-Xmx1024m"/>
+                        <jvmarg value="-Xss8m"/>
+                        <arg line="-m transform"/>
+                        <arg line="-p cool"/>
+                        <arg line="-I COOL.old"/>
+                        <arg line="-I COOL.old/include"/>
+                        <arg line="-i COOL.old/trans/transform.str"/>
+                        <arg line="-o COOL.old/dist/transform.java"/>
                         <arg line="-la java-front"/>
                         <arg line="-la stratego-gpp"/>
                         <arg line="-la stratego-sglr"/>

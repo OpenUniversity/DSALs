@@ -1,0 +1,35 @@
+module languages/cool/Main
+imports
+	languages/java-15/Main
+	languages/cool/AspectjExtension
+
+exports
+  sorts
+    ConditionDec CoordinatorBodyDec CoordinatorDec CoordinatorBody MethodAdditionsDec MethodSignature MutexDec SelfexDec
+
+  context-free syntax
+    CoordinatorDec -> TypeDec
+    CoordinatorDecHead CoordinatorBody -> CoordinatorDec {cons("CoordinatorDec")}
+    "coordinator" TypeName -> CoordinatorDecHead {cons("CoordinatorDecHead")}
+    "{" CoordinatorBodyDec* "}" -> CoordinatorBody {cons("CoordinatorBody")}
+
+    SelfexDec -> CoordinatorBodyDec
+    "selfex" "{" {MethodSignature ","}* "}" ";" -> SelfexDec {cons("Selfex")}
+
+    MutexDec -> CoordinatorBodyDec
+    "mutex" "{" {MethodSignature ","}* "}" ";" -> MutexDec {cons("Mutex")}
+
+    ConditionDec -> CoordinatorBodyDec
+    "condition" {Expr ","}* ";" -> ConditionDec {cons("ConditionDec")}
+
+    MethodAdditionsDec -> CoordinatorBodyDec
+	MethodSignature ":" Requires? OnEntry? OnExit? -> MethodAdditionsDec {cons("MethodAdditions")}
+	Id "(" {Type ","}* ")" -> MethodSignature {cons("MethodSignature")}
+    "requires" Expr ";" -> Requires {cons("Requires")}
+    "on_entry" Block -> OnEntry {cons("OnEntry")}
+    "on_exit" Block -> OnExit {cons("OnExit")}
+
+	FieldDec -> CoordinatorBodyDec
+    
+    lexical syntax
+    "condition" -> Keyword

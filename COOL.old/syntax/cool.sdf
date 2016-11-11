@@ -1,0 +1,8 @@
+%% Grammar for the cool language
+%% By default, based on an example "entities" syntax
+module cool
+imports
+  languages/cool/Main
+  languages/java-15/packages/CompilationUnits
+exports
+  context-free start-symbols CompilationUnit

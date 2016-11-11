@@ -1,0 +1,42 @@
+module aspectj/pp/aspect/AdviceDeclaration
+rules
+
+  aspectj-to-box :
+    AdviceDec(ggg, b2, throws, b4, b5) ->
+      V vs=0 [
+        H hs=1 [~*ggg b2 ~*b3 KW[":"] b4]
+        b5
+      ]
+    where
+      <option-to-boxes> throws => b3
+
+  aspectj-to-box :
+    Before(params) -> H hs=0 [ KW["before"] KW["("] b KW[")"]]
+    where
+      <separate-by-comma> params => b
+
+  aspectj-to-box :
+    After(params, b2) ->
+      H hs=1 [
+        H hs=0 [KW["after"] KW["("] b KW[")"]]
+        b2
+      ]
+    where
+      <separate-by-comma> params => b
+
+  aspectj-to-box :
+    Around(type, params) -> H hs=1 [~type H hs=0 [KW["around"] KW["("] b KW[")"]]]
+    where
+      <separate-by-comma> params => b
+
+  aspectj-to-box :
+    Returning() -> box |[ KW["returning"] ]|
+
+  aspectj-to-box :
+    Returning(b) -> H hs=0 [KW["returning"] KW["("] b KW[")"]]
+
+  aspectj-to-box :
+    Throwing() -> box |[ KW["throwing"] ]|
+
+  aspectj-to-box :
+    Throwing(b) -> H hs=0 [ KW["throwing"] KW["("] b KW[")"] ]

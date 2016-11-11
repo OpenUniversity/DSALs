@@ -1,0 +1,13 @@
+module editor/cool-Outliner
+
+imports
+  
+  include/cool
+  lib/runtime/editor/outline-library
+  lib/runtime/editor/origins
+  editor/cool-Outliner.generated
+
+rules
+  
+  to-outline-label = fail
+  
