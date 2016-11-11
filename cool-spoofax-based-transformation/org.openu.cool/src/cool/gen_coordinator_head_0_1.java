@@ -34,12 +34,12 @@ import java.lang.ref.WeakReference;
         { 
           Fail132:
           { 
-            IStrategoTerm w_177 = null;
+            IStrategoTerm e_177 = null;
             IStrategoTerm arg27 = term.getSubterm(1);
             if(arg27.getTermType() != IStrategoTerm.APPL || transform._consId_1 != ((IStrategoAppl)arg27).getConstructor())
               break Fail132;
-            w_177 = arg27.getSubterm(0);
-            term = w_177;
+            e_177 = arg27.getSubterm(0);
+            term = e_177;
             if(true)
               break Success107;
           }
@@ -47,12 +47,12 @@ import java.lang.ref.WeakReference;
         }
         if(cons8 == transform._consTypeName_1)
         { 
-          IStrategoTerm x_177 = null;
+          IStrategoTerm f_177 = null;
           IStrategoTerm arg28 = term.getSubterm(0);
           if(arg28.getTermType() != IStrategoTerm.APPL || transform._consId_1 != ((IStrategoAppl)arg28).getConstructor())
             break Fail131;
-          x_177 = arg28.getSubterm(0);
-          term = x_177;
+          f_177 = arg28.getSubterm(0);
+          term = f_177;
         }
         else
         { 
@@ -64,8 +64,8 @@ import java.lang.ref.WeakReference;
       if(term == null)
         break Fail131;
       x_22 = term;
-      y_22 = cool.constCons29;
-      term = termFactory.makeAppl(transform._consSome_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consPerThis_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consExec_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consConstrPattern_5, new IStrategoTerm[]{cool.constAnnoPattern0, cool.constModPattern0, termFactory.makeAppl(transform._consConstrName_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consRefTypePattern_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consNamePattern_1, new IStrategoTerm[]{x_22})})}), cool.constCons30, cool.constNone0})})})});
+      y_22 = cool.constCons31;
+      term = termFactory.makeAppl(transform._consSome_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consPerThis_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consExec_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consConstrPattern_5, new IStrategoTerm[]{cool.constAnnoPattern0, cool.constModPattern0, termFactory.makeAppl(transform._consConstrName_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consRefTypePattern_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consNamePattern_1, new IStrategoTerm[]{x_22})})}), cool.constCons32, cool.constNone0})})})});
       a_23 = term;
       term = (IStrategoTerm)termFactory.makeListCons(z_22, (IStrategoList)cool.constCons18);
       term = concat_strings_0_0.instance.invoke(context, term);

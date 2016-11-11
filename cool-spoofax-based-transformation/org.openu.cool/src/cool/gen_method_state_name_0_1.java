@@ -39,7 +39,7 @@ import java.lang.ref.WeakReference;
       term = int_to_string_0_0.instance.invoke(context, term);
       if(term == null)
         break Fail124;
-      term = (IStrategoTerm)termFactory.makeListCons(f_21, termFactory.makeListCons(term, (IStrategoList)cool.constCons26));
+      term = (IStrategoTerm)termFactory.makeListCons(f_21, termFactory.makeListCons(term, (IStrategoList)cool.constCons28));
       term = concat_strings_0_0.instance.invoke(context, term);
       if(term == null)
         break Fail124;

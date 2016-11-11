@@ -40,7 +40,7 @@ import java.lang.ref.WeakReference;
           IStrategoTerm r_22 = null;
           n_22 = term;
           r_22 = l_22;
-          term = equal_0_1.instance.invoke(context, r_22, cool.const87);
+          term = equal_0_1.instance.invoke(context, r_22, cool.const89);
           if(term == null)
             break Fail129;
           term = n_22;
@@ -59,7 +59,7 @@ import java.lang.ref.WeakReference;
             IStrategoTerm t_22 = null;
             o_22 = term;
             t_22 = l_22;
-            term = equal_0_1.instance.invoke(context, t_22, cool.const88);
+            term = equal_0_1.instance.invoke(context, t_22, cool.const90);
             if(term == null)
               break Fail130;
             term = o_22;

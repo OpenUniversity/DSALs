@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference;
       term = gen_method_state_name_0_1.instance.invoke(context, z_20, x_20);
       if(term == null)
         break Fail123;
-      term = termFactory.makeAppl(transform._consFieldDec_3, new IStrategoTerm[]{cool.constCons24, cool.constClassOrInterfaceType0, (IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consVarDec_2, new IStrategoTerm[]{termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{term}), cool.constInvoke3}), (IStrategoList)cool.constNil0)});
+      term = termFactory.makeAppl(transform._consFieldDec_3, new IStrategoTerm[]{cool.constCons26, cool.constClassOrInterfaceType0, (IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consVarDec_2, new IStrategoTerm[]{termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{term}), cool.constInvoke3}), (IStrategoList)cool.constNil0)});
       context.popOnSuccess();
       if(true)
         return term;

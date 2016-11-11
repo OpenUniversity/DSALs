@@ -46,7 +46,7 @@ import java.lang.ref.WeakReference;
       term = hashtable_get_0_1.instance.invoke(context, e_23, k_23);
       if(term == null)
         break Fail133;
-      term = termFactory.makeAppl(transform._consIntertypeMethodDec_2, new IStrategoTerm[]{termFactory.makeAppl(transform._consIntertypeMethodDecHead_8, new IStrategoTerm[]{cool.constCons31, cool.constNone0, cool.constBoolean0, d_23, cool.constNone0, termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{j_23}), cool.constNil0, cool.constNone0}), termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{(IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consReturn_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consSome_1, new IStrategoTerm[]{term})}), (IStrategoList)cool.constNil0)})});
+      term = termFactory.makeAppl(transform._consIntertypeMethodDec_2, new IStrategoTerm[]{termFactory.makeAppl(transform._consIntertypeMethodDecHead_8, new IStrategoTerm[]{cool.constCons34, cool.constNone0, cool.constBoolean0, d_23, cool.constNone0, termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{j_23}), cool.constNil0, cool.constNone0}), termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{(IStrategoTerm)termFactory.makeListCons(termFactory.makeAppl(transform._consReturn_1, new IStrategoTerm[]{termFactory.makeAppl(transform._consSome_1, new IStrategoTerm[]{term})}), (IStrategoList)cool.constNil0)})});
       context.popOnSuccess();
       if(true)
         return term;

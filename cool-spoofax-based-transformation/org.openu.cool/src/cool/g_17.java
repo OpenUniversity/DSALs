@@ -17,16 +17,16 @@ import java.lang.ref.WeakReference;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail210:
+    Fail207:
     { 
       IStrategoTerm term101 = term;
       Success132:
       { 
-        Fail211:
+        Fail208:
         { 
           term = $Not$Comp_1_0.instance.invoke(context, term, _Id.instance);
           if(term == null)
-            break Fail211;
+            break Fail208;
           if(true)
             break Success132;
         }
@@ -34,17 +34,17 @@ import java.lang.ref.WeakReference;
         IStrategoTerm term102 = term;
         Success133:
         { 
-          Fail212:
+          Fail209:
           { 
             term = $And$Comp_2_0.instance.invoke(context, term, this, _Id.instance);
             if(term == null)
-              break Fail212;
+              break Fail209;
             if(true)
               break Success133;
           }
           term = $Or$Comp_2_0.instance.invoke(context, term102, this, _Id.instance);
           if(term == null)
-            break Fail210;
+            break Fail207;
         }
       }
       if(true)

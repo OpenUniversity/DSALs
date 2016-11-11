@@ -13,38 +13,38 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted29 extends Strategy 
 { 
-  TermReference a_36;
+  TermReference u_34;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail185:
+    Fail182:
     { 
-      IStrategoTerm f_36 = null;
-      IStrategoTerm g_36 = null;
-      IStrategoTerm h_36 = null;
-      IStrategoTerm l_36 = null;
-      IStrategoTerm n_36 = null;
-      IStrategoTerm o_36 = null;
+      IStrategoTerm z_34 = null;
+      IStrategoTerm a_35 = null;
+      IStrategoTerm b_35 = null;
+      IStrategoTerm f_35 = null;
+      IStrategoTerm h_35 = null;
+      IStrategoTerm i_35 = null;
       if(term.getTermType() != IStrategoTerm.APPL || transform._consFieldDec_3 != ((IStrategoAppl)term).getConstructor())
-        break Fail185;
-      f_36 = term.getSubterm(0);
-      g_36 = term.getSubterm(1);
-      h_36 = term.getSubterm(2);
-      term = h_36;
-      n_36 = h_36;
-      if(a_36.value == null)
-        break Fail185;
-      term = topdown_1_0.instance.invoke(context, a_36.value, strip_annos_0_0.instance);
+        break Fail182;
+      z_34 = term.getSubterm(0);
+      a_35 = term.getSubterm(1);
+      b_35 = term.getSubterm(2);
+      term = b_35;
+      h_35 = b_35;
+      if(u_34.value == null)
+        break Fail182;
+      term = topdown_1_0.instance.invoke(context, u_34.value, strip_annos_0_0.instance);
       if(term == null)
-        break Fail185;
-      l_36 = term;
-      o_36 = n_36;
-      term = topdown_1_0.instance.invoke(context, g_36, strip_annos_0_0.instance);
+        break Fail182;
+      f_35 = term;
+      i_35 = h_35;
+      term = topdown_1_0.instance.invoke(context, a_35, strip_annos_0_0.instance);
       if(term == null)
-        break Fail185;
-      term = add_coordinator_fields2_0_3.instance.invoke(context, o_36, l_36, term, f_36);
+        break Fail182;
+      term = add_coordinator_fields2_0_3.instance.invoke(context, i_35, f_35, term, z_34);
       if(term == null)
-        break Fail185;
+        break Fail182;
       if(true)
         return term;
     }

@@ -21,37 +21,69 @@ import java.lang.ref.WeakReference;
 
   private static boolean isIniting;
 
-  protected static IStrategoTerm const126;
-
-  protected static IStrategoTerm const125;
-
-  protected static IStrategoTerm const124;
+  protected static IStrategoTerm constId32;
 
   protected static IStrategoTerm const123;
 
+  protected static IStrategoTerm constId31;
+
   protected static IStrategoTerm const122;
 
-  protected static IStrategoTerm constTypeName6;
+  protected static IStrategoTerm constCons52;
 
-  protected static IStrategoTerm constId33;
+  protected static IStrategoTerm constElemValPair0;
+
+  protected static IStrategoTerm constLit0;
+
+  protected static IStrategoTerm constString0;
+
+  protected static IStrategoTerm constCons51;
+
+  protected static IStrategoTerm constChars0;
 
   protected static IStrategoTerm const121;
 
-  protected static IStrategoTerm constId32;
+  protected static IStrategoTerm constId30;
 
   protected static IStrategoTerm const120;
 
-  protected static IStrategoTerm constCons42;
+  protected static IStrategoTerm constTypeName6;
+
+  protected static IStrategoTerm constId29;
+
+  protected static IStrategoTerm const119;
+
+  protected static IStrategoTerm const118;
+
+  protected static IStrategoTerm const117;
+
+  protected static IStrategoTerm const116;
+
+  protected static IStrategoTerm const115;
+
+  protected static IStrategoTerm const114;
+
+  protected static IStrategoTerm constTypeName5;
+
+  protected static IStrategoTerm constId28;
+
+  protected static IStrategoTerm const113;
+
+  protected static IStrategoTerm constId27;
+
+  protected static IStrategoTerm const112;
+
+  protected static IStrategoTerm constCons50;
 
   protected static IStrategoTerm constTry0;
 
-  protected static IStrategoTerm constCons41;
+  protected static IStrategoTerm constCons49;
 
   protected static IStrategoTerm constCatch0;
 
   protected static IStrategoTerm constBlock2;
 
-  protected static IStrategoTerm constCons40;
+  protected static IStrategoTerm constCons48;
 
   protected static IStrategoTerm constThrow0;
 
@@ -59,29 +91,29 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constClassOrInterfaceType3;
 
-  protected static IStrategoTerm constTypeName5;
+  protected static IStrategoTerm constTypeName4;
 
-  protected static IStrategoTerm constId31;
+  protected static IStrategoTerm constId26;
 
-  protected static IStrategoTerm const119;
+  protected static IStrategoTerm const111;
 
   protected static IStrategoTerm constParam1;
 
-  protected static IStrategoTerm constId30;
+  protected static IStrategoTerm constId25;
 
-  protected static IStrategoTerm const118;
+  protected static IStrategoTerm const110;
 
   protected static IStrategoTerm constClassOrInterfaceType2;
 
-  protected static IStrategoTerm constTypeName4;
+  protected static IStrategoTerm constTypeName3;
 
-  protected static IStrategoTerm constId29;
+  protected static IStrategoTerm constId24;
 
-  protected static IStrategoTerm const117;
+  protected static IStrategoTerm const109;
 
   protected static IStrategoTerm constBlock1;
 
-  protected static IStrategoTerm constCons39;
+  protected static IStrategoTerm constCons47;
 
   protected static IStrategoTerm constExprStm1;
 
@@ -91,25 +123,19 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constMethodName6;
 
-  protected static IStrategoTerm constId28;
+  protected static IStrategoTerm constId23;
 
-  protected static IStrategoTerm const116;
-
-  protected static IStrategoTerm const115;
+  protected static IStrategoTerm const108;
 
   protected static IStrategoTerm constMethod5;
 
   protected static IStrategoTerm constMethodName5;
 
-  protected static IStrategoTerm const114;
+  protected static IStrategoTerm const107;
 
-  protected static IStrategoTerm const113;
+  protected static IStrategoTerm const106;
 
-  protected static IStrategoTerm const112;
-
-  protected static IStrategoTerm const111;
-
-  protected static IStrategoTerm constCons38;
+  protected static IStrategoTerm constCons46;
 
   protected static IStrategoTerm constExprStm0;
 
@@ -119,61 +145,35 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constMethodName4;
 
-  protected static IStrategoTerm constId27;
-
-  protected static IStrategoTerm const110;
-
-  protected static IStrategoTerm constId26;
-
-  protected static IStrategoTerm const109;
-
-  protected static IStrategoTerm constAmbName3;
-
-  protected static IStrategoTerm constId25;
-
-  protected static IStrategoTerm const108;
-
-  protected static IStrategoTerm constTypeName3;
-
-  protected static IStrategoTerm constId24;
-
-  protected static IStrategoTerm const107;
-
-  protected static IStrategoTerm constPackageOrTypeName5;
-
-  protected static IStrategoTerm constId23;
-
-  protected static IStrategoTerm const106;
-
-  protected static IStrategoTerm constPackageOrTypeName4;
-
   protected static IStrategoTerm constId22;
 
   protected static IStrategoTerm const105;
-
-  protected static IStrategoTerm constPackageOrTypeName3;
 
   protected static IStrategoTerm constId21;
 
   protected static IStrategoTerm const104;
 
-  protected static IStrategoTerm constPackageOrTypeName2;
+  protected static IStrategoTerm constAmbName3;
 
   protected static IStrategoTerm constId20;
 
   protected static IStrategoTerm const103;
 
-  protected static IStrategoTerm constCons37;
+  protected static IStrategoTerm constTypeName2;
 
-  protected static IStrategoTerm constCons36;
-
-  protected static IStrategoTerm constSynchronized0;
+  protected static IStrategoTerm constId19;
 
   protected static IStrategoTerm const102;
 
-  protected static IStrategoTerm constCons35;
+  protected static IStrategoTerm constCons45;
+
+  protected static IStrategoTerm constCons44;
+
+  protected static IStrategoTerm constSynchronized0;
 
   protected static IStrategoTerm const101;
+
+  protected static IStrategoTerm constCons43;
 
   protected static IStrategoTerm const100;
 
@@ -181,47 +181,61 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm const98;
 
-  protected static IStrategoTerm constCons34;
+  protected static IStrategoTerm const97;
 
-  protected static IStrategoTerm constTypeImportOnDemandDec0;
+  protected static IStrategoTerm constCons42;
 
-  protected static IStrategoTerm constPackageName0;
+  protected static IStrategoTerm constTypeImportOnDemandDec1;
 
-  protected static IStrategoTerm constCons33;
+  protected static IStrategoTerm constPackageName1;
 
-  protected static IStrategoTerm constId19;
-
-  protected static IStrategoTerm constCons32;
+  protected static IStrategoTerm constCons41;
 
   protected static IStrategoTerm constId18;
 
-  protected static IStrategoTerm const97;
-
-  protected static IStrategoTerm constVoid0;
+  protected static IStrategoTerm constCons40;
 
   protected static IStrategoTerm constId17;
 
   protected static IStrategoTerm const96;
 
+  protected static IStrategoTerm constCons39;
+
+  protected static IStrategoTerm constTypeImportOnDemandDec0;
+
+  protected static IStrategoTerm constPackageName0;
+
+  protected static IStrategoTerm constCons38;
+
   protected static IStrategoTerm constId16;
 
   protected static IStrategoTerm const95;
+
+  protected static IStrategoTerm constCons37;
 
   protected static IStrategoTerm constId15;
 
   protected static IStrategoTerm const94;
 
+  protected static IStrategoTerm constCons36;
+
   protected static IStrategoTerm constId14;
 
   protected static IStrategoTerm const93;
+
+  protected static IStrategoTerm constCons35;
 
   protected static IStrategoTerm constId13;
 
   protected static IStrategoTerm const92;
 
-  protected static IStrategoTerm constCons31;
+  protected static IStrategoTerm constVoid0;
 
-  protected static IStrategoTerm constCons30;
+  protected static IStrategoTerm constCons34;
+
+  protected static IStrategoTerm constCons33;
+
+  protected static IStrategoTerm constCons32;
 
   protected static IStrategoTerm constFormalWildcard0;
 
@@ -229,55 +243,41 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constAnnoPattern0;
 
-  protected static IStrategoTerm constCons29;
+  protected static IStrategoTerm constCons31;
 
-  protected static IStrategoTerm constMarkerAnno0;
-
-  protected static IStrategoTerm constTypeName2;
+  protected static IStrategoTerm constMarkerAnno2;
 
   protected static IStrategoTerm constId12;
 
   protected static IStrategoTerm const91;
 
-  protected static IStrategoTerm constPackageOrTypeName1;
-
-  protected static IStrategoTerm constId11;
-
-  protected static IStrategoTerm const90;
-
-  protected static IStrategoTerm constPackageOrTypeName0;
-
-  protected static IStrategoTerm constId10;
-
-  protected static IStrategoTerm const89;
-
-  protected static IStrategoTerm constCons28;
+  protected static IStrategoTerm constCons30;
 
   protected static IStrategoTerm constPublic0;
 
-  protected static IStrategoTerm constCons27;
+  protected static IStrategoTerm constCons29;
 
   protected static IStrategoTerm constPrivileged0;
 
-  protected static IStrategoTerm const88;
+  protected static IStrategoTerm const90;
 
   protected static IStrategoTerm constFalse0;
+
+  protected static IStrategoTerm const89;
+
+  protected static IStrategoTerm const88;
 
   protected static IStrategoTerm const87;
 
   protected static IStrategoTerm const86;
 
+  protected static IStrategoTerm constCons28;
+
   protected static IStrategoTerm const85;
-
-  protected static IStrategoTerm const84;
-
-  protected static IStrategoTerm constCons26;
-
-  protected static IStrategoTerm const83;
 
   protected static IStrategoTerm constInvoke3;
 
-  protected static IStrategoTerm constCons25;
+  protected static IStrategoTerm constCons27;
 
   protected static IStrategoTerm constNewInstance0;
 
@@ -285,33 +285,41 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constTypeName1;
 
-  protected static IStrategoTerm constId9;
+  protected static IStrategoTerm constId11;
 
-  protected static IStrategoTerm const82;
+  protected static IStrategoTerm const84;
 
   protected static IStrategoTerm constMethod3;
 
   protected static IStrategoTerm constMethodName3;
 
+  protected static IStrategoTerm constId10;
+
+  protected static IStrategoTerm const83;
+
+  protected static IStrategoTerm constAmbName2;
+
+  protected static IStrategoTerm constId9;
+
+  protected static IStrategoTerm const82;
+
+  protected static IStrategoTerm constClassOrInterfaceType0;
+
+  protected static IStrategoTerm constCons26;
+
+  protected static IStrategoTerm constMarkerAnno1;
+
   protected static IStrategoTerm constId8;
 
   protected static IStrategoTerm const81;
 
-  protected static IStrategoTerm constAmbName2;
-
-  protected static IStrategoTerm constId7;
-
-  protected static IStrategoTerm const80;
-
-  protected static IStrategoTerm constClassOrInterfaceType0;
-
-  protected static IStrategoTerm constCons24;
+  protected static IStrategoTerm constCons25;
 
   protected static IStrategoTerm constMethodDec0;
 
   protected static IStrategoTerm constBlock0;
 
-  protected static IStrategoTerm constCons23;
+  protected static IStrategoTerm constCons24;
 
   protected static IStrategoTerm constReturn0;
 
@@ -323,7 +331,7 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constInvoke2;
 
-  protected static IStrategoTerm constCons22;
+  protected static IStrategoTerm constCons23;
 
   protected static IStrategoTerm constInvoke1;
 
@@ -331,23 +339,23 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constMethodName2;
 
-  protected static IStrategoTerm constId6;
+  protected static IStrategoTerm constId7;
 
-  protected static IStrategoTerm const79;
+  protected static IStrategoTerm const80;
 
   protected static IStrategoTerm constAmbName1;
 
-  protected static IStrategoTerm constId5;
+  protected static IStrategoTerm constId6;
 
-  protected static IStrategoTerm const78;
+  protected static IStrategoTerm const79;
 
   protected static IStrategoTerm constMethod1;
 
   protected static IStrategoTerm constMethodName1;
 
-  protected static IStrategoTerm constId4;
+  protected static IStrategoTerm constId5;
 
-  protected static IStrategoTerm const77;
+  protected static IStrategoTerm const78;
 
   protected static IStrategoTerm constNot0;
 
@@ -357,35 +365,43 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constMethodName0;
 
-  protected static IStrategoTerm constId3;
+  protected static IStrategoTerm constId4;
 
-  protected static IStrategoTerm const76;
+  protected static IStrategoTerm const77;
 
   protected static IStrategoTerm constAmbName0;
 
   protected static IStrategoTerm constMethodDecHead0;
 
-  protected static IStrategoTerm constCons21;
+  protected static IStrategoTerm constCons22;
 
   protected static IStrategoTerm constParam0;
+
+  protected static IStrategoTerm constId3;
+
+  protected static IStrategoTerm const76;
+
+  protected static IStrategoTerm constTypeName0;
 
   protected static IStrategoTerm constId2;
 
   protected static IStrategoTerm const75;
 
-  protected static IStrategoTerm constTypeName0;
-
   protected static IStrategoTerm constId1;
 
   protected static IStrategoTerm const74;
 
-  protected static IStrategoTerm constId0;
-
-  protected static IStrategoTerm const73;
-
   protected static IStrategoTerm constBoolean0;
 
   protected static IStrategoTerm constNone0;
+
+  protected static IStrategoTerm constCons21;
+
+  protected static IStrategoTerm constMarkerAnno0;
+
+  protected static IStrategoTerm constId0;
+
+  protected static IStrategoTerm const73;
 
   protected static IStrategoTerm constCons20;
 
@@ -836,6 +852,12 @@ import java.lang.ref.WeakReference;
 
   public static IStrategoConstructor _consConc_2;
 
+  protected static IStrategoConstructor _consDeci_1;
+
+  protected static IStrategoConstructor _consElemValPair_2;
+
+  protected static IStrategoConstructor _consAnno_2;
+
   protected static IStrategoConstructor _consAssign_2;
 
   protected static IStrategoConstructor _consWhile_2;
@@ -852,6 +874,12 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoConstructor _consExprStm_1;
 
+  protected static IStrategoConstructor _consChars_1;
+
+  protected static IStrategoConstructor _consString_1;
+
+  protected static IStrategoConstructor _consLit_1;
+
   protected static IStrategoConstructor _consSingleElemAnno_2;
 
   protected static IStrategoConstructor _consSynchronized_0;
@@ -863,20 +891,6 @@ import java.lang.ref.WeakReference;
   protected static IStrategoConstructor _consCompilationUnit_3;
 
   protected static IStrategoConstructor _consVoid_0;
-
-  protected static IStrategoConstructor _consChars_1;
-
-  protected static IStrategoConstructor _consString_1;
-
-  protected static IStrategoConstructor _consDeci_1;
-
-  protected static IStrategoConstructor _consLit_1;
-
-  protected static IStrategoConstructor _consElemValPair_2;
-
-  protected static IStrategoConstructor _consAnno_2;
-
-  protected static IStrategoConstructor _consMarkerAnno_1;
 
   protected static IStrategoConstructor _consPublic_0;
 
@@ -907,6 +921,8 @@ import java.lang.ref.WeakReference;
   protected static IStrategoConstructor _consParam_3;
 
   protected static IStrategoConstructor _consBoolean_0;
+
+  protected static IStrategoConstructor _consMarkerAnno_1;
 
   protected static IStrategoConstructor _consPrivate_0;
 
@@ -1281,6 +1297,9 @@ import java.lang.ref.WeakReference;
   public static void initConstructors(ITermFactory termFactory)
   { 
     _consConc_2 = termFactory.makeConstructor("Conc", 2);
+    _consDeci_1 = termFactory.makeConstructor("Deci", 1);
+    _consElemValPair_2 = termFactory.makeConstructor("ElemValPair", 2);
+    _consAnno_2 = termFactory.makeConstructor("Anno", 2);
     _consAssign_2 = termFactory.makeConstructor("Assign", 2);
     _consWhile_2 = termFactory.makeConstructor("While", 2);
     _consThrow_1 = termFactory.makeConstructor("Throw", 1);
@@ -1289,19 +1308,15 @@ import java.lang.ref.WeakReference;
     _consExprName_1 = termFactory.makeConstructor("ExprName", 1);
     _consMethodName_1 = termFactory.makeConstructor("MethodName", 1);
     _consExprStm_1 = termFactory.makeConstructor("ExprStm", 1);
+    _consChars_1 = termFactory.makeConstructor("Chars", 1);
+    _consString_1 = termFactory.makeConstructor("String", 1);
+    _consLit_1 = termFactory.makeConstructor("Lit", 1);
     _consSingleElemAnno_2 = termFactory.makeConstructor("SingleElemAnno", 2);
     _consSynchronized_0 = termFactory.makeConstructor("Synchronized", 0);
     _consPackageName_1 = termFactory.makeConstructor("PackageName", 1);
     _consTypeImportOnDemandDec_1 = termFactory.makeConstructor("TypeImportOnDemandDec", 1);
     _consCompilationUnit_3 = termFactory.makeConstructor("CompilationUnit", 3);
     _consVoid_0 = termFactory.makeConstructor("Void", 0);
-    _consChars_1 = termFactory.makeConstructor("Chars", 1);
-    _consString_1 = termFactory.makeConstructor("String", 1);
-    _consDeci_1 = termFactory.makeConstructor("Deci", 1);
-    _consLit_1 = termFactory.makeConstructor("Lit", 1);
-    _consElemValPair_2 = termFactory.makeConstructor("ElemValPair", 2);
-    _consAnno_2 = termFactory.makeConstructor("Anno", 2);
-    _consMarkerAnno_1 = termFactory.makeConstructor("MarkerAnno", 1);
     _consPublic_0 = termFactory.makeConstructor("Public", 0);
     _consLazyOr_2 = termFactory.makeConstructor("LazyOr", 2);
     _consFalse_0 = termFactory.makeConstructor("False", 0);
@@ -1317,6 +1332,7 @@ import java.lang.ref.WeakReference;
     _consReturn_1 = termFactory.makeConstructor("Return", 1);
     _consParam_3 = termFactory.makeConstructor("Param", 3);
     _consBoolean_0 = termFactory.makeConstructor("Boolean", 0);
+    _consMarkerAnno_1 = termFactory.makeConstructor("MarkerAnno", 1);
     _consPrivate_0 = termFactory.makeConstructor("Private", 0);
     _consStatic_0 = termFactory.makeConstructor("Static", 0);
     _consMethodDecHead_6 = termFactory.makeConstructor("MethodDecHead", 6);
@@ -1675,189 +1691,197 @@ import java.lang.ref.WeakReference;
     constCons19 = (IStrategoTerm)termFactory.makeListCons(cool.constStatic0, (IStrategoList)cool.constNil0);
     constPrivate0 = termFactory.makeAppl(transform._consPrivate_0, NO_TERMS);
     constCons20 = (IStrategoTerm)termFactory.makeListCons(cool.constPrivate0, (IStrategoList)cool.constCons19);
+    const73 = termFactory.makeString("HideMethod");
+    constId0 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const73});
+    constMarkerAnno0 = termFactory.makeAppl(transform._consMarkerAnno_1, new IStrategoTerm[]{cool.constId0});
+    constCons21 = (IStrategoTerm)termFactory.makeListCons(cool.constMarkerAnno0, (IStrategoList)cool.constCons20);
     constNone0 = termFactory.makeAppl(transform._consNone_0, NO_TERMS);
     constBoolean0 = termFactory.makeAppl(transform._consBoolean_0, NO_TERMS);
-    const73 = termFactory.makeString("isRunByOthers");
-    constId0 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const73});
-    const74 = termFactory.makeString("List");
+    const74 = termFactory.makeString("isRunByOthers");
     constId1 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const74});
-    constTypeName0 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId1});
-    const75 = termFactory.makeString("methState");
+    const75 = termFactory.makeString("List");
     constId2 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const75});
-    constParam0 = termFactory.makeAppl(transform._consParam_3, new IStrategoTerm[]{cool.constNil0, cool.constTypeName0, cool.constId2});
-    constCons21 = (IStrategoTerm)termFactory.makeListCons(cool.constParam0, (IStrategoList)cool.constNil0);
-    constMethodDecHead0 = termFactory.makeAppl(transform._consMethodDecHead_6, new IStrategoTerm[]{cool.constCons20, cool.constNone0, cool.constBoolean0, cool.constId0, cool.constCons21, cool.constNone0});
-    constAmbName0 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId2});
-    const76 = termFactory.makeString("isEmpty");
+    constTypeName0 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId2});
+    const76 = termFactory.makeString("methState");
     constId3 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const76});
-    constMethodName0 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName0, cool.constId3});
+    constParam0 = termFactory.makeAppl(transform._consParam_3, new IStrategoTerm[]{cool.constNil0, cool.constTypeName0, cool.constId3});
+    constCons22 = (IStrategoTerm)termFactory.makeListCons(cool.constParam0, (IStrategoList)cool.constNil0);
+    constMethodDecHead0 = termFactory.makeAppl(transform._consMethodDecHead_6, new IStrategoTerm[]{cool.constCons21, cool.constNone0, cool.constBoolean0, cool.constId1, cool.constCons22, cool.constNone0});
+    constAmbName0 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId3});
+    const77 = termFactory.makeString("isEmpty");
+    constId4 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const77});
+    constMethodName0 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName0, cool.constId4});
     constMethod0 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName0});
     constInvoke0 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod0, cool.constNil0});
     constNot0 = termFactory.makeAppl(transform._consNot_1, new IStrategoTerm[]{cool.constInvoke0});
-    const77 = termFactory.makeString("contains");
-    constId4 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const77});
-    constMethodName1 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName0, cool.constId4});
-    constMethod1 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName1});
-    const78 = termFactory.makeString("Thread");
+    const78 = termFactory.makeString("contains");
     constId5 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const78});
-    constAmbName1 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId5});
-    const79 = termFactory.makeString("currentThread");
+    constMethodName1 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName0, cool.constId5});
+    constMethod1 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName1});
+    const79 = termFactory.makeString("Thread");
     constId6 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const79});
-    constMethodName2 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName1, cool.constId6});
+    constAmbName1 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId6});
+    const80 = termFactory.makeString("currentThread");
+    constId7 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const80});
+    constMethodName2 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName1, cool.constId7});
     constMethod2 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName2});
     constInvoke1 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod2, cool.constNil0});
-    constCons22 = (IStrategoTerm)termFactory.makeListCons(cool.constInvoke1, (IStrategoList)cool.constNil0);
-    constInvoke2 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod1, cool.constCons22});
+    constCons23 = (IStrategoTerm)termFactory.makeListCons(cool.constInvoke1, (IStrategoList)cool.constNil0);
+    constInvoke2 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod1, cool.constCons23});
     constNot1 = termFactory.makeAppl(transform._consNot_1, new IStrategoTerm[]{cool.constInvoke2});
     constLazyAnd0 = termFactory.makeAppl(transform._consLazyAnd_2, new IStrategoTerm[]{cool.constNot0, cool.constNot1});
     constSome0 = termFactory.makeAppl(transform._consSome_1, new IStrategoTerm[]{cool.constLazyAnd0});
     constReturn0 = termFactory.makeAppl(transform._consReturn_1, new IStrategoTerm[]{cool.constSome0});
-    constCons23 = (IStrategoTerm)termFactory.makeListCons(cool.constReturn0, (IStrategoList)cool.constNil0);
-    constBlock0 = termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{cool.constCons23});
+    constCons24 = (IStrategoTerm)termFactory.makeListCons(cool.constReturn0, (IStrategoList)cool.constNil0);
+    constBlock0 = termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{cool.constCons24});
     constMethodDec0 = termFactory.makeAppl(transform._consMethodDec_2, new IStrategoTerm[]{cool.constMethodDecHead0, cool.constBlock0});
-    constCons24 = (IStrategoTerm)termFactory.makeListCons(cool.constPrivate0, (IStrategoList)cool.constNil0);
-    constClassOrInterfaceType0 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName0, cool.constNone0});
-    const80 = termFactory.makeString("Collections");
-    constId7 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const80});
-    constAmbName2 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId7});
-    const81 = termFactory.makeString("synchronizedList");
+    constCons25 = (IStrategoTerm)termFactory.makeListCons(cool.constPrivate0, (IStrategoList)cool.constNil0);
+    const81 = termFactory.makeString("HideField");
     constId8 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const81});
-    constMethodName3 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName2, cool.constId8});
-    constMethod3 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName3});
-    const82 = termFactory.makeString("Vector");
+    constMarkerAnno1 = termFactory.makeAppl(transform._consMarkerAnno_1, new IStrategoTerm[]{cool.constId8});
+    constCons26 = (IStrategoTerm)termFactory.makeListCons(cool.constMarkerAnno1, (IStrategoList)cool.constCons25);
+    constClassOrInterfaceType0 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName0, cool.constNone0});
+    const82 = termFactory.makeString("Collections");
     constId9 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const82});
-    constTypeName1 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId9});
+    constAmbName2 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId9});
+    const83 = termFactory.makeString("synchronizedList");
+    constId10 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const83});
+    constMethodName3 = termFactory.makeAppl(transform._consMethodName_2, new IStrategoTerm[]{cool.constAmbName2, cool.constId10});
+    constMethod3 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName3});
+    const84 = termFactory.makeString("Vector");
+    constId11 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const84});
+    constTypeName1 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId11});
     constClassOrInterfaceType1 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName1, cool.constNone0});
     constNewInstance0 = termFactory.makeAppl(transform._consNewInstance_4, new IStrategoTerm[]{cool.constNone0, cool.constClassOrInterfaceType1, cool.constNil0, cool.constNone0});
-    constCons25 = (IStrategoTerm)termFactory.makeListCons(cool.constNewInstance0, (IStrategoList)cool.constNil0);
-    constInvoke3 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod3, cool.constCons25});
-    const83 = termFactory.makeString("State");
-    constCons26 = (IStrategoTerm)termFactory.makeListCons(cool.const83, (IStrategoList)cool.constNil0);
-    const84 = termFactory.makeString("requires_");
-    const85 = termFactory.makeString("on_entry_");
-    const86 = termFactory.makeString("on_exit_");
-    const87 = termFactory.makeInt(0);
+    constCons27 = (IStrategoTerm)termFactory.makeListCons(cool.constNewInstance0, (IStrategoList)cool.constNil0);
+    constInvoke3 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod3, cool.constCons27});
+    const85 = termFactory.makeString("State");
+    constCons28 = (IStrategoTerm)termFactory.makeListCons(cool.const85, (IStrategoList)cool.constNil0);
+    const86 = termFactory.makeString("requires_");
+    const87 = termFactory.makeString("on_entry_");
+    const88 = termFactory.makeString("on_exit_");
+    const89 = termFactory.makeInt(0);
     constFalse0 = termFactory.makeAppl(transform._consFalse_0, NO_TERMS);
-    const88 = termFactory.makeInt(1);
+    const90 = termFactory.makeInt(1);
     constPrivileged0 = termFactory.makeAppl(transform._consPrivileged_0, NO_TERMS);
-    constCons27 = (IStrategoTerm)termFactory.makeListCons(cool.constPrivileged0, (IStrategoList)cool.constNil0);
+    constCons29 = (IStrategoTerm)termFactory.makeListCons(cool.constPrivileged0, (IStrategoList)cool.constNil0);
     constPublic0 = termFactory.makeAppl(transform._consPublic_0, NO_TERMS);
-    constCons28 = (IStrategoTerm)termFactory.makeListCons(cool.constPublic0, (IStrategoList)cool.constCons27);
-    const89 = termFactory.makeString("cool");
-    constId10 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const89});
-    constPackageOrTypeName0 = termFactory.makeAppl(transform._consPackageOrTypeName_1, new IStrategoTerm[]{cool.constId10});
-    const90 = termFactory.makeString("runtime");
-    constId11 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const90});
-    constPackageOrTypeName1 = termFactory.makeAppl(transform._consPackageOrTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName0, cool.constId11});
-    const91 = termFactory.makeString("CoolAspect");
+    constCons30 = (IStrategoTerm)termFactory.makeListCons(cool.constPublic0, (IStrategoList)cool.constCons29);
+    const91 = termFactory.makeString("HideType");
     constId12 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const91});
-    constTypeName2 = termFactory.makeAppl(transform._consTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName1, cool.constId12});
-    constMarkerAnno0 = termFactory.makeAppl(transform._consMarkerAnno_1, new IStrategoTerm[]{cool.constTypeName2});
-    constCons29 = (IStrategoTerm)termFactory.makeListCons(cool.constMarkerAnno0, (IStrategoList)cool.constCons28);
+    constMarkerAnno2 = termFactory.makeAppl(transform._consMarkerAnno_1, new IStrategoTerm[]{cool.constId12});
+    constCons31 = (IStrategoTerm)termFactory.makeListCons(cool.constMarkerAnno2, (IStrategoList)cool.constCons30);
     constAnnoPattern0 = termFactory.makeAppl(transform._consAnnoPattern_1, new IStrategoTerm[]{cool.constNil0});
     constModPattern0 = termFactory.makeAppl(transform._consModPattern_1, new IStrategoTerm[]{cool.constNil0});
     constFormalWildcard0 = termFactory.makeAppl(transform._consFormalWildcard_0, NO_TERMS);
-    constCons30 = (IStrategoTerm)termFactory.makeListCons(cool.constFormalWildcard0, (IStrategoList)cool.constNil0);
-    constCons31 = (IStrategoTerm)termFactory.makeListCons(cool.constPublic0, (IStrategoList)cool.constNil0);
-    const92 = termFactory.makeString("offset");
-    constId13 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const92});
-    const93 = termFactory.makeString("column");
-    constId14 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const93});
-    const94 = termFactory.makeString("endLine");
-    constId15 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const94});
-    const95 = termFactory.makeString("startLine");
-    constId16 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const95});
-    const96 = termFactory.makeString("file");
-    constId17 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const96});
+    constCons32 = (IStrategoTerm)termFactory.makeListCons(cool.constFormalWildcard0, (IStrategoList)cool.constNil0);
+    constCons33 = (IStrategoTerm)termFactory.makeListCons(cool.constPublic0, (IStrategoList)cool.constNil0);
+    constCons34 = (IStrategoTerm)termFactory.makeListCons(cool.constMarkerAnno0, (IStrategoList)cool.constCons33);
     constVoid0 = termFactory.makeAppl(transform._consVoid_0, NO_TERMS);
-    const97 = termFactory.makeString("util");
-    constId18 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const97});
-    constCons32 = (IStrategoTerm)termFactory.makeListCons(cool.constId18, (IStrategoList)cool.constNil0);
-    constId19 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const71});
-    constCons33 = (IStrategoTerm)termFactory.makeListCons(cool.constId19, (IStrategoList)cool.constCons32);
-    constPackageName0 = termFactory.makeAppl(transform._consPackageName_1, new IStrategoTerm[]{cool.constCons33});
+    const92 = termFactory.makeString("annotation");
+    constId13 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const92});
+    constCons35 = (IStrategoTerm)termFactory.makeListCons(cool.constId13, (IStrategoList)cool.constNil0);
+    const93 = termFactory.makeString("lang");
+    constId14 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const93});
+    constCons36 = (IStrategoTerm)termFactory.makeListCons(cool.constId14, (IStrategoList)cool.constCons35);
+    const94 = termFactory.makeString("aspectj");
+    constId15 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const94});
+    constCons37 = (IStrategoTerm)termFactory.makeListCons(cool.constId15, (IStrategoList)cool.constCons36);
+    const95 = termFactory.makeString("org");
+    constId16 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const95});
+    constCons38 = (IStrategoTerm)termFactory.makeListCons(cool.constId16, (IStrategoList)cool.constCons37);
+    constPackageName0 = termFactory.makeAppl(transform._consPackageName_1, new IStrategoTerm[]{cool.constCons38});
     constTypeImportOnDemandDec0 = termFactory.makeAppl(transform._consTypeImportOnDemandDec_1, new IStrategoTerm[]{cool.constPackageName0});
-    constCons34 = (IStrategoTerm)termFactory.makeListCons(cool.constTypeImportOnDemandDec0, (IStrategoList)cool.constNil0);
-    const98 = termFactory.makeString("'convert-coordinator-declaration'");
-    const99 = termFactory.makeString("'gen-coordinator-body'");
-    const100 = termFactory.makeString("'make-lock-and-unlock-methods'");
-    const101 = termFactory.makeString("(..)) && this(obj)");
-    constCons35 = (IStrategoTerm)termFactory.makeListCons(cool.const101, (IStrategoList)cool.constNil0);
-    const102 = termFactory.makeString("execution(* ");
+    constCons39 = (IStrategoTerm)termFactory.makeListCons(cool.constTypeImportOnDemandDec0, (IStrategoList)cool.constNil0);
+    const96 = termFactory.makeString("util");
+    constId17 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const96});
+    constCons40 = (IStrategoTerm)termFactory.makeListCons(cool.constId17, (IStrategoList)cool.constNil0);
+    constId18 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const71});
+    constCons41 = (IStrategoTerm)termFactory.makeListCons(cool.constId18, (IStrategoList)cool.constCons40);
+    constPackageName1 = termFactory.makeAppl(transform._consPackageName_1, new IStrategoTerm[]{cool.constCons41});
+    constTypeImportOnDemandDec1 = termFactory.makeAppl(transform._consTypeImportOnDemandDec_1, new IStrategoTerm[]{cool.constPackageName1});
+    constCons42 = (IStrategoTerm)termFactory.makeListCons(cool.constTypeImportOnDemandDec1, (IStrategoList)cool.constCons39);
+    const97 = termFactory.makeString("'convert-coordinator-declaration'");
+    const98 = termFactory.makeString("'gen-coordinator-body'");
+    const99 = termFactory.makeString("'make-lock-and-unlock-methods'");
+    const100 = termFactory.makeString("(..)) && this(obj)");
+    constCons43 = (IStrategoTerm)termFactory.makeListCons(cool.const100, (IStrategoList)cool.constNil0);
+    const101 = termFactory.makeString("execution(* ");
     constSynchronized0 = termFactory.makeAppl(transform._consSynchronized_0, NO_TERMS);
-    constCons36 = (IStrategoTerm)termFactory.makeListCons(cool.constSynchronized0, (IStrategoList)cool.constNil0);
-    constCons37 = (IStrategoTerm)termFactory.makeListCons(cool.constPublic0, (IStrategoList)cool.constCons36);
-    const103 = termFactory.makeString("org");
+    constCons44 = (IStrategoTerm)termFactory.makeListCons(cool.constSynchronized0, (IStrategoList)cool.constNil0);
+    constCons45 = (IStrategoTerm)termFactory.makeListCons(cool.constPublic0, (IStrategoList)cool.constCons44);
+    const102 = termFactory.makeString("After");
+    constId19 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const102});
+    constTypeName2 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId19});
+    const103 = termFactory.makeString("obj");
     constId20 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const103});
-    constPackageOrTypeName2 = termFactory.makeAppl(transform._consPackageOrTypeName_1, new IStrategoTerm[]{cool.constId20});
-    const104 = termFactory.makeString("aspectj");
+    constAmbName3 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId20});
+    const104 = termFactory.makeString("remove");
     constId21 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const104});
-    constPackageOrTypeName3 = termFactory.makeAppl(transform._consPackageOrTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName2, cool.constId21});
-    const105 = termFactory.makeString("lang");
+    const105 = termFactory.makeString("notifyAll");
     constId22 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const105});
-    constPackageOrTypeName4 = termFactory.makeAppl(transform._consPackageOrTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName3, cool.constId22});
-    const106 = termFactory.makeString("annotation");
-    constId23 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const106});
-    constPackageOrTypeName5 = termFactory.makeAppl(transform._consPackageOrTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName4, cool.constId23});
-    const107 = termFactory.makeString("After");
-    constId24 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const107});
-    constTypeName3 = termFactory.makeAppl(transform._consTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName5, cool.constId24});
-    const108 = termFactory.makeString("obj");
-    constId25 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const108});
-    constAmbName3 = termFactory.makeAppl(transform._consAmbName_1, new IStrategoTerm[]{cool.constId25});
-    const109 = termFactory.makeString("remove");
-    constId26 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const109});
-    const110 = termFactory.makeString("notifyAll");
-    constId27 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const110});
-    constMethodName4 = termFactory.makeAppl(transform._consMethodName_1, new IStrategoTerm[]{cool.constId27});
+    constMethodName4 = termFactory.makeAppl(transform._consMethodName_1, new IStrategoTerm[]{cool.constId22});
     constMethod4 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName4});
     constInvoke4 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod4, cool.constNil0});
     constExprStm0 = termFactory.makeAppl(transform._consExprStm_1, new IStrategoTerm[]{cool.constInvoke4});
-    constCons38 = (IStrategoTerm)termFactory.makeListCons(cool.constExprStm0, (IStrategoList)cool.constNil0);
-    const111 = termFactory.makeString("'make-unlock-method'");
-    const112 = termFactory.makeString("unlock_");
-    const113 = termFactory.makeString("COOLMutexLocation");
-    const114 = termFactory.makeString("COOLSelfexLocation");
-    constMethodName5 = termFactory.makeAppl(transform._consMethodName_1, new IStrategoTerm[]{cool.constId0});
+    constCons46 = (IStrategoTerm)termFactory.makeListCons(cool.constExprStm0, (IStrategoList)cool.constNil0);
+    const106 = termFactory.makeString("'make-unlock-method'");
+    const107 = termFactory.makeString("unlock_");
+    constMethodName5 = termFactory.makeAppl(transform._consMethodName_1, new IStrategoTerm[]{cool.constId1});
     constMethod5 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName5});
-    const115 = termFactory.makeString("COOLAdditionsLocation");
-    const116 = termFactory.makeString("wait");
-    constId28 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const116});
-    constMethodName6 = termFactory.makeAppl(transform._consMethodName_1, new IStrategoTerm[]{cool.constId28});
+    const108 = termFactory.makeString("wait");
+    constId23 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const108});
+    constMethodName6 = termFactory.makeAppl(transform._consMethodName_1, new IStrategoTerm[]{cool.constId23});
     constMethod6 = termFactory.makeAppl(transform._consMethod_1, new IStrategoTerm[]{cool.constMethodName6});
     constInvoke5 = termFactory.makeAppl(transform._consInvoke_2, new IStrategoTerm[]{cool.constMethod6, cool.constNil0});
     constExprStm1 = termFactory.makeAppl(transform._consExprStm_1, new IStrategoTerm[]{cool.constInvoke5});
-    constCons39 = (IStrategoTerm)termFactory.makeListCons(cool.constExprStm1, (IStrategoList)cool.constNil0);
-    constBlock1 = termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{cool.constCons39});
-    const117 = termFactory.makeString("InterruptedException");
-    constId29 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const117});
-    constTypeName4 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId29});
-    constClassOrInterfaceType2 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName4, cool.constNone0});
-    const118 = termFactory.makeString("e");
-    constId30 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const118});
-    constParam1 = termFactory.makeAppl(transform._consParam_3, new IStrategoTerm[]{cool.constNil0, cool.constClassOrInterfaceType2, cool.constId30});
-    const119 = termFactory.makeString("RuntimeException");
-    constId31 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const119});
-    constTypeName5 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId31});
-    constClassOrInterfaceType3 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName5, cool.constNone0});
+    constCons47 = (IStrategoTerm)termFactory.makeListCons(cool.constExprStm1, (IStrategoList)cool.constNil0);
+    constBlock1 = termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{cool.constCons47});
+    const109 = termFactory.makeString("InterruptedException");
+    constId24 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const109});
+    constTypeName3 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId24});
+    constClassOrInterfaceType2 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName3, cool.constNone0});
+    const110 = termFactory.makeString("e");
+    constId25 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const110});
+    constParam1 = termFactory.makeAppl(transform._consParam_3, new IStrategoTerm[]{cool.constNil0, cool.constClassOrInterfaceType2, cool.constId25});
+    const111 = termFactory.makeString("RuntimeException");
+    constId26 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const111});
+    constTypeName4 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId26});
+    constClassOrInterfaceType3 = termFactory.makeAppl(transform._consClassOrInterfaceType_2, new IStrategoTerm[]{cool.constTypeName4, cool.constNone0});
     constNewInstance1 = termFactory.makeAppl(transform._consNewInstance_4, new IStrategoTerm[]{cool.constNone0, cool.constClassOrInterfaceType3, cool.constNil0, cool.constNone0});
     constThrow0 = termFactory.makeAppl(transform._consThrow_1, new IStrategoTerm[]{cool.constNewInstance1});
-    constCons40 = (IStrategoTerm)termFactory.makeListCons(cool.constThrow0, (IStrategoList)cool.constNil0);
-    constBlock2 = termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{cool.constCons40});
+    constCons48 = (IStrategoTerm)termFactory.makeListCons(cool.constThrow0, (IStrategoList)cool.constNil0);
+    constBlock2 = termFactory.makeAppl(transform._consBlock_1, new IStrategoTerm[]{cool.constCons48});
     constCatch0 = termFactory.makeAppl(transform._consCatch_2, new IStrategoTerm[]{cool.constParam1, cool.constBlock2});
-    constCons41 = (IStrategoTerm)termFactory.makeListCons(cool.constCatch0, (IStrategoList)cool.constNil0);
-    constTry0 = termFactory.makeAppl(transform._consTry_2, new IStrategoTerm[]{cool.constBlock1, cool.constCons41});
-    constCons42 = (IStrategoTerm)termFactory.makeListCons(cool.constTry0, (IStrategoList)cool.constNil0);
-    const120 = termFactory.makeString("add");
-    constId32 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const120});
-    const121 = termFactory.makeString("Before");
-    constId33 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const121});
-    constTypeName6 = termFactory.makeAppl(transform._consTypeName_2, new IStrategoTerm[]{cool.constPackageOrTypeName5, cool.constId33});
-    const122 = termFactory.makeString("'make-lock-method'");
-    const123 = termFactory.makeString("lock_");
-    const124 = termFactory.makeString("'fillMethodMaps'");
-    const125 = termFactory.makeString("'add-condition-fields'");
-    const126 = termFactory.makeString("'add-coordinator-fields'");
+    constCons49 = (IStrategoTerm)termFactory.makeListCons(cool.constCatch0, (IStrategoList)cool.constNil0);
+    constTry0 = termFactory.makeAppl(transform._consTry_2, new IStrategoTerm[]{cool.constBlock1, cool.constCons49});
+    constCons50 = (IStrategoTerm)termFactory.makeListCons(cool.constTry0, (IStrategoList)cool.constNil0);
+    const112 = termFactory.makeString("add");
+    constId27 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const112});
+    const113 = termFactory.makeString("Before");
+    constId28 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const113});
+    constTypeName5 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId28});
+    const114 = termFactory.makeString("'make-lock-method'");
+    const115 = termFactory.makeString("lock_");
+    const116 = termFactory.makeString("'fillMethodMaps'");
+    const117 = termFactory.makeString("'add-condition-fields'");
+    const118 = termFactory.makeString("'add-coordinator-fields'");
+    const119 = termFactory.makeString("BridgedSourceLocation");
+    constId29 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const119});
+    constTypeName6 = termFactory.makeAppl(transform._consTypeName_1, new IStrategoTerm[]{cool.constId29});
+    const120 = termFactory.makeString("module");
+    constId30 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const120});
+    const121 = termFactory.makeString("BoundedStack.cool");
+    constChars0 = termFactory.makeAppl(transform._consChars_1, new IStrategoTerm[]{cool.const121});
+    constCons51 = (IStrategoTerm)termFactory.makeListCons(cool.constChars0, (IStrategoList)cool.constNil0);
+    constString0 = termFactory.makeAppl(transform._consString_1, new IStrategoTerm[]{cool.constCons51});
+    constLit0 = termFactory.makeAppl(transform._consLit_1, new IStrategoTerm[]{cool.constString0});
+    constElemValPair0 = termFactory.makeAppl(transform._consElemValPair_2, new IStrategoTerm[]{cool.constId30, cool.constLit0});
+    constCons52 = (IStrategoTerm)termFactory.makeListCons(cool.constElemValPair0, (IStrategoList)cool.constNil0);
+    const122 = termFactory.makeString("line");
+    constId31 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const122});
+    const123 = termFactory.makeString("file");
+    constId32 = termFactory.makeAppl(transform._consId_1, new IStrategoTerm[]{cool.const123});
   }
 
   public static void registerInterop(org.spoofax.interpreter.core.IContext context, Context compiledContext)
