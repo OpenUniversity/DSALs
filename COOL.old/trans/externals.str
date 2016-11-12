@@ -683,10 +683,10 @@ rules
         Id(name) -> name
 
    type-of(|rest, env, var2type):
-        ExprName(exprname) -> <get-expr-type(|<fetch><id>, env, var2type)>
+	ExprName(exprname) -> <get-expr-type(|<fetch><id>, env, var2type)>
 
    type-of(|rest, env, var2type):
-        ExprName(amb_name, exprname) -> <get-expr-type(|<fetch><id>, env, var2type)>
+	ExprName(amb_name, exprname) -> <get-expr-type(|<fetch><id>, env, var2type)>
 
    type-of(|rest, env, var2type):
 	Lit(type) -> type
@@ -719,37 +719,37 @@ rules
 	LazyOr(_, _) -> Boolean()
 
    type-of(|rest, env, var2type):
-        Assign(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	Assign(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignMul(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignMul(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignDiv(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignDiv(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignRemain(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignRemain(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignPlus(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignPlus(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignMinus(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignMinus(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignLeftShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignLeftShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignRightShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignRightShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
 	AssignURightShift(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignAnd(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignAnd(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
-        AssignExcOr(LHS, _) -> <type-of(|rest, env, var2type)>LHS
+	AssignExcOr(LHS, _) -> <type-of(|rest, env, var2type)>LHS
 
    type-of(|rest, env, var2type):
 	AssignOr(LHS, _) -> <type-of(|rest, env, var2type)>LHS
