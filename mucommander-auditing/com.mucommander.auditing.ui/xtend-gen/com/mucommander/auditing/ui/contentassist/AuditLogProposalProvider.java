@@ -3,12 +3,10 @@
  */
 package com.mucommander.auditing.ui.contentassist;
 
-import com.mucommander.auditing.ui.contentassist.AbstractAuditLogProposalProvider;
-
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 @SuppressWarnings("all")
-public class AuditLogProposalProvider extends AbstractAuditLogProposalProvider {
+public class AuditLogProposalProvider /* implements AbstractAuditLogProposalProvider  */{
 }

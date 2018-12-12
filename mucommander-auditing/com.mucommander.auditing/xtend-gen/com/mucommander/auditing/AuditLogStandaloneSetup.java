@@ -3,15 +3,13 @@
  */
 package com.mucommander.auditing;
 
-import com.mucommander.auditing.AuditLogStandaloneSetupGenerated;
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class AuditLogStandaloneSetup extends AuditLogStandaloneSetupGenerated {
+public class AuditLogStandaloneSetup /* implements AuditLogStandaloneSetupGenerated  */{
   public static void doSetup() {
-    AuditLogStandaloneSetup _auditLogStandaloneSetup = new AuditLogStandaloneSetup();
-    _auditLogStandaloneSetup.createInjectorAndDoEMFRegistration();
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method createInjectorAndDoEMFRegistration() is undefined for the type AuditLogStandaloneSetup");
   }
 }

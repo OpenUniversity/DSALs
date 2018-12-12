@@ -3,17 +3,15 @@
  */
 package com.mucommander.auditing;
 
-import com.mucommander.auditing.AbstractAuditLogRuntimeModule;
 import com.mucommander.auditing.SuppressingLinkingResource;
-import org.eclipse.xtext.resource.XtextResource;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class AuditLogRuntimeModule extends AbstractAuditLogRuntimeModule {
+public class AuditLogRuntimeModule /* implements AbstractAuditLogRuntimeModule  */{
   @Override
-  public Class<? extends XtextResource> bindXtextResource() {
+  public Class<SuppressingLinkingResource> bindXtextResource() {
     return SuppressingLinkingResource.class;
   }
 }

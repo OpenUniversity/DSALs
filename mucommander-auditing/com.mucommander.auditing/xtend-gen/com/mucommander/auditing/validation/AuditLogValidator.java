@@ -3,13 +3,11 @@
  */
 package com.mucommander.auditing.validation;
 
-import com.mucommander.auditing.validation.AbstractAuditLogValidator;
-
 /**
  * This class contains custom validation rules.
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 @SuppressWarnings("all")
-public class AuditLogValidator extends AbstractAuditLogValidator {
+public class AuditLogValidator /* implements AbstractAuditLogValidator  */{
 }

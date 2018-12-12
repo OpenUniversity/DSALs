@@ -3,8 +3,6 @@
  */
 package com.mucommander.auditing.ui;
 
-import com.mucommander.auditing.ui.AbstractAuditLogUiModule;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 
 /**
@@ -12,8 +10,5 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
  */
 @FinalFieldsConstructor
 @SuppressWarnings("all")
-public class AuditLogUiModule extends AbstractAuditLogUiModule {
-  public AuditLogUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
-  }
+public class AuditLogUiModule /* implements AbstractAuditLogUiModule  */{
 }
