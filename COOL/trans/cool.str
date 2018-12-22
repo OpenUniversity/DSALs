@@ -27,7 +27,7 @@ rules // Analysis
 	generate-java:
     (selected, position, ast, path, project-path) -> (filename, result)
     with
-      filename := "result.java";
+      filename := "BoundedStackCoord.java";
       result   := <pp-java5-to-string><transform-ast><topdown(\ trm -> trm {<try(gen-source-location)>} \)> selected
 
 	editor-analyze = analysis-default-editor
