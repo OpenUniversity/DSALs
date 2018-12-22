@@ -297,7 +297,7 @@ rules
 	   annos := <conc>([Anno(TypeName(Id("COOLLock")),[ElemValPair(Id("methodName"),Lit(String([Chars(name)]))),ElemValPair(Id("className"),Lit(String([]))),ElemValPair(Id("parameterTypes"),ElemValArrayInit(<map(\ name -> Lit(String([Chars(name)]))\ )><map(pp-type)>types))]),
 		Public(),
 		Synchronized()],
-		source_location)
+		mutex_location)
 
    fillMethodMaps(|requires_map,on_exit_map,on_entry_map, method2index):
      MethodAdditions(methodsig, requires, on_entry, on_exit) -> None()
